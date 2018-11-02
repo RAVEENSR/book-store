@@ -73,7 +73,7 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Gets a book by title and author name
+     * Gets a book by title and author name.
      * @param $title String Title of the book
      * @param $authorName String Name of the author
      * @return bool|ArrayObject Returns the result array if found or false if not found.
@@ -87,7 +87,7 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Gets all the books in the database
+     * Gets all the books in the database.
      * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
     public function getAllBooks() {
@@ -99,7 +99,7 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Gets a book by title and author name
+     * Gets a book by title and author name.
      * @param $configurationObject ArrayObject An array object which contains details of a book
      * @return Book|bool Returns a object or false if error occurs
      */
@@ -112,5 +112,46 @@ class BookModel extends CI_Model {
         }
     }
 
+    /**
+     * Adds a new book to the database.
+     * @param $bookObject Book Details of the book
+     * @return bool Returns true if result is successful or false if not found.
+     */
+    public function addBook($bookObject) {
+        //TODO: check whether the book exists
+        if(true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Adds a new main category of books to the database.
+     * @param $category String Name of the new category
+     * @return bool Returns true if result is successful or false if not found.
+     */
+    public function createBookCategory($category) {
+        //TODO: check whether the category exists
+        if(true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Adds a new sub category of books to the database.
+     * @param $subCategory String Name of the new sub category
+     * @return bool Returns true if result is successful or false if not found.
+     */
+    public function createBookSubCategory($subCategory) {
+        //TODO: check whether the category exists
+        if(true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
