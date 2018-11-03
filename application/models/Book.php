@@ -10,7 +10,7 @@ class Book {
     private $isbnNo;
     private $title;
     private $mainCategory;
-    private $subCategories;
+    private $subCategory;
     private $authors;
     private $publisher;
     private $price;
@@ -28,7 +28,7 @@ class Book {
         $this->isbnNo = $config->isbnNo;
         $this->title = $config->title;
         $this->mainCategory = $config->mainCategory;
-        $this->subCategories = $config->subCategories;
+        $this->subCategory = $config->subCategory;
         $this->authors = $config->authors;
         $this->publisher = $config->publisher;
         $this->price = $config->price;
@@ -50,8 +50,8 @@ class Book {
         return $this->mainCategory;
     }
 
-    public function getSubCategories() {
-        return $this->subCategories;
+    public function getSubCategory() {
+        return $this->subCategory;
     }
 
     public function getAuthors(){
