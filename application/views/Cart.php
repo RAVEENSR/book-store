@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <tbody>
                                 <tr>
                                     <td class="product-thumbnail"><a href="#"><img src="<?php echo base_url();
-                                    ?>img/cart/1.jpg" alt="book1" /></a></td>
+                                    ?>img/product/1.jpg" alt="book1" /></a></td>
                                     <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
                                     <td class="product-price"><span class="amount">£165.00</span></td>
                                     <td class="product-quantity"><input type="number" value="1"></td>
@@ -61,7 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </tr>
                                 <tr>
                                     <td class="product-thumbnail"><a href="#"><img src="<?php echo base_url();
-                                    ?>img/cart/2.jpg" alt="book2" /></a></td>
+                                    ?>img/product/1.jpg" alt="book2" /></a></td>
                                     <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
                                     <td class="product-price"><span class="amount">£50.00</span></td>
                                     <td class="product-quantity"><input type="number" value="1"></td>

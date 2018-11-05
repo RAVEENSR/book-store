@@ -30,8 +30,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="flexslider">
                                 <ul class="slides">
-                                    <li data-thumb="<?php echo base_url();?>img/thum-2/1.jpg">
-                                        <img src="<?php echo base_url();?>img/flex/1.jpg" alt="woman" />
+                                    <li data-thumb="<?php echo base_url();?>img/product/1.jpg">
+                                        <img src="<?php echo base_url();?>img/product/1.jpg" alt="woman" />
                                     </li>
                                 </ul>
                             </div>
@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="product-wrapper">
                             <div class="product-img">
                                 <a href="#">
-                                    <img src="<?php echo base_url();?>img/product/7.jpg" alt="book" class="primary" />
+                                    <img src="<?php echo base_url();?>img/product/1.jpg" alt="book" class="primary" />
                                 </a>
                             </div>
                             <div class="product-details text-center">

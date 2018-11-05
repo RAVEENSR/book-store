@@ -2,18 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'Header.php' ?>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="header-search">
-                <form action="#">
-                    <input type="text" placeholder="Search a book by title or author..."/>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- slider-area-start -->
 <div class="slider-area mt-30">
@@ -234,6 +222,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- banner-area-end -->
-
-<!-- Modal end -->
 <?php include 'Footer.php' ?>

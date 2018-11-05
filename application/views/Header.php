@@ -161,3 +161,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- mobile-menu-area-end -->
 </header>
 <!-- header-area-end -->
+<!-- search-area-start -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="header-search">
+                <form action="#">
+                    <input type="text" placeholder="Search a book by title or author..."/>
+                    <a href="#"><i class="fa fa-search"></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search-area-end -->

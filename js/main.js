@@ -200,7 +200,6 @@
     ------------------------------ */
     $('.bestseller-active').owlCarousel({
         smartSpeed: 1000,
-        margin: 0,
         nav: true,
         autoplay: false,
         dots: false,
@@ -274,54 +273,6 @@
     })
 
     /*----------------------------
-     Testimonial active
-    ------------------------------ */
-    $('.testimonial-active').owlCarousel({
-        smartSpeed: 1000,
-        margin: 0,
-        nav: false,
-        autoplay: true,
-        dots: true,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    })
-    
-    /*----------------------------
-     Deal active
-    ------------------------------ */
-    $('.deal-active').owlCarousel({
-        smartSpeed: 1000,
-        margin: 0,
-        nav: false,
-        autoplay: false,
-        dots: false,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    })
-
-    /*----------------------------
      Post active 2
     ------------------------------ */
     $('.post-active-2').owlCarousel({
@@ -369,29 +320,6 @@
             }
         }
     })
-    /*----------------------------
-    Blog slider active
-    ------------------------------ */
-    $('.blog-slider-active').owlCarousel({
-        smartSpeed: 1000,
-        margin: 0,
-        nav: false,
-        autoplay: true,
-        dots: false,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    })
     
     /*----------------------------
      Parallax active
@@ -412,27 +340,7 @@
     $('#showlogin').on('click', function() {
         $('#checkout-login').slideToggle(900);
     });
-    
-    /*-------------------------
-      Showcoupon toggle function
-    --------------------------*/
-    $('#showcoupon').on('click', function() {
-        $('#checkout_coupon').slideToggle(900);
-    });
-    
-    /*-------------------------
-      Create an account toggle function
-    --------------------------*/
-    $('#cbox').on('click', function() {
-        $('#cbox_info').slideToggle(900);
-    });
-    
-    /*-------------------------
-      Create an account toggle function
-    --------------------------*/
-    $('#ship-box').on('click', function() {
-        $('#ship-box-info').slideToggle(1000);
-    });
+
     
     /*-------------------------
       Showlogin toggle function
@@ -467,7 +375,6 @@
         time: 1000
     });
     
-    
     /*---------------------
     	Category menu
     --------------------- */
@@ -488,8 +395,7 @@
         }
     });
     $('#cate-toggle>ul>li.has-sub>a').append('<span class="holder"></span>');
-    
-    
+
     /*--------------------------
      ScrollUp
     ---------------------------- */
@@ -499,8 +405,7 @@
         scrollSpeed: 900,
         animation: 'fade'
     });
-    
-    
+
     /* Category Dropdown Menu  */
     if ($(window).width() < 768) {
         function sidemenuDropdown() {
@@ -520,6 +425,26 @@
         sidemenuDropdown();
     }
 
+    /* Author DropDown Select Menu  */
+    $(".author-select").select2({
+        tags: true
+    });
 
+    /* Main Category DropDown Select Menu  */
+    $(".main-category-select").select2({
+        tags: true
+    });
+
+    /* Sub Category DropDown Select Menu  */
+    $(".sub-category-select").select2({
+        tags: true
+    });
+
+    /* Load sub categories after selecting the main category in AddBook.php*/
+    $('#sub-category-div').hide();
+    $('#main-category-select').change(function () {
+        var selected = $('#main-category-select option:selected').text();
+        $('#sub-category-div').toggle(selected === "1");
+    });
 
 })(jQuery);
