@@ -23,6 +23,8 @@
 	12. Contact
 	13. Cart
 	14. 404 page
+	15. Stat Chart
+	16. Other
 
 -----------------------------------------------------------------------------------*/
 
@@ -3164,7 +3166,7 @@ a#scrollUp:hover {
 .single-login-2 {
     overflow: hidden;
 }
-.login-form > a {
+.login-form > a, .login-form .btn {
     color: #F07C29;
     line-height: 24px;
     margin-bottom: 15px;
@@ -3742,3 +3744,15 @@ a#scrollUp:hover {
 .quickview-active:hover .owl-nav button {
     opacity: 1;
 }
+
+/*----------------------------------------*/
+/*  15. Stat Chart
+/*----------------------------------------*/
+.chartContainer {
+    width: 80%;
+    margin: 20px auto;
+}
+
+/*----------------------------------------*/
+/*  16. Other
+/*----------------------------------------*/

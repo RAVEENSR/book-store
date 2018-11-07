@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'AdminHeader.php' ?>
+<!-- js file for Add sub category -->
+<script src="<?php echo base_url();?>js/addSubCategory.js"></script>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -9,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo site_url();?>/administrator/loadAdminPortal">Home</a></li>
                         <li><a href="#" class="active">Add Sub Category</a></li>
                     </ul>
                 </div>
@@ -18,8 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- breadcrumbs-area-end -->
-
-<!-- user-login-area-start -->
+<?php if(isset($mainCategories)) { ?>
+<!-- add-sub-category-area-start -->
 <div class="user-login-area mb-70">
     <div class="container">
         <div class="row">
@@ -31,41 +33,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-form">
-                <form>
+                <form id="subCategoryForm">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Main Category</label>
-                        <select class="form-control">
+                        <label for="mainCatSelect">Main Category<span>*</span></label>
+                        <select class="form-control" id="mainCatSelect">
                             <option value="" disabled selected>Select a Main Category</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <?php foreach ($mainCategories as $key=>$value) {
+                                echo "<option>".$value."</option>";
+                            }?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Sub Category 1</label>
-                        <input type="text" class="form-control" name="subCategory[]"
+                        <label for="subCat1">Sub Category 1<span>*</span></label>
+                        <input type="text" class="form-control" id="subCat1" name="subCategory[]"
                                placeholder="Ex: Computer Science"/>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Sub Category 2</label>
-                        <input type="text" class="form-control" name="subCategory[]"
+                        <label for="subCat2">Sub Category 2</label>
+                        <input type="text" class="form-control" id="subCat2" name="subCategory[]"
                                placeholder="Ex: Physical Science"/>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Sub Category 3</label>
-                        <input type="text" class="form-control" name="subCategory[]"
+                        <label for="subCat3">Sub Category 3</label>
+                        <input type="text" class="form-control" id="subCat3" name="subCategory[]"
                                placeholder="Ex: Biological Science"/>
                     </div>
-                    <div class="single-login single-login-2">
-                        <a href="#" onclick="document.forms[0].submit();" >Add</a>
+                    <div class="form-group">
+                        <label for="subCat4">Sub Category 4</label>
+                        <input type="text" class="form-control" id="subCat4" name="subCategory[]"
+                               placeholder="Ex: Chemical Science"/>
                     </div>
+                    <div class="single-login single-login-2" id="addSubCategoryBtn">
+                        <a href="javascript:validateSubCategoryForm()">Add</a>
+                    </div>
+                    <!-- store the base url to access in the js file -->
+                    <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
+                    <div id="subCategoryAlertSection"></div>
                 </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- user-login-area-end -->
+<?php } else { ?>
+    <div class="user-login-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="login-title text-center mb-30">
+                        <h2>Please add a Main Category before adding a Sub Category</h2>
+                        <a href="<?php echo site_url();?>/administrator/loadAddMainCategory">Add Main Category</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+<!-- add-sub-category-area-end -->
 <?php include 'AdminFooter.php' ?>

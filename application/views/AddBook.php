@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'AdminHeader.php' ?>
+<!-- js file for Add Book -->
+<script src="<?php echo base_url();?>js/addBook.js"></script>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -9,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo site_url();?>/administrator/loadAdminPortal">Home</a></li>
                         <li><a href="#" class="active">Add Book</a></li>
                     </ul>
                 </div>
@@ -19,7 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- breadcrumbs-area-end -->
-<!-- user-login-area-start -->
+<?php if(isset($publishers)) { ?>
+<!-- add-book-area-start -->
 <div class="user-login-area mb-70">
     <div class="container">
         <div class="row">
@@ -31,94 +34,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-form">
-                <form>
+                <form id="addBookForm">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Title</label>
-                        <input type="text" class="form-control" id="" placeholder="Title of the Book" required>
+                        <label for="title">Title<span>*</span></label>
+                        <input type="text" class="form-control" id="title" placeholder="Title of the Book" required>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
-                            <label for="author">Author</label>
-                            <select class="form-control author-select" required>
+                            <label for="author">Author<span>*</span></label>
+                            <select class="form-control author-select" id="author" required>
                                 <option value="" disabled selected>Select an author or add new author</option>
-                                <option>orange</option>
-                                <option>white</option>
-                                <option>purple</option>
-                                <option>orange</option>
-                                <option>white</option>
-                                <option>purple</option>
-                                <option>orange</option>
-                                <option>white</option>
-                                <option>purple</option>
+                                <?php foreach ($authors as $key=>$value) {
+                                    echo "<option>".$value."</option>";
+                                }?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">ISBN </label>
-                        <input type="text" class="form-control" id="" placeholder="Ex: 978-0062390493" required>
+                        <label for="isbn">ISBN<span>*</span></label>
+                        <input type="text" class="form-control" id="isbn" placeholder="Ex: 978-0062390493" required>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Main Category</label>
-                        <select class="form-control main-category-select" id="main-category-select" required>
+                        <label for="mainCategorySelect">Main Category<span>*</span></label>
+                        <select class="form-control main-category-select" id="mainCategorySelect"
+                                onchange="loadSubCategories()" required>
                             <option value="" disabled selected>Select a category or add new category</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <?php foreach ($mainCategories as $key=>$value) {
+                                echo "<option>$value</option>";
+                            }?>
                         </select>
                     </div>
                     <div class="form-group" id="sub-category-div" >
-                        <label for="formGroupExampleInput">Sub Category</label>
-                        <select class="form-control sub-category-select" id="" required>
+                        <label for="subCategorySelect">Sub Category<span>*</span></label>
+                        <select class="form-control sub-category-select" id="subCategorySelect" required>
                             <option value="" disabled selected>Select a category or add new category</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Publisher</label>
-                        <select class="form-control sub-category-select" id="" required>
+                        <label for="publisher">Publisher<span>*</span></label>
+                        <select class="form-control publisher-select" id="publisher" required>
                             <option value="" disabled selected>Select a publisher or add new publisher</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <?php foreach ($publishers as $key=>$value) {
+                                echo "<option>$value</option>";
+                            }?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Edition</label>
-                        <input type="text" class="form-control" id="" placeholder="Ex: 2nd Edition" required>
+                        <label for="edition">Edition</label>
+                        <input type="text" class="form-control" id="edition" placeholder="Ex: 2nd Edition" required>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Price (USD)</label>
-                        <input type="text" class="form-control" id="" placeholder="Ex: 10.00" required>
+                        <label for="price">Price (USD)<span>*</span></label>
+                        <input type="number" step="0.01" min="0" class="form-control" id="price" placeholder="Ex: 10.00"
+                               required>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Available Quantity</label>
-                        <input type="text" class="form-control" id="" placeholder="Ex: 25" required>
+                        <label for="quantity">Available Quantity<span>*</span></label>
+                        <input type="number" min="0" class="form-control" id="quantity" placeholder="Ex: 25" required>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Description</label>
-                        <textarea class="form-control" id="" rows="3" required></textarea>
+                        <label for="description">Description<span>*</span></label>
+                        <textarea class="form-control" id="description" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Image URL</label>
-                        <input type="text" class="form-control" id="" placeholder="Ex: img/education/1.jpg" required>
+                        <label for="imgURL">Image URL<span>*</span></label>
+                        <input type="text" class="form-control" id="imgURL" placeholder="Ex: img/education/1.jpg"
+                               required>
                     </div>
-<!--                    <button type="submit" class="btn btn-primary">Submit</button>-->
-                    <div class="single-login single-login-2">
-                        <a href="#" onclick="document.forms[0].submit();" >submit</a>
+                    <div class="single-login single-login-2" id="addBookBtn">
+                        <a href="javascript:validateAddBookForm()">Add</a>
                     </div>
+                    <!-- store the base url to access in the js file -->
+                    <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
+                    <div id="addBookAlertSection"></div>
                 </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- user-login-area-end -->
+<?php } else { ?>
+    <div class="user-login-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="login-title text-center mb-30">
+                        <h2>Please add at least one Publisher before adding a book</h2>
+                        <a href="<?php echo site_url();?>/administrator/loadAddPublisher">Add Publisher</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+<!-- add-book-area-end -->
 <?php include 'AdminFooter.php' ?>

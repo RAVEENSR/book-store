@@ -34,6 +34,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url();?>css/responsive.css">
     <!-- modernizr css -->
     <script src="<?php echo base_url();?>js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- all js here -->
+    <!-- jquery latest version -->
+    <script src="<?php echo base_url();?>js/vendor/jquery-1.12.0.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+    <!-- owl.carousel js -->
+    <script src="<?php echo base_url();?>js/owl.carousel.min.js"></script>
+    <!-- meanmenu js -->
+    <script src="<?php echo base_url();?>js/jquery.meanmenu.js"></script>
+    <!-- wow js -->
+    <script src="<?php echo base_url();?>js/wow.min.js"></script>
+    <!-- jquery.parallax-1.1.3.js -->
+    <script src="<?php echo base_url();?>js/jquery.parallax-1.1.3.js"></script>
+    <!-- jquery.countdown.min.js -->
+    <script src="<?php echo base_url();?>js/jquery.countdown.min.js"></script>
+    <!-- jquery.flexslider.js -->
+    <script src="<?php echo base_url();?>js/jquery.flexslider.js"></script>
+    <!-- chosen.jquery.min.js -->
+    <script src="<?php echo base_url();?>js/chosen.jquery.min.js"></script>
+    <!-- jquery.counterup.min.js -->
+    <script src="<?php echo base_url();?>js/jquery.counterup.min.js"></script>
+    <!-- waypoints.min.js -->
+    <script src="<?php echo base_url();?>js/waypoints.min.js"></script>
+    <!-- plugins js -->
+    <script src="<?php echo base_url();?>js/plugins.js"></script>
+    <!-- select2 library script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 </head>
 <body class="home-2">
 <!--[if lt IE 8]>

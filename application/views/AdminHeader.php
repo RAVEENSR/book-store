@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>img/favicon.png">
 
-    <!-- all css here -->
+    <!-- all css start -->
     <!-- bootstrap v3.3.6 css -->
     <link rel="stylesheet" href="<?php echo base_url();?>css/bootstrap.min.css">
     <!-- animate css -->
@@ -36,6 +36,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- modernizr css -->
     <script src="<?php echo base_url();?>js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- all-css-end-->
+    <!-- all-js-start -->
+    <!-- jquery latest version -->
+    <script src="<?php echo base_url();?>js/vendor/jquery-1.12.0.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+    <!-- owl.carousel js -->
+    <script src="<?php echo base_url();?>js/owl.carousel.min.js"></script>
+    <!-- meanmenu js -->
+    <script src="<?php echo base_url();?>js/jquery.meanmenu.js"></script>
+    <!-- wow js -->
+    <script src="<?php echo base_url();?>js/wow.min.js"></script>
+    <!-- jquery.parallax-1.1.3.js -->
+    <script src="<?php echo base_url();?>js/jquery.parallax-1.1.3.js"></script>
+    <!-- jquery.countdown.min.js -->
+    <script src="<?php echo base_url();?>js/jquery.countdown.min.js"></script>
+    <!-- jquery.flexslider.js -->
+    <script src="<?php echo base_url();?>js/jquery.flexslider.js"></script>
+    <!-- chosen.jquery.min.js -->
+    <script src="<?php echo base_url();?>js/chosen.jquery.min.js"></script>
+    <!-- jquery.counterup.min.js -->
+    <script src="<?php echo base_url();?>js/jquery.counterup.min.js"></script>
+    <!-- waypoints.min.js -->
+    <script src="<?php echo base_url();?>js/waypoints.min.js"></script>
+    <!-- plugins js -->
+    <script src="<?php echo base_url();?>js/plugins.js"></script>
+    <!-- select2 library script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- ajax js -->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!-- all-js-end -->
 </head>
 <body class="home-2">
 <!--[if lt IE 8]>
@@ -53,7 +84,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
                     <div class="logo-area text-center logo-xs-mrg">
-                        <a href="index.html"><img src="<?php echo base_url();?>img/logo/logo.png" alt="logo" /></a>
+                        <a href="<?php echo site_url();?>/administrator/loadAdminPortal">
+                            <img src="<?php echo base_url();?>img/logo/logo.png" alt="logo" />
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
@@ -70,24 +103,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="menu-area">
                         <nav>
                             <ul>
-                                <li class="active"><a href="index.html">Home</a>
+                                <li class="active"><a href="<?php echo site_url();?>/administrator/loadAdminPortal">Home</a>
                                 </li>
                                 <li><a href="#">Books<i class="fa fa-angle-down"></i></a>
                                     <div class="sub-menu sub-menu-2">
                                         <ul>
-                                            <li><a href="#">Add Book</a></li>
+                                            <li>
+                                                <a href="<?php echo site_url();?>/administrator/loadAddBook">
+                                                    Add Book</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#">Publishers<i class="fa fa-angle-down"></i></a>
+                                    <div class="sub-menu sub-menu-2">
+                                        <ul>
+                                            <li>
+                                                <a href="<?php echo site_url();?>/administrator/loadAddPublisher">
+                                                    Add Publisher</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li><a href="#">Categories<i class="fa fa-angle-down"></i></a>
                                     <div class="sub-menu sub-menu-2">
                                         <ul>
-                                            <li><a href="#">Create Main Category</a></li>
-                                            <li><a href="#">Create Sub Category</a></li>
+                                            <li><a href="<?php echo site_url();?>/administrator/loadAddMainCategory">
+                                                    Create Main Category</a></li>
+                                            <li><a href="<?php echo site_url();?>/administrator/loadAddSubCategory">
+                                                    Create Sub Category</a></li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li><a href="#">Search</a>
+                                <li><a href="<?php echo site_url();?>/administrator/loadSearchBook">Search</a>
                                 </li>
                             </ul>
                         </nav>
@@ -105,20 +153,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="mobile-menu">
                         <nav id="mobile-menu-active">
                             <ul id="nav">
-                                <li><a href="index.html">Home</a>
+                                <li><a href="<?php echo site_url();?>/administrator/loadAdminPortal">Home</a>
                                 </li>
                                 <li><a href="#">Books</a>
                                     <ul>
-                                        <li><a href="shop.html">Add Book</a></li>
+                                        <li><a href="<?php echo site_url();?>/administrator/loadAddBook">
+                                                Add Book</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Publishers</a>
+                                    <ul>
+                                        <li><a href="<?php echo site_url();?>/administrator/loadAddPublisher">
+                                                Add Publisher</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Categories</a>
                                     <ul>
-                                        <li><a href="shop.html">Create Main Category</a></li>
-                                        <li><a href="shop.html">Create Sub Category</a></li>
+                                        <li><a href="<?php echo site_url();?>/administrator/loadAddMainCategory">
+                                                Create Main Category</a></li>
+                                        <li><a href="<?php echo site_url();?>/administrator/loadAddSubCategory">
+                                                Create Sub Category</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="product-details.html">Search</a>
+                                <li><a href="<?php echo site_url();?>/administrator/loadSearchBook">Search</a>
                                 </li>
                             </ul>
                         </nav>

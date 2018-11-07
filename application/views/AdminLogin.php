@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'Header.php' ?>
+<?php include 'AdminHeader.php' ?>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -47,4 +47,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- user-login-area-end -->
-<?php include 'Footer.php' ?>
+<?php include 'AdminFooter.php' ?>

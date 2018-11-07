@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-    
+
     /*----------------------------
      Top Menu Stick
     ------------------------------ */
@@ -406,24 +406,26 @@
         animation: 'fade'
     });
 
-    /* Category Dropdown Menu  */
-    if ($(window).width() < 768) {
-        function sidemenuDropdown() {
-            var $this = $('.category-menu');
-            $this.find('nav.menu .cr-dropdown').find('.left-menu').css('display', 'none');
-            $this.find('nav.menu .cr-dropdown ul').slideUp();
-            $this.find('nav.menu .cr-dropdown a').on('click', function(e) {
-                e.preventDefault();
-                $(this).parent('.cr-dropdown').children('ul').slideToggle();
-            });
-            $this.find('nav.menu .cr-dropdown ul .cr-sub-dropdown ul').css('display', 'none');
-            $this.find('nav.menu .cr-dropdown ul .cr-sub-dropdown a').on('click', function(e) {
-                e.preventDefault();
-                $(this).parent('.cr-sub-dropdown').children('ul').slideToggle();
-            });
-        }
-        sidemenuDropdown();
-    }
+    // /* Category Dropdown Menu  */
+    // if ($(window).width() < 768) {
+    //     function sidemenuDropdown() {
+    //         var $this = $('.category-menu');
+    //         $this.find('nav.menu .cr-dropdown').find('.left-menu').css('display', 'none');
+    //         $this.find('nav.menu .cr-dropdown ul').slideUp();
+    //         $this.find('nav.menu .cr-dropdown a').on('click', function(e) {
+    //             e.preventDefault();
+    //             $(this).parent('.cr-dropdown').children('ul').slideToggle();
+    //         });
+    //         $this.find('nav.menu .cr-dropdown ul .cr-sub-dropdown ul').css('display', 'none');
+    //         $this.find('nav.menu .cr-dropdown ul .cr-sub-dropdown a').on('click', function(e) {
+    //             e.preventDefault();
+    //             $(this).parent('.cr-sub-dropdown').children('ul').slideToggle();
+    //         });
+    //     }
+    //     sidemenuDropdown();
+    // }
+
+    $.fn.select2.defaults.set( "width", "100%" );
 
     /* Author DropDown Select Menu  */
     $(".author-select").select2({
@@ -442,9 +444,9 @@
 
     /* Load sub categories after selecting the main category in AddBook.php*/
     $('#sub-category-div').hide();
-    $('#main-category-select').change(function () {
-        var selected = $('#main-category-select option:selected').text();
-        $('#sub-category-div').toggle(selected === "1");
+    $('#mainCategorySelect').change(function () {
+        var selected = $('#mainCategorySelect option:selected').text();
+        $('#sub-category-div').toggle(selected !== "");
     });
 
 })(jQuery);
