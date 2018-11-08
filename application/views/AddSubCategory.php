@@ -46,25 +46,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label for="subCat1">Sub Category 1<span>*</span></label>
                         <input type="text" class="form-control" id="subCat1" name="subCategory[]"
+                               onkeyup="validateSubCategoryName(false, 'subCat1')"
                                placeholder="Ex: Computer Science"/>
                     </div>
                     <div class="form-group">
                         <label for="subCat2">Sub Category 2</label>
                         <input type="text" class="form-control" id="subCat2" name="subCategory[]"
+                               onkeyup="validateSubCategoryName(false, 'subCat2')"
                                placeholder="Ex: Physical Science"/>
                     </div>
                     <div class="form-group">
                         <label for="subCat3">Sub Category 3</label>
                         <input type="text" class="form-control" id="subCat3" name="subCategory[]"
+                               onkeyup="validateSubCategoryName(false, 'subCat3')"
                                placeholder="Ex: Biological Science"/>
                     </div>
                     <div class="form-group">
                         <label for="subCat4">Sub Category 4</label>
                         <input type="text" class="form-control" id="subCat4" name="subCategory[]"
+                               onkeyup="validateSubCategoryName(false, 'subCat4')"
                                placeholder="Ex: Chemical Science"/>
                     </div>
-                    <div class="single-login single-login-2" id="addSubCategoryBtn">
-                        <a href="javascript:validateSubCategoryForm()">Add</a>
+                    <div class="single-login single-login-2">
+                        <button type="button" id="addSubCategoryBtn" class="btn btn-default"
+                                onclick="validateSubCategoryForm()">Add</button>
                     </div>
                     <!-- store the base url to access in the js file -->
                     <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>

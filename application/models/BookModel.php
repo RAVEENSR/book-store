@@ -5,8 +5,6 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require (APPPATH . 'models/Book.php');
-
 class BookModel extends CI_Model {
 
     /**
@@ -56,14 +54,13 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Gets all the books by title. (There can be multiple books by same title)
+     * Gets books which are likely having title.
      * @param $title String Title of the book
      * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
     public function getBooksByTitle($title) {
         // get the result row from the 'book' table
-        $this->db->select('*');
-        $this->db->where('title', $title);
+        $this->db->like('title', $title);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
@@ -80,7 +77,6 @@ class BookModel extends CI_Model {
      */
     public function getBookByISBN($isbnNo) {
         // get the result row from the 'book' table
-        $this->db->select('*');
         $this->db->where('isbnNo', $isbnNo);
         $result = $this->db->get('book');
         // check the number of rows in the result
@@ -92,11 +88,28 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Get books by author name.
+     * Get books which are likely having author name.
      * @param $authorName String Name of the author of the book
      * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
     public function getBooksByAuthor($authorName) {
+        // get the result row from the 'book' table
+        $this->db->like('authorName', $authorName);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Get count of the books under the author name.
+     * @param $authorName String Name of the author of the book
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getCountBooksByAuthor($authorName) {
         // get the result row from the 'book' table
         $this->db->select('*');
         $this->db->where('authorName', $authorName);
@@ -108,6 +121,24 @@ class BookModel extends CI_Model {
             return $result->result();
         }
     }
+
+//    /**
+//     * Get publisher by publisher name.
+//     * @param $publisherName String Name of the publisher
+//     * @return bool|ArrayObject Returns the result array if found or false if not found.
+//     */
+//    public function getPublisherByName($publisherName) {
+//        // get the result row from the 'book' table
+//        $this->db->select('*');
+//        $this->db->where('publisherName', $publisherName);
+//        $result = $this->db->get('book');
+//        // check the number of rows in the result
+//        if ($result->num_rows() == 0) {
+//            return false;
+//        } else {
+//            return $result->result();
+//        }
+//    }
 
 //    /**
 //     * There can be authors with the same name. In order to separately identify each author an author code is used.
@@ -128,23 +159,23 @@ class BookModel extends CI_Model {
 //        }
 //    }
 //
-//    /**
-//     * Gets a book by title and author code.
-//     * @param $title String Title of the book
-//     * @param $authorCode String Dedicated code for the author
-//     * @return bool|ArrayObject Returns the result array if found or false if not found.
-//     */
-//    public function getBookByTitleAndAuthorCode($title, $authorCode) {
-//        // get the result row from the 'book' table
-//        $this->db->where(array('title' => $title, 'authorCode' => $authorCode));
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return false;
-//        } else {
-//            return $result->result();
-//        }
-//    }
+    /**
+     * Get books which are likely having similar title and author name.
+     * @param $title String Title of the book
+     * @param $authorName String Name of the author
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getBookByTitleAndAuthor($title, $authorName) {
+        // get the result row from the 'book' table
+        $this->db->like(array('title' => $title, 'authorName' => $authorName));
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
 
     /**
      * Gets all the books in the database.
@@ -229,14 +260,29 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Checks whether a Main Category is available in the database.
+     * Checks whether a Main Category title is available in the database.
      * @param $mainCategory String Name of the Main Category
      * @return bool Returns true if main category title is available, false if not.
      */
     public function isCategoryAvailable($mainCategory) {
         // get the result row from the 'category' table
+        $this->db->select('categoryTitle');
         $this->db->where('categoryTitle', $mainCategory);;
         $result = $this->db->get('category');
+        // check the number of rows in the result
+        return $result->num_rows() == 0 ? false : true;
+    }
+
+    /**
+     * Checks whether a Sub Category title is available in the database.
+     * @param $subCategory String Name of the Sub Category
+     * @return bool Returns true if sub category title is available, false if not.
+     */
+    public function isSubCategoryAvailable($subCategory) {
+        // get the result row from the 'subcategory' table
+        $this->db->select('subCategoryTitle');
+        $this->db->where('subCategoryTitle', $subCategory);;
+        $result = $this->db->get('subcategory');
         // check the number of rows in the result
         return $result->num_rows() == 0 ? false : true;
     }
@@ -249,6 +295,7 @@ class BookModel extends CI_Model {
      */
     public function isSubCategoryAvailableInMainCategory($subCategory, $mainCategory) {
         // get the result row from the 'category' table
+        $this->db->select('subCategoryTitle');
         $this->db->where(array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory));
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
@@ -262,37 +309,25 @@ class BookModel extends CI_Model {
      */
     public function isAuthorAvailable($authorName) {
         // get the result row from the 'author' table
+        $this->db->select('authorName');
         $this->db->where('authorName', $authorName);;
         $result = $this->db->get('author');
         // check the number of rows in the result
         return $result->num_rows() == 0 ? false : true;
     }
 
-//    /**
-//     * Checks whether a Publisher is available in the database.
-//     * @param $publisherName String Name of the Publiksher
-//     * @return bool Returns true if publisher name is available, false if not.
-//     */
-//    public function isPublisherAvailable($publisherName) {
-//        // get the result row from the 'publisher' table
-//        $this->db->where('publisher', $publisherName);;
-//        $result = $this->db->get('author');
-//        // check the number of rows in the result
-//        return $result->num_rows() == 0 ? false : true;
-//    }
-
     /**
-     * Gets a book by title and author name.
-     * @param $configurationObject ArrayObject An array object which contains details of a book
-     * @return Book|bool Returns a object or false if error occurs
+     * Checks whether a Publisher is available in the database.
+     * @param $publisherName String Name of the Publiksher
+     * @return bool Returns true if publisher name is available, false if not.
      */
-    public function createBookObject($configurationObject) {
-        if(true) {
-            $bookObject = new Book($configurationObject);
-            return $bookObject;
-        } else {
-            return false;
-        }
+    public function isPublisherAvailable($publisherName) {
+        // get the result row from the 'publisher' table
+        $this->db->select('publisherName');
+        $this->db->where('publisherName', $publisherName);;
+        $result = $this->db->get('publisher');
+        // check the number of rows in the result
+        return $result->num_rows() == 0 ? false : true;
     }
 
     /**

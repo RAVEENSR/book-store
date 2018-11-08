@@ -35,15 +35,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <form id="publisherForm">
                             <div class="form-group">
                                 <label for="publisherName">Publisher Name<span>*</span></label>
-                                <input type="text" class="form-control" id="publisherName" placeholder="Ex: Elsevier"
-                                       required/>
+                                <input type="text" onkeyup="validatePublisherName()" class="form-control" id="publisherName"
+                                       placeholder="Ex: Elsevier" required/>
                             </div>
                             <div class="form-group">
                                 <label for="contactNo">Contact Number</label>
                                 <input type="text" class="form-control" id="contactNo" placeholder="Ex: +94112212345"/>
                             </div>
-                            <div class="single-login single-login-2" id="addPublisherBtn">
-                                <a href="javascript:validatePublisherForm()">Add</a>
+                            <div class="single-login single-login-2">
+                                <button type="button" id="addPublisherBtn" class="btn btn-default"
+                                        onclick="validatePublisherForm()">Add</button>
                             </div>
                             <!-- store the base url to access in the js file -->
                             <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>

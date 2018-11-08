@@ -3,21 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'AdminHeader.php' ?>
 
-<!-- breadcrumbs-area-start -->
-<div class="breadcrumbs-area mb-20">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumbs-menu">
-                    <ul>
-                        <li><a href="#">Admin Home</a></li>
-                        <li><a href="#" class="active">Admin Search</a></li>
-                    </ul>
+    <!-- breadcrumbs-area-start -->
+    <div class="breadcrumbs-area mb-20">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
+                            <li><a href="#" class="active">Book Search</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <!-- admin-search-area-start -->
     <div class="user-login-area mb-70">
         <div class="container">
@@ -38,47 +38,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="tab-content">
                         <div class="tab-pane active" id="Title">
                             <div class="login-form">
-                                <form>
-                                    <div class="form-group dynamic-main-category">
-                                        <label for="formGroupExampleInput">Title</label>
-                                        <input type="text" class="form-control" name="mainCategory[]"
-                                               placeholder="Enter title of the book" />
+                                <form action="<?php echo site_url(); ?>/administrator/searchBookByTitle" method="POST">
+                                    <div class="form-group">
+                                        <label for="title">Title<span>*</span></label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                               placeholder="Enter title of the book" required/>
                                     </div>
                                     <div class="single-login single-login-2">
-                                        <a href="#" onclick="document.forms[0].submit();" >Search</a>
+                                        <button type="submit" class="btn btn-default">Search</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="tab-pane" id="Author">
                             <div class="login-form">
-                                <form>
-                                    <div class="form-group dynamic-main-category">
-                                        <label for="formGroupExampleInput">Author</label>
-                                        <input type="text" class="form-control" name="mainCategory[]"
-                                               placeholder="Enter name of the author"/>
+                                <form action="<?php echo site_url(); ?>/administrator/searchBooksByAuthor"
+                                      method="POST">
+                                    <div class="form-group">
+                                        <label for="author">Author<span>*</span></label>
+                                        <input type="text" class="form-control" id="author" name="author"
+                                               placeholder="Enter name of the author" required/>
                                     </div>
                                     <div class="single-login single-login-2">
-                                        <a href="#" onclick="document.forms[0].submit();" >Search</a>
+                                        <button type="submit" class="btn btn-default">Search</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="tab-pane" id="TitleAuthor">
                             <div class="login-form">
-                                <form>
-                                    <div class="form-group dynamic-main-category">
-                                        <label for="formGroupExampleInput">Title</label>
-                                        <input type="text" class="form-control" name="mainCategory[]"
-                                               placeholder="Enter title of the book" />
+                                <form action="<?php echo site_url(); ?>/administrator/searchBookByTitleAndAuthor"
+                                      method="POST">
+                                    <div class="form-group">
+                                        <label for="title">Title<span>*</span></label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                               placeholder="Enter title of the book" required/>
                                     </div>
-                                    <div class="form-group dynamic-main-category">
-                                        <label for="formGroupExampleInput">Author</label>
-                                        <input type="text" class="form-control" name="mainCategory[]"
-                                               placeholder="Enter name of the author"/>
+                                    <div class="form-group">
+                                        <label for="author">Author<span>*</span></label>
+                                        <input type="text" class="form-control" id="author" name="author"
+                                               placeholder="Enter name of the author" required/>
                                     </div>
                                     <div class="single-login single-login-2">
-                                        <a href="#" onclick="document.forms[0].submit();" >Search</a>
+                                        <button type="submit" class="btn btn-default">Search</button>
                                     </div>
                                 </form>
                             </div>

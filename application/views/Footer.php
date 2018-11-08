@@ -64,7 +64,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    <p><a href="admin">Admin Portal</a></p>
+                    <p><a href="<?php echo site_url();?>/login/loadAdminLogin">Admin Portal</a></p>
                 </div>
             </div>
         </div>

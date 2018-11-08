@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
                         <li><a href="#" class="active">Book-Details</a></li>
                     </ul>
                 </div>

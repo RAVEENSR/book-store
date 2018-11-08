@@ -52,7 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group">
                         <label for="isbn">ISBN<span>*</span></label>
-                        <input type="text" class="form-control" id="isbn" placeholder="Ex: 978-0062390493" required>
+                        <input type="text" onkeyup="validateISBN()" class="form-control" id="isbn"
+                               placeholder="Ex: 978-0062390493" required>
                     </div>
                     <div class="form-group">
                         <label for="mainCategorySelect">Main Category<span>*</span></label>
@@ -101,8 +102,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input type="text" class="form-control" id="imgURL" placeholder="Ex: img/education/1.jpg"
                                required>
                     </div>
-                    <div class="single-login single-login-2" id="addBookBtn">
-                        <a href="javascript:validateAddBookForm()">Add</a>
+                    <div class="single-login single-login-2">
+                        <button type="button" id="addBookBtn" class="btn btn-default"
+                                onclick="validateAddBookForm()">Add</button>
                     </div>
                     <!-- store the base url to access in the js file -->
                     <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>

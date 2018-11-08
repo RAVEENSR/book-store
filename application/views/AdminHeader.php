@@ -137,6 +137,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </li>
                                 <li><a href="<?php echo site_url();?>/administrator/loadSearchBook">Search</a>
                                 </li>
+                                <li><a href="#">Hi <?php echo $this->session->userdata('username'); ?><i class="fa
+                                fa-angle-down"></i></a>
+                                    <div class="sub-menu sub-menu-2 ">
+                                        <ul>
+                                            <li><a href="<?php echo site_url();?>/login/logout">LogOut</a>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </nav>
                     </div>
