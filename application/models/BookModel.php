@@ -105,14 +105,31 @@ class BookModel extends CI_Model {
     }
 
     /**
-     * Get count of the books under the author name.
-     * @param $authorName String Name of the author of the book
+     * Get count of the books of likely having title.
+     * @param $title String Title of the book
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooksByTitle($title) {
+        // get the result row from the 'book' table
+        $this->db->like('title', $title);
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
+
+    /**
+     * Get books of likely having title with a limit.
+     * @param $title String Title of the book
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
      * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function getCountBooksByAuthor($authorName) {
+    public function getLimitedBooksByTitle($title, $pageNo, $itemsPerPage) {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
-        $this->db->select('*');
-        $this->db->where('authorName', $authorName);
+        $this->db->like('title', $title);
+        $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
@@ -121,6 +138,79 @@ class BookModel extends CI_Model {
             return $result->result();
         }
     }
+
+    /**
+     * Get count of the books of likely having author name.
+     * @param $authorName String Name of the author of the book
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooksByAuthor($authorName) {
+        // get the result row from the 'book' table
+        $this->db->like('authorName', $authorName);
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
+
+    /**
+     * Get books of likely having author name with a limit.
+     * @param $authorName String Name of the author of the book
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLimitedBooksByAuthor($authorName, $pageNo, $itemsPerPage) {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
+        // get the result row from the 'book' table
+        $this->db->like('authorName', $authorName);
+        $this->db->limit($limit, $offset);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Get count of the books of likely having title and author name.
+     * @param $title String Title of the book
+     * @param $authorName String Name of the author
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooksByTitleAndAuthor($title, $authorName) {
+        // get the result row from the 'book' table
+        $this->db->like(array('title' => $title, 'authorName' => $authorName));
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
+
+    /**
+     * Get books of likely having title and author name with a limit.
+     * @param $title String Title of the book
+     * @param $authorName String Name of the author of the book
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLimitedBooksByTitleAndAuthor($title, $authorName, $pageNo, $itemsPerPage) {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
+        // get the result row from the 'book' table
+        $this->db->like(array('title' => $title, 'authorName' => $authorName));
+        $this->db->limit($limit, $offset);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
 
 //    /**
 //     * Get publisher by publisher name.
@@ -194,6 +284,37 @@ class BookModel extends CI_Model {
     }
 
     /**
+     * Get count of the books.
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooks() {
+        // get the result row from the 'book' table
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
+
+    /**
+     * Get all the books with a limit.
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLimitedBooks($pageNo, $itemsPerPage) {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
+        // get the result row from the 'book' table
+        $this->db->limit($limit, $offset);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
      * Gets all the authors in the database.
      * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
@@ -242,6 +363,21 @@ class BookModel extends CI_Model {
     }
 
     /**
+     * Gets all the Main Categories in the database with their ids.
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getAllMainCategoriesWithMainCategoryId() {
+        // get the result rows from the 'category' table
+        $result = $this->db->get('category');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
      * Gets all the Sub Categories under a Main Category in the database.
      * @param $mainCategory String Name of the Main Category
      * @return bool|ArrayObject Returns the result array if found or false if not found.
@@ -249,6 +385,24 @@ class BookModel extends CI_Model {
     public function getSubCategoriesOfAMainCategory($mainCategory) {
         // get the result row from the 'subCategory' table
         $this->db->select('subCategoryTitle');
+        $this->db->where('categoryTitle', $mainCategory);
+        $result = $this->db->get('subcategory');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Gets all the Sub Categories with title and id under a Main Category in the database.
+     * @param $mainCategory String Name of the Main Category
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getSubCategoriesOfAMainCategoryWithSubCategoryId($mainCategory) {
+        // get the result row from the 'subCategory' table
+        $this->db->select('subCategoryTitle, subCategoryId');
         $this->db->where('categoryTitle', $mainCategory);
         $result = $this->db->get('subcategory');
         // check the number of rows in the result

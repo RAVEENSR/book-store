@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require (APPPATH . 'models/Book.php');
+require(APPPATH . 'models/Book.php');
 
 /**
  * This class represent all the controller work related to an Administrator.
@@ -13,10 +13,9 @@ class Administrator extends CI_Controller
     {
         // Parent constructor call
         parent::__construct();
-        if (!$this->session->userdata('username'))
-        {
+        if (!$this->session->userdata('username')) {
             // if the admin user is not logged in redirect them to the login page
-            redirect(site_url().'/login/loadAdminLogin');
+            redirect(site_url() . '/login/loadAdminLogin');
         }
     }
 
@@ -163,45 +162,66 @@ class Administrator extends CI_Controller
      */
     public function addBook()
     {
-        if (!isset($_POST['bookData'])) {
-            return false;
-        }
-        $receivedData = $_POST['bookData'];
-        $this->load->model('BookModel');
-        // check whether the entered author name exists. If not add the author.
-        if (!$this->BookModel->isAuthorAvailable($receivedData['author'])) {
-            $this->BookModel->addAuthor(array('authorName' => $receivedData['author']));
-        }
+        $config['upload_path'] = './img/product';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['encrypt_name'] = TRUE;
 
-        // check whether the entered main category exists. If not add the main category.
-        if (!$this->BookModel->isCategoryAvailable($receivedData['mainCategory'])) {
-            $categoryData = array();
-            array_push($categoryData, array('categoryTitle' => $receivedData['mainCategory']));
-            $this->BookModel->createBookCategories($categoryData);
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload("imgURL")) {
+            $data = array('upload_data' => $this->upload->data());
+            $image = $data['upload_data']['file_name'];
+
+            $title = $this->input->post('title');
+            $author = $this->input->post('author');
+            $isbn = $this->input->post('isbn');
+            $mainCategory = $this->input->post('mainCategorySelect');
+            $subCategory = $this->input->post('subCategorySelect');
+            $publisher = $this->input->post('publisher');
+            $edition = $this->input->post('edition');
+            $price = $this->input->post('price');
+            $qty = $this->input->post('quantity');
+            $description = $this->input->post('description');
+            $img = 'img/product/' . $image;
+
+            $this->load->model('BookModel');
+            // check whether the entered author name exists. If not add the author.
+            if (!$this->BookModel->isAuthorAvailable($author)) {
+                $this->BookModel->addAuthor(array('authorName' => $author));
+            }
+
+            // check whether the entered main category exists. If not add the main category.
+            if (!$this->BookModel->isCategoryAvailable($mainCategory)) {
+                $categoryData = array();
+                array_push($categoryData, array('categoryTitle' => $mainCategory));
+                $this->BookModel->createBookCategories($categoryData);
+            }
+
+            // check whether the entered sub category exists. If not add the sub category.
+            if (!$this->BookModel->isSubCategoryAvailableInMainCategory($subCategory, $mainCategory)) {
+                $subCategoryData = array();
+                array_push($subCategoryData, array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory));
+                $this->BookModel->createBookSubCategories($subCategoryData);
+            }
+
+            $newEntry = array('isbnNo' => $isbn,
+                'title' => $title,
+                'categoryTitle' => $mainCategory,
+                'subCategoryTitle' => $subCategory,
+                'authorName' => $author,
+                'publisherName' => $publisher,
+                'price' => number_format((float)$price, 2, '.', ''),
+                'availableCopies' => $qty,
+                'description' => $description,
+                'edition' => $edition,
+                'imageURL' => $img);
+            $result = $this->BookModel->addBook($newEntry);
+            // flag determines the validity
+            $flag = false;
+            if ($result) {
+                $flag = true;
+            }
+            echo json_encode($flag);
         }
-
-        // check whether the entered sub category exists. If not add the sub category.
-        if (!$this->BookModel->isSubCategoryAvailableInMainCategory($receivedData['subCategory'],
-            $receivedData['mainCategory'])) {
-            $subCategoryData = array();
-            array_push($subCategoryData, array('subCategoryTitle' => $receivedData['subCategory'],
-                'categoryTitle' => $receivedData['mainCategory']));
-            $this->BookModel->createBookSubCategories($subCategoryData);
-        }
-
-        $newEntry = array('isbnNo' => $receivedData['isbn'],
-            'title' => $receivedData['title'],
-            'categoryTitle' => $receivedData['mainCategory'],
-            'subCategoryTitle' => $receivedData['subCategory'],
-            'authorName' => $receivedData['author'],
-            'publisherName' => $receivedData['publisher'],
-            'price' => number_format((float)$receivedData['price'], 2, '.', ''),
-            'availableCopies' => $receivedData['qty'],
-            'description' => $receivedData['description'],
-            'edition' => $receivedData['edition'],
-            'imageURL' => $receivedData['img']);
-
-        return $this->BookModel->addBook($newEntry);
     }
 
     /**
@@ -258,11 +278,49 @@ class Administrator extends CI_Controller
      */
     public function searchBookByTitle()
     {
-        $title = $_POST['title'];
+        if (isset($_POST['title'])) {
+            $title = $_POST['title'];
+        } else if (isset($_GET['title'])) {
+            $title = $_GET['title'];
+        } else {
+            return false;
+        }
+
+        if (isset($_GET['pageNo'])) {
+            $pageNo = $_GET['pageNo'];
+        } else {
+            $pageNo = 1;
+        }
         $this->load->model('BookModel');
-        $result = $this->BookModel->getBooksByTitle($title);
+        $count = $this->BookModel->getCountBooksByTitle($title);
+        $itemsPerPage = 20;
+        $lastPage = ceil($count / $itemsPerPage);
+
+        // ensuring page number is within the range(from 1 to lastPage)
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
+        }
+
+        if ($pageNo < 1) {
+            $pageNo = 1;
+        }
+
+        $result = $this->BookModel->getLimitedBooksByTitle($title, $pageNo, $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$nextPage&title=$title";
+        }
+        if ($pageNo !== 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$previousPage&title=$title";
+        }
+        $data['result'] = $result;
+        $data['first'] = site_url() . "/administrator/searchBookByTitle/?pageNo=1&title=$title";
+        $data['last'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$lastPage&title=$title";
+
         $data['title'] = $title;
-        if (!$result){
+        if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
             $this->load->view('AdminSearchResults', $data);
@@ -277,11 +335,49 @@ class Administrator extends CI_Controller
      */
     public function searchBooksByAuthor()
     {
-        $author = $_POST['author'];
+        if (isset($_POST['author'])) {
+            $author = $_POST['author'];
+        } else if (isset($_GET['author'])) {
+            $author = $_GET['author'];
+        } else {
+            return false;
+        }
+
+        if (isset($_GET['pageNo'])) {
+            $pageNo = $_GET['pageNo'];
+        } else {
+            $pageNo = 1;
+        }
         $this->load->model('BookModel');
-        $result = $this->BookModel->getBooksByAuthor($author);
+        $count = $this->BookModel->getCountBooksByAuthor($author);
+        $itemsPerPage = 20;
+        $lastPage = ceil($count / $itemsPerPage);
+
+        // ensuring page number is within the range(from 1 to lastPage)
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
+        }
+
+        if ($pageNo < 1) {
+            $pageNo = 1;
+        }
+
+        $result = $this->BookModel->getLimitedBooksByAuthor($author, $pageNo, $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$nextPage&author=$author";
+        }
+        if ($pageNo !== 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$previousPage&author=$author";
+        }
+        $data['result'] = $result;
+        $data['first'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=1&author=$author";
+        $data['last'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$lastPage&author=$author";
+
         $data['author'] = $author;
-        if (!$result){
+        if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
             $this->load->view('AdminSearchResults', $data);
@@ -296,13 +392,58 @@ class Administrator extends CI_Controller
      */
     public function searchBookByTitleAndAuthor()
     {
-        $title = $_POST['title'];
-        $author = $_POST['author'];
+
+        if (isset($_POST['author'])) {
+            $author = $_POST['author'];
+        } else if (isset($_GET['author'])) {
+            $author = $_GET['author'];
+        } else {
+            return false;
+        }
+
+        if (isset($_POST['title'])) {
+            $title = $_POST['title'];
+        } else if (isset($_GET['title'])) {
+            $title = $_GET['title'];
+        } else {
+            return false;
+        }
+
+        if (isset($_GET['pageNo'])) {
+            $pageNo = $_GET['pageNo'];
+        } else {
+            $pageNo = 1;
+        }
         $this->load->model('BookModel');
-        $result = $this->BookModel->getBookByTitleAndAuthor($title, $author);
-        $data['title'] = $title;
+        $count = $this->BookModel->getCountBooksByTitleAndAuthor($title, $author);
+        $itemsPerPage = 20;
+        $lastPage = ceil($count / $itemsPerPage);
+
+        // ensuring page number is within the range(from 1 to lastPage)
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
+        }
+
+        if ($pageNo < 1) {
+            $pageNo = 1;
+        }
+
+        $result = $this->BookModel->getLimitedBooksByTitleAndAuthor($title, $author, $pageNo, $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$nextPage&title=$title&author=$author";
+        }
+        if ($pageNo !== 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$previousPage&title=$title&author=$author";
+        }
+        $data['result'] = $result;
+        $data['first'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=1&title=$title&author=$author";
+        $data['last'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$lastPage&title=$title&author=$author";
+
         $data['author'] = $author;
-        if (!$result){
+        if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
             $this->load->view('AdminSearchResults', $data);
@@ -313,37 +454,26 @@ class Administrator extends CI_Controller
     }
 
     /**
-     * Controls getting data(book title, author name and main category) from view and returning the searched book to
-     * the view.
-     */
-    public function searchBookByTitleAuthorCategory()
-    {
-
-    }
-
-    /**
-     * Controls getting data(book title, author name, main category, sub category) from view and returning the searched
-     * book to the view.
-     */
-    public function searchBookByTitleAuthorCategorySubCategory()
-    {
-
-    }
-
-    /**
      * Controls displaying details of a book in the view.
      */
     public function viewBookDetails()
     {
+        if (isset($_GET['isbn'])) {
+            $isbn = $_GET['isbn'];
+        } else {
+            return false;
+        }
 
-    }
-
-    /**
-     * Controls returning all the books to the view.
-     */
-    public function viewAllBooks()
-    {
-
+        $this->load->model('BookModel');
+        $result = $this->BookModel->getBookByISBN($isbn);
+        if (!$result) {
+            $errorMessage = "Error occurred";
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('AdminBookDetails', $data);
+        } else {
+            $data['book'] = $result[0];
+            $this->load->view('AdminBookDetails', $data);
+        }
     }
 
     /**
@@ -359,6 +489,7 @@ class Administrator extends CI_Controller
      */
     public function loadAddBook()
     {
+        $this->load->helper('form');
         $mainCategories = $this->getAllCategories();
         $authors = $this->getAllAuthors();
         $publishers = $this->getAllPublishers();
@@ -414,32 +545,6 @@ class Administrator extends CI_Controller
         $this->load->view('AdminSearch');
     }
 
-//    /**
-//     * Creates an array of Book objects for a given result array.
-//     * @param $resultArray ArrayObject An array of objects which contains details of books
-//     * @return array Returns a array of Book objects
-//     */
-//    private function createBookArray($resultArray) {
-//        $bookArray = array();
-//        foreach ($resultArray as $bookConfig) {
-//            $bookArray[] = $bookConfig;
-//        }
-//        return $bookArray;
-//    }
-
-    /**
-     * Creates an array of Book objects for a given result array.
-     * @param $resultArray ArrayObject An array of objects which contains details of books
-     * @return array Returns a array of Book objects
-     */
-    private function handlePagination() {
-        $bookArray = array();
-        foreach ($resultArray as $bookConfig) {
-            $bookArray[] = $bookConfig;
-        }
-        return $bookArray;
-    }
-
-
 }
+
 ?>

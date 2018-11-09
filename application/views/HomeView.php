@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- editor-area-start -->
 <div class="new-book-area pt-100">
-    <div class="container">
+    <div class="container" id="editorsCorner">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title section-title-res text-center mb-30">
@@ -208,7 +208,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                <div class="single-banner mrg-none-xs">
+                <div class="single-banner mrg-none-xs" id="contactUs">
                     <div class="banner-img">
                         <a href="#"><img src="<?php echo base_url();?>img/banner/4.png" alt="Customer Support" /></a>
                     </div>

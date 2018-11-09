@@ -19,12 +19,12 @@
      Jquery MeanMenu
     ------------------------------ */
     jQuery('#mobile-menu-active').meanmenu();
-    
+
     /*----------------------------
      Wow js active
     ------------------------------ */
     new WOW().init();
-    
+
     /*----------------------------
      Slider active
     ------------------------------ */
@@ -47,7 +47,7 @@
                 items: 1
             }
         }
-    })
+    });
     
     
     /* Quickview-active active */
@@ -59,7 +59,7 @@
         nav: true,
         item: 3,
         margin: 12,
-    })
+    });
     
     
     /*--------------------------
@@ -73,7 +73,7 @@
         $(this).addClass('active');
         $('.product-details-large .tab-pane').removeClass('active');
         $('.product-details-large ' + $href).addClass('active');
-    })
+    });
     
     /*----------------------------
      Tab slider active
@@ -106,7 +106,7 @@
                 items: 5
             }
         }
-    })
+    });
 
     /*----------------------------
      Tab slider active2
@@ -134,7 +134,7 @@
                 items: 4
             }
         }
-    })
+    });
     
     /*----------------------------
      Tab active 3
@@ -163,7 +163,7 @@
                 items: 4
             }
         }
-    })
+    });
     
     /*----------------------------
      Post active
@@ -193,34 +193,34 @@
                 items: 3
             }
         }
-    })
+    });
     
-    /*----------------------------
-     Bestseller active
-    ------------------------------ */
-    $('.bestseller-active').owlCarousel({
-        smartSpeed: 1000,
-        nav: true,
-        autoplay: false,
-        dots: false,
-        margin: 20,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            480: {
-                items: 2
-            },
-            768: {
-                items: 2
-            },
-            1000: {
-                items: 2
-            }
-        }
-    })
+    // /*----------------------------
+    //  Bestseller active
+    // ------------------------------ */
+    // $('.bestseller-active').owlCarousel({
+    //     smartSpeed: 1000,
+    //     nav: true,
+    //     autoplay: false,
+    //     dots: false,
+    //     margin: 20,
+    //     loop: true,
+    //     navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+    //     responsive: {
+    //         0: {
+    //             items: 1
+    //         },
+    //         480: {
+    //             items: 2
+    //         },
+    //         768: {
+    //             items: 2
+    //         },
+    //         1000: {
+    //             items: 2
+    //         }
+    //     }
+    // });
     
     /*----------------------------
      Product active 2
@@ -244,7 +244,7 @@
                 items: 1
             }
         }
-    })
+    });
     /*----------------------------
      Product active 3
     ------------------------------ */
@@ -270,56 +270,56 @@
                 items: 1
             }
         }
-    })
+    });
 
-    /*----------------------------
-     Post active 2
-    ------------------------------ */
-    $('.post-active-2').owlCarousel({
-        smartSpeed: 1000,
-        margin: 0,
-        nav: false,
-        autoplay: false,
-        dots: false,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    })
-    
-    /*----------------------------
-     Hot sell active
-    ------------------------------ */
-    $('.hot-sell-active').owlCarousel({
-        smartSpeed: 1000,
-        margin: 20,
-        nav: true,
-        autoplay: false,
-        dots: false,
-        items: 3,
-        loop: true,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 2
-            },
-            992: {
-                items: 3
-            }
-        }
-    })
+    // /*----------------------------
+    //  Post active 2
+    // ------------------------------ */
+    // $('.post-active-2').owlCarousel({
+    //     smartSpeed: 1000,
+    //     margin: 0,
+    //     nav: false,
+    //     autoplay: false,
+    //     dots: false,
+    //     loop: true,
+    //     navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+    //     responsive: {
+    //         0: {
+    //             items: 1
+    //         },
+    //         768: {
+    //             items: 1
+    //         },
+    //         1000: {
+    //             items: 1
+    //         }
+    //     }
+    // });
+    //
+    // /*----------------------------
+    //  Hot sell active
+    // ------------------------------ */
+    // $('.hot-sell-active').owlCarousel({
+    //     smartSpeed: 1000,
+    //     margin: 20,
+    //     nav: true,
+    //     autoplay: false,
+    //     dots: false,
+    //     items: 3,
+    //     loop: true,
+    //     navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+    //     responsive: {
+    //         0: {
+    //             items: 1
+    //         },
+    //         768: {
+    //             items: 2
+    //         },
+    //         992: {
+    //             items: 3
+    //         }
+    //     }
+    // });
     
     /*----------------------------
      Parallax active
@@ -334,67 +334,67 @@
         controlNav: "thumbnails"
     });
     
-    /*-------------------------
-      Showlogin toggle function
-    --------------------------*/
-    $('#showlogin').on('click', function() {
-        $('#checkout-login').slideToggle(900);
-    });
-
+    // /*-------------------------
+    //   Showlogin toggle function
+    // --------------------------*/
+    // $('#showlogin').on('click', function() {
+    //     $('#checkout-login').slideToggle(900);
+    // });
+    //
+    //
+    // /*-------------------------
+    //   Showlogin toggle function
+    // --------------------------*/
+    // $('#showcat').on('click', function() {
+    //     $('#hidecat').slideToggle(900);
+    // });
+    //
+    // /*Category accordion*/
+    // $('.rx-parent').on('click', function() {
+    //     $('.rx-child').slideToggle();
+    //     $(this).toggleClass('rx-change');
+    // });
+    //
+    // /*--------------------------
+    //    Countdown
+    // ---------------------------- */
+    // $('[data-countdown]').each(function() {
+    //     var $this = $(this),
+    //         finalDate = $(this).data('countdown');
+    //     $this.countdown(finalDate, function(event) {
+    //         $this.html(event.strftime('<div class="cdown days"><span class="counting counting-2">%-D</span>days</div><div class="cdown hours"><span class="counting counting-2">%-H</span>hrs</div><div class="cdown minutes"><span class="counting counting-2">%M</span>mins</div><div class="cdown seconds"><span class="counting">%S</span>secs</div>'));
+    //     });
+    // });
     
-    /*-------------------------
-      Showlogin toggle function
-    --------------------------*/
-    $('#showcat').on('click', function() {
-        $('#hidecat').slideToggle(900);
-    });
-    
-    /*Category accordion*/
-    $('.rx-parent').on('click', function() {
-        $('.rx-child').slideToggle();
-        $(this).toggleClass('rx-change');
-    });
-    
-    /*--------------------------
-       Countdown
-    ---------------------------- */
-    $('[data-countdown]').each(function() {
-        var $this = $(this),
-            finalDate = $(this).data('countdown');
-        $this.countdown(finalDate, function(event) {
-            $this.html(event.strftime('<div class="cdown days"><span class="counting counting-2">%-D</span>days</div><div class="cdown hours"><span class="counting counting-2">%-H</span>hrs</div><div class="cdown minutes"><span class="counting counting-2">%M</span>mins</div><div class="cdown seconds"><span class="counting">%S</span>secs</div>'));
-        });
-    });
-    
-    
-    /*---------------------
-    	Counter
-    --------------------- */
-    $('.counter').counterUp({
-        delay: 10,
-        time: 1000
-    });
-    
-    /*---------------------
-    	Category menu
-    --------------------- */
-    $('#cate-toggle li.has-sub>a').on('click', function() {
-        $(this).removeAttr('href');
-        var element = $(this).parent('li');
-        if (element.hasClass('open')) {
-            element.removeClass('open');
-            element.find('li').removeClass('open');
-            element.find('ul').slideUp();
-        } else {
-            element.addClass('open');
-            element.children('ul').slideDown();
-            element.siblings('li').children('ul').slideUp();
-            element.siblings('li').removeClass('open');
-            element.siblings('li').find('li').removeClass('open');
-            element.siblings('li').find('ul').slideUp();
-        }
-    });
-    $('#cate-toggle>ul>li.has-sub>a').append('<span class="holder"></span>');
+    //
+    // /*---------------------
+    // 	Counter
+    // --------------------- */
+    // $('.counter').counterUp({
+    //     delay: 10,
+    //     time: 1000
+    // });
+    //
+    // /*---------------------
+    // 	Category menu
+    // --------------------- */
+    // $('#cate-toggle li.has-sub>a').on('click', function() {
+    //     $(this).removeAttr('href');
+    //     var element = $(this).parent('li');
+    //     if (element.hasClass('open')) {
+    //         element.removeClass('open');
+    //         element.find('li').removeClass('open');
+    //         element.find('ul').slideUp();
+    //     } else {
+    //         element.addClass('open');
+    //         element.children('ul').slideDown();
+    //         element.siblings('li').children('ul').slideUp();
+    //         element.siblings('li').removeClass('open');
+    //         element.siblings('li').find('li').removeClass('open');
+    //         element.siblings('li').find('ul').slideUp();
+    //     }
+    // });
+    // $('#cate-toggle>ul>li.has-sub>a').append('<span class="holder"></span>');
 
     /*--------------------------
      ScrollUp

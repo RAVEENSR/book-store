@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'Header.php' ?>
+<!-- js file for Add to Cart -->
+<script src="<?php echo base_url();?>js/addToCart.js"></script>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -9,8 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="https://d29u17ylf1ylz9.cloudfront.net/koparion-v1/product-details.html#">Home</a></li>
-                        <li><a href="https://d29u17ylf1ylz9.cloudfront.net/koparion-v1/product-details.html#" class="active">product-details</a></li>
+                        <li><a href="<?php echo site_url();?>">Home</a></li>
+                        <li><a href="#" class="active">Book Details</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,6 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- breadcrumbs-area-end -->
+<?php if (isset($errorMessage)) {
+    echo "<h3>" . $errorMessage . "</h3>";
+} else { ?>
 <!-- product-main-area-start -->
 <div class="product-main-area mb-70">
     <div class="container">
@@ -30,8 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="flexslider">
                                 <ul class="slides">
-                                    <li data-thumb="<?php echo base_url();?>img/product/1.jpg">
-                                        <img src="<?php echo base_url();?>img/product/1.jpg" alt="woman" />
+                                    <li data-thumb="<?php echo base_url().$book->imageURL;?>">
+                                        <img src="<?php echo base_url().$book->imageURL;?>" alt="bookImage" />
                                     </li>
                                 </ul>
                             </div>
@@ -39,45 +44,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
                             <div class="product-info-main">
                                 <div class="page-title">
-                                    <h1>Savvy Shoulder Tote</h1>
+                                    <h1><?php echo $book->title;?></h1>
                                 </div>
                                 <div class="product-attribute">
-                                    <span class="value">Technology</span>
+                                    <span class="value"><?php echo $book->categoryTitle;?></span>
                                     <span class="value"><i class="fa fa-angle-right"></i></span>
-                                    <span class="value">Computer Science</span>
+                                    <span class="value"><?php echo $book->subCategoryTitle;?></span>
                                 </div>
                                 <div class="product-info-price">
                                     <table>
                                         <tbody>
                                         <tr>
                                             <td align="right" class=""><strong>Author:</strong></td>
-                                            <td>Andersen, Hans Christian</td>
+                                            <td><?php echo $book->authorName;?></td>
                                         </tr>
                                         <tr>
                                             <td align="right" class=""><strong>ISBN:</strong></td>
-                                            <td>205-11110432-534346</td>
+                                            <td><?php echo $book->isbnNo;?></td>
                                         </tr>
                                         <tr>
                                             <td align="right" class=""><strong>Edition:</strong></td>
-                                            <td>2nd Edition</td>
+                                            <td><?php echo $book->edition;?></td>
                                         </tr>
                                         <tr>
                                             <td align="right" class=""><strong>Publisher:</strong></td>
-                                            <td>Oreily</td>
+                                            <td><?php echo $book->publisherName;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" class=""><strong>Available Qty:</strong></td>
+                                            <td><?php echo $book->availableCopies;?></td>
                                         </tr>
                                         <tr>
                                             <td align="right" class=""><strong>Price:</strong></td>
-                                            <td>$34.00</td>
+                                            <td>$<?php echo $book->price;?></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="product-add-form">
-                                    <form action="https://d29u17ylf1ylz9.cloudfront.net/koparion-v1/product-details.html#">
+                                    <form>
                                         <div class="quality-button">
-                                            <input class="qty" type="number" value="1">
+                                            <input class="qty" type="number" value="1" min="1" id="quantity"
+                                                   name="quantity">
                                         </div>
-                                        <a href="#">Add to cart</a>
+                                        <!-- store the base url to access in the js file -->
+                                        <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
+                                        <button type="button" id="<?php echo $book->isbnNo;?>"
+                                                class="btn btn-default"
+                                                onclick="addToCart(this.id)">Add to Cart</button>
                                     </form>
                                 </div>
                             </div>
@@ -92,20 +106,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-lg-10 col-md-10 col-sm-4 col-xs-12">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="active"><a href="https://d29u17ylf1ylz9.cloudfront.net/koparion-v1/product-details
-                        .html#Details" data-toggle="tab" aria-expanded="true">Description</a></li>
+                                <li class="active"><a href="" data-toggle="tab" aria-expanded="true">Description</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="Description">
                                     <div class="valu">
-                                        <p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the
-                                            luggage
-                                            carousel, not anywhere. Big enough to haul a basketball or soccer ball and
-                                            some
-                                            sneakers with plenty of room to spare, it's ideal for athletes with places
-                                            to
-                                            go.
-                                        </p>
+                                        <p><?php echo $book->description;?></p>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +147,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="product-link">
                                 <div class="product-button">
-                                    <a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <!-- TODO: changethis <?php //echo  $book->isbnNo;?>"-->
+                                    <button type="button" id=""
+                                            class="btn btn-default"
+                                            onclick="addToCart(this.id)">Add to Cart</button>
                                 </div>
                                 <div class="add-to-link">
                                     <ul>
@@ -162,5 +171,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+<?php } ?>
 <!-- product-main-area-end -->
 <?php include 'Footer.php' ?>

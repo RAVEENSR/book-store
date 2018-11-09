@@ -14,8 +14,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>img/favicon.png">
 
     <!-- all css start -->
-    <!-- bootstrap v3.3.6 css -->
-    <link rel="stylesheet" href="<?php echo base_url();?>css/bootstrap.min.css">
+    <!-- latest-bootstrap-version-3 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- animate css -->
     <link rel="stylesheet" href="<?php echo base_url();?>css/animate.css">
     <!-- meanmenu css -->
@@ -26,8 +26,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url();?>css/font-awesome.min.css">
     <!-- flexslider.css-->
     <link rel="stylesheet" href="<?php echo base_url();?>css/flexslider.css">
-    <!-- chosen.min.css-->
-    <link rel="stylesheet" href="<?php echo base_url();?>css/chosen.min.css">
     <!-- style css -->
     <link rel="stylesheet" href="<?php echo base_url();?>css/style.css">
     <!-- responsive css -->
@@ -37,11 +35,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- modernizr css -->
     <script src="<?php echo base_url();?>js/vendor/modernizr-2.8.3.min.js"></script>
     <!-- all-css-end-->
+
     <!-- all-js-start -->
-    <!-- jquery latest version -->
-    <script src="<?php echo base_url();?>js/vendor/jquery-1.12.0.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+    <!-- latest-jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- bootstrap 3.3.7 compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- owl.carousel js -->
     <script src="<?php echo base_url();?>js/owl.carousel.min.js"></script>
     <!-- meanmenu js -->
@@ -50,20 +49,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>js/wow.min.js"></script>
     <!-- jquery.parallax-1.1.3.js -->
     <script src="<?php echo base_url();?>js/jquery.parallax-1.1.3.js"></script>
-    <!-- jquery.countdown.min.js -->
-    <script src="<?php echo base_url();?>js/jquery.countdown.min.js"></script>
     <!-- jquery.flexslider.js -->
     <script src="<?php echo base_url();?>js/jquery.flexslider.js"></script>
-    <!-- chosen.jquery.min.js -->
-    <script src="<?php echo base_url();?>js/chosen.jquery.min.js"></script>
-    <!-- jquery.counterup.min.js -->
-    <script src="<?php echo base_url();?>js/jquery.counterup.min.js"></script>
-    <!-- waypoints.min.js -->
-    <script src="<?php echo base_url();?>js/waypoints.min.js"></script>
     <!-- plugins js -->
     <script src="<?php echo base_url();?>js/plugins.js"></script>
     <!-- select2 library script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- all-js-end -->
+
+    <!-- all-js-start -->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!-- jquery version -->
+<!--    <script src="--><?php //echo base_url();?><!--js/vendor/jquery-1.12.0.min.js"></script>-->
+    <!-- bootstrap js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/bootstrap.min.js"></script>-->
+    <!-- owl.carousel js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/owl.carousel.min.js"></script>-->
+    <!-- meanmenu js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/jquery.meanmenu.js"></script>-->
+    <!-- wow js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/wow.min.js"></script>-->
+    <!-- jquery.parallax-1.1.3.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/jquery.parallax-1.1.3.js"></script>-->
+    <!-- jquery.countdown.min.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/jquery.countdown.min.js"></script>-->
+    <!-- jquery.flexslider.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/jquery.flexslider.js"></script>-->
+    <!-- chosen.jquery.min.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/chosen.jquery.min.js"></script>-->
+    <!-- jquery.counterup.min.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/jquery.counterup.min.js"></script>-->
+    <!-- waypoints.min.js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/waypoints.min.js"></script>-->
+    <!-- plugins js -->
+<!--    <script src="--><?php //echo base_url();?><!--js/plugins.js"></script>-->
+    <!-- select2 library script -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>-->
     <!-- ajax js -->
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <!-- all-js-end -->

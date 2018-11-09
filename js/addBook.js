@@ -49,15 +49,12 @@ function validateAddBookForm() {
     var mainCategory = $('#mainCategorySelect')[0].value;
     var subCategory = $('#subCategorySelect')[0].value;
     var publisher = $('#publisher')[0].value;
-    var edition = $('#edition')[0].value;
     var price = $('#price')[0].value;
     var qty = $('#quantity')[0].value;
     var description = $('#description')[0].value;
     var img = $('#imgURL')[0].value;
 
     var alertSection = $('#addBookAlertSection');
-    var siteURL = $('#siteURL')[0].value;
-    var data = {};
 
     // check for main category field whether it is empty
     if (title === '') {
@@ -107,44 +104,44 @@ function validateAddBookForm() {
         return;
     }
     if (img === '') {
-        alertSection.html('<div class="alert alert-danger">Please enter a "Image URL"</div>');
+        alertSection.html('<div class="alert alert-danger">Please select an "Image"</div>');
         return;
     }
-
-    data['title'] = title;
-    data['author'] = author;
-    data['isbn'] = isbn;
-    data['mainCategory'] = mainCategory;
-    data['subCategory'] = subCategory;
-    data['publisher'] = publisher;
-    data['edition'] = edition;
-    data['price'] =  price;
-    data['qty'] = Number(qty);
-    data['description'] = description;
-    data['img'] = img;
-    console.log(data);
-
-    $.ajax({
-        url: siteURL + "/administrator/addBook",
-        type: "POST",
-        data: {bookData: data},
-        success: function (data) {
-            alertSection.html('<div class="alert alert-success">Successfully added the book.</div>');
-            $('#addBookForm').trigger("reset");
-        },
-        error: function (XHR, status, response) {
-            console.log(XHR.response);
-            console.log(status);
-            console.log(response);
-            alertSection.html('<div class="alert alert-danger">Error occurred when adding the book.</div>');
-        }
-    });
+    return true;
 }
+
+
+$(document).ready(function(){
+    var alertSection = $('#addBookAlertSection');
+    var siteURL = $('#siteURL')[0].value;
+
+    $('#addBookForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: siteURL + '/administrator/addBook',
+            type:"post",
+            data:new FormData(this),
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success: function(data){
+                var flag = $.parseJSON(data);
+                if (!flag) {
+                    alertSection.html('<div class="alert alert-danger">Error occurred when adding the book.</div>');
+                } else {
+                    alertSection.html('<div class="alert alert-success">Successfully added the book.</div>');
+                    $('#addBookForm').trigger("reset");
+                }
+            }
+        });
+    });
+});
 
 /*
 * validates the title of the book.
 * */
-function  validateISBN () {
+function validateISBN() {
     var isbn = $('#isbn')[0].value;
     var alertSection = $('#addBookAlertSection');
     var siteURL = $('#siteURL')[0].value;
@@ -155,7 +152,7 @@ function  validateISBN () {
         data: {isbn: isbn},
         success: function (data) {
             var flag = $.parseJSON(data);
-            if(!flag) {
+            if (!flag) {
                 alertSection.html('<div class="alert alert-danger">Book ISBN already exists in database.</div>');
                 $('#addBookBtn').prop('disabled', true);
                 return false;
@@ -198,4 +195,5 @@ function isDecimal(value) {
 function convertToDecimal(number) {
     //With 3 exposing the hundredths place
     number = number.slice(0, (number.indexOf(".")) + 3);
-    return number;}
+    return number;
+}

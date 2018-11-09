@@ -34,15 +34,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-form">
-                <form id="addBookForm">
+                <form method="post" id="addBookForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="title">Title<span>*</span></label>
-                        <input type="text" class="form-control" id="title" placeholder="Title of the Book" required>
+                        <input type="text" class="form-control" id="title"  name="title"
+                               placeholder="Title of the Book" required>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <label for="author">Author<span>*</span></label>
-                            <select class="form-control author-select" id="author" required>
+                            <select class="form-control author-select" id="author" name="author" required>
                                 <option value="" disabled selected>Select an author or add new author</option>
                                 <?php foreach ($authors as $key=>$value) {
                                     echo "<option>".$value."</option>";
@@ -52,13 +53,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group">
                         <label for="isbn">ISBN<span>*</span></label>
-                        <input type="text" onkeyup="validateISBN()" class="form-control" id="isbn"
+                        <input type="text" onkeyup="validateISBN()" class="form-control" id="isbn" name="isbn"
                                placeholder="Ex: 978-0062390493" required>
                     </div>
                     <div class="form-group">
                         <label for="mainCategorySelect">Main Category<span>*</span></label>
                         <select class="form-control main-category-select" id="mainCategorySelect"
-                                onchange="loadSubCategories()" required>
+                                name="mainCategorySelect" onchange="loadSubCategories()" required>
                             <option value="" disabled selected>Select a category or add new category</option>
                             <?php foreach ($mainCategories as $key=>$value) {
                                 echo "<option>$value</option>";
@@ -67,13 +68,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group" id="sub-category-div" >
                         <label for="subCategorySelect">Sub Category<span>*</span></label>
-                        <select class="form-control sub-category-select" id="subCategorySelect" required>
+                        <select class="form-control sub-category-select" id="subCategorySelect"
+                                name="subCategorySelect" required>
                             <option value="" disabled selected>Select a category or add new category</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="publisher">Publisher<span>*</span></label>
-                        <select class="form-control publisher-select" id="publisher" required>
+                        <select class="form-control publisher-select" id="publisher" name="publisher" required>
                             <option value="" disabled selected>Select a publisher or add new publisher</option>
                             <?php foreach ($publishers as $key=>$value) {
                                 echo "<option>$value</option>";
@@ -82,29 +84,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group">
                         <label for="edition">Edition</label>
-                        <input type="text" class="form-control" id="edition" placeholder="Ex: 2nd Edition" required>
+                        <input type="text" class="form-control" id="edition" name="edition"
+                               placeholder="Ex: 2nd Edition" required>
                     </div>
                     <div class="form-group">
                         <label for="price">Price (USD)<span>*</span></label>
-                        <input type="number" step="0.01" min="0" class="form-control" id="price" placeholder="Ex: 10.00"
-                               required>
+                        <input type="number" step="0.01" min="0" class="form-control" id="price" name="price"
+                               placeholder="Ex: 10.00" required>
                     </div>
                     <div class="form-group">
                         <label for="quantity">Available Quantity<span>*</span></label>
-                        <input type="number" min="0" class="form-control" id="quantity" placeholder="Ex: 25" required>
+                        <input type="number" min="0" class="form-control" id="quantity"  name="quantity"
+                               placeholder="Ex: 25" required>
                     </div>
                     <div class="form-group">
                         <label for="description">Description<span>*</span></label>
-                        <textarea class="form-control" id="description" rows="3" required></textarea>
+                        <textarea class="form-control" id="description"  name="description" rows="3"
+                                  required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="imgURL">Image URL<span>*</span></label>
-                        <input type="text" class="form-control" id="imgURL" placeholder="Ex: img/education/1.jpg"
-                               required>
+                        <input type="file" class="form-control" id="imgURL" name="imgURL" required>
                     </div>
                     <div class="single-login single-login-2">
-                        <button type="button" id="addBookBtn" class="btn btn-default"
-                                onclick="validateAddBookForm()">Add</button>
+                        <button type="submit" id="addBookBtn" class="btn btn-default"
+                                onclick="return validateAddBookForm()">Add</button>
                     </div>
                     <!-- store the base url to access in the js file -->
                     <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>

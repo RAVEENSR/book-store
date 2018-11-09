@@ -33,13 +33,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php if(isset($errorMessage)) {
                     echo "<h3>".$errorMessage."</h3>";
                 } else {?>
-                <div class="toolbar mb-30">
-                    <div class="shop-tab">
-                        <div class="list-page">
-                            <p>Items 1-9 of 11</p>
-                        </div>
-                    </div>
-                </div>
                 <!-- tab-area-start -->
                 <div class="tab-content">
                     <div class="tab-pane active" id="th">
@@ -49,9 +42,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <!-- single-product-start -->
                                 <div class="product-wrapper mb-40">
                                     <div class="product-img">
-                                        <a href="<?php echo base_url().'administrator/viewBookDetails/?id='
-                                            .$book->isbnNo;
-                                        ?>">
+                                        <a href="<?php echo site_url().'/administrator/viewBookDetails/?isbn='
+                                            .$book->isbnNo;?>">
                                             <img src="<?php echo base_url().$book->imageURL;?>" alt="book"
                                                  class="primary" />
                                         </a>
@@ -70,23 +62,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php } ?>
                         </div>
                     </div>
-                </div>
-                <!-- tab-area-end -->
-                <!-- pagination-area-start -->
-                <div class="pagination-area mt-50">
-                    <div class="list-page-2">
-                        <p>Items 1-16 of 16</p>
                     </div>
-                    <div class="page-number">
-                        <ul>
-                            <li><a href="#" class="active">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
-                        </ul>
+                    <!-- tab-area-end -->
+                    <!-- pagination-area-start -->
+                    <div class="pagination-area mt-50">
+                        <div class="page-number">
+                            <ul class="pagination ">
+                                <li class="page-item ">
+                                    <a class="page-link" href="<?php echo $first;?>">First</a>
+                                </li>
+                                <?php if(isset($previous)) { ?>
+                                    <li class="page-item ">
+                                        <a class="page-link" href="<?php echo $previous;?>">Previous</a>
+                                    </li>
+                                <?php} else { ?>
+                                    <li class="page-item ">
+                                        <a class="page-link disabled" href="">Previous</a>
+                                    </li>
+                                <?php } ?>
+                                <?php if(isset($next)) { ?>
+                                    <li class="page-item ">
+                                        <a class="page-link" href="<?php echo $next;?>">Next</a>
+                                    </li>
+                                <?php} else { ?>
+                                    <li class="page-item ">
+                                        <a class="page-link disabled" href="">Next</a>
+                                    </li>
+                                <?php } ?>
+                                <li class="page-item ">
+                                    <a class="page-link" href="<?php echo $last;?>">Last</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
                 <?php } ?>
                 <!-- pagination-area-end -->
             </div>
