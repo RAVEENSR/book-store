@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'Header.php' ?>
 <!-- js file for Add to Cart -->
-<script src="<?php echo base_url();?>js/addToCart.js"></script>
+<script src="<?php echo base_url();?>js/manageCart.js"></script>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">

@@ -76,31 +76,176 @@ class Visitor extends CI_Controller {
     }
 
     /**
-     * Controls getting all the books of a given category from the database.
+     * Controls adding an item to the cart.
+     * Returns String 0, 1, 2, 3
+     * 0: Quantity should be less than the available copies
+     * 1: Book is already available in the cart
+     * 2: Book Added to the Cart Successfully
+     * 3: Error occurred when adding the book into the cart
      */
-    public function getBooksOfACategory() {
+    public function addToCart() {
+        if (isset($_POST['isbn']) && isset($_POST['quantity'])) {
+            $isbn = $_POST['isbn'];
+            $quantity = $_POST['quantity'];
+            $quantity = ceil($quantity);
 
+            $this->load->model('BookModel');
+            $bookResult =$this->BookModel->getBookByISBN($isbn);
+            if(!$bookResult) {
+                echo '3';
+                exit;
+            }
+
+            $book =$bookResult[0];
+            $availableCopies =$book->availableCopies;
+            if($quantity > $availableCopies) {
+                echo '0';
+                exit;
+            }
+
+            // get the cart from the session
+            $userCart = $this->session->userdata('bookCart');
+            if($userCart != null){
+                $foundItem = $this->isBookAvailableInCart($userCart, $isbn);
+                if($foundItem){
+                    echo '1';
+                    exit;
+                }
+                // add the book to the cart if book is not in the cart
+                $bookItem = array(
+                    'isbn' => $book->isbnNo,
+                    'imgURL' => $book->imageURL,
+                    'title' => $book->title,
+                    'qty' => $quantity,
+                    'price'  => $book->price,
+                    'total'  => ($book->price)*$quantity);
+                $userCart[] = $bookItem;
+                $this->session->set_userdata('bookCart', $userCart);
+                echo '2';
+                exit;
+
+            } else {
+                // if the user do not has a cart create a cart and save the book item
+                $userCart = array();
+                $bookItem = array(
+                    'isbn' => $book->isbnNo,
+                    'imgURL' => $book->imageURL,
+                    'title' => $book->title,
+                    'qty' => $quantity,
+                    'price'  => $book->price,
+                    'total'  => ($book->price)*$quantity);
+                $userCart[] = $bookItem;
+                $this->session->set_userdata('bookCart', $userCart);
+                echo '2';
+                exit;
+            }
+        } else {
+            echo '3';
+            exit;
+        }
     }
 
     /**
-     * Controls adding an item to the cart.
+     * Checks whether a book is already in the cart.
+     * @param $cart ArrayObject cart of the visitor
+     * @param $isbn String isbn number of the book
+     * @return bool returns true if the book is found in the cart or false otherwise.
      */
-    public function addItemToCart() {
-
+    private function isBookAvailableInCart($cart, $isbn){
+        foreach($cart as $key=>$book){
+            if($book["isbn"]===$isbn){
+                return true;
+            }
+        }
+        // if the book is not in the cart
+        return false;
     }
 
     /**
      * Controls displaying a cart for a particular user.
      */
     public function viewCart() {
-        $this->load->view('visitor/Cart');
+        // get the cart from the session
+        $userCart = $this->session->userdata('bookCart');
+        if($userCart != null && sizeof($userCart) !== 0){
+            $totalPrice =0;
+            foreach($userCart as $book){
+                $totalPrice+=$book['total'];
+            }
+            $data['totalPrice'] = $totalPrice;
+            $data['userCart'] = $userCart;
+            $this->load->view('visitor/Cart', $data);
+        } else {
+            $errorMessage = "You have no items in the cart";
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Cart', $data);
+        }
+    }
+
+    /**
+     * Updates the quantity of item in the cart
+     * Returns Object with status and price data
+     * 0: Quantity should be less than the available copies
+     * 1: Successfully update the quantity
+     * 2: Error occurred when adding the book into the cart
+     */
+    public function updateCart()
+    {
+        $isbn = $this->input->post('isbn');
+        $quantity = $this->input->post('quantity');
+        // get the cart from the session
+        $userCart = $this->session->userdata('bookCart');
+        if ($userCart != null) {
+            for ($x = 0; $x < sizeof($isbn); $x++) {
+                $bookId = $isbn[$x];
+                $newQuantity = $quantity[$x];
+                $foundArrayKeyForItem = $this->getBookKeyInCart($userCart, $bookId);
+                $oldDetails = $userCart[$foundArrayKeyForItem];
+                $newBookItem = array(
+                    'isbn' => $oldDetails['isbn'],
+                    'imgURL' => $oldDetails['imgURL'],
+                    'title' => $oldDetails['title'],
+                    'qty' => $newQuantity,
+                    'price' => $oldDetails['price'],
+                    'total' => ($oldDetails['price']) * $newQuantity);
+                $userCart[$foundArrayKeyForItem] = $newBookItem;
+            }
+            $this->session->set_userdata('bookCart', $userCart);
+            $this->viewCart();
+        } else {
+            $data['status'] = '2';
+            echo json_encode($data);
+            exit;
+        }
+    }
+
+    /**
+     * Checks whether a book is already in the cart.
+     * @param $cart ArrayObject cart of the visitor
+     * @param $isbn String isbn number of the book
+     * @return String|null returns the key of the row if the book is found in the cart or null otherwise.
+     */
+    private function getBookKeyInCart($cart, $isbn){
+        foreach($cart as $key=>$book){
+            if($book["isbn"]===$isbn){
+                return $key;
+            }
+        }
+        // if the book is not in the cart
+        return null;
     }
 
     /**
      * Controls removing an item from the cart.
      */
     public function removeCartItem() {
-
+        $bookId = $_GET['bookId'];
+        // get the cart from the session
+        $userCart = $this->session->userdata('bookCart');
+        $foundArrayKeyForItem = $this->getBookKeyInCart($userCart, $bookId);
+        unset($userCart[$foundArrayKeyForItem]);
+        $this->session->set_userdata('bookCart', $userCart);
+        $this->viewCart();
     }
 
     /**

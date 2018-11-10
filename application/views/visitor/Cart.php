@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'Header.php' ?>
+    <!-- js file for Add to Cart -->
+    <script src="<?php echo base_url();?>js/manageCart.js"></script>
     <!-- breadcrumbs-area-start -->
     <div class="breadcrumbs-area mb-70">
         <div class="container">
@@ -9,8 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <div class="breadcrumbs-menu">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#" class="active">cart</a></li>
+                            <li><a href="<?php echo site_url(); ?>">Home</a></li>
+                            <li><a href="#" class="active">Shopping Cart</a></li>
                         </ul>
                     </div>
                 </div>
@@ -24,19 +26,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-lg-12">
                     <div class="entry-header-title">
-                        <h2>Cart</h2>
+                        <h2>Shopping Cart</h2>
+                        <?php if(isset($errorMessage)) {
+                        echo "<h3>".$errorMessage."</h3>";
+                        }?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- entry-header-area-end -->
+<?php if(!isset($errorMessage)) {?>
     <!-- cart-main-area-start -->
     <div class="cart-main-area mb-70">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="#">
+                    <form id="cartForm" action="<?php echo site_url().'/visitor/updateCart'?>" method="post">
                         <div class="table-content table-responsive">
                             <table>
                                 <thead>
@@ -50,24 +56,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="<?php echo base_url();
-                                    ?>img/product/1.jpg" alt="book1" /></a></td>
-                                    <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
-                                    <td class="product-price"><span class="amount">£165.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">£165.00</td>
-                                    <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
+                                <?php if(isset($userCart)) {
+                                    foreach($userCart as $item) { ?>
+                                <tr id="row-<?php echo $item['isbn']?>">
+                                    <td class="product-thumbnail">
+                                        <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='.$item['isbn'];
+                                        ?> ">
+                                            <img src="<?php echo base_url().$item['imgURL'];?>" alt="book" />
+                                        </a>
+                                    </td>
+                                    <td class="product-name">
+                                        <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='.$item['isbn'];
+                                            ?>"><?php echo $item['title'];?>
+                                        </a>
+                                    </td>
+                                    <td class="product-price"><span class="amount">$<?php echo $item['price']; ?></span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <input type="number" name="quantity[]" value="<?php echo $item['qty']; ?>">
+                                        <!-- store the book id -->
+                                        <input type="text" class="hide" name="isbn[]" value="<?php echo $item['isbn'];
+                                        ?>"/>
+                                    </td>
+                                    <td class="product-subtotal" >$<?php echo $item['total'];?></td>
+                                    <td class="product-remove"><a href="<?php echo site_url();
+                                    ?>/visitor/removeCartItem?bookId=<?php echo $item['isbn']?>"><i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="<?php echo base_url();
-                                    ?>img/product/1.jpg" alt="book2" /></a></td>
-                                    <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
-                                    <td class="product-price"><span class="amount">£50.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">£50.00</td>
-                                    <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                </tr>
+                                <?php }} ?>
                                 </tbody>
                             </table>
                         </div>
@@ -78,7 +95,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
                     <div class="buttons-cart mb-30">
                         <ul>
-                            <li><a href="#">Continue Shopping</a></li>
+                            <li><a href="#" onclick="document.getElementById('cartForm').submit();">Update
+                                    Cart</a></li>
                         </ul>
                     </div>
                 </div>
@@ -90,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <th>Total</th>
                                 <td>
                                     <strong>
-                                        <span class="amount">£215.00</span>
+                                        <span class="amount">$<?php echo $totalPrice ?></span>
                                     </strong>
                                 </td>
                             </tr>
@@ -105,4 +123,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- cart-main-area-end -->
+    <?php } ?>
 <?php include 'Footer.php' ?>
