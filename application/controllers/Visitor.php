@@ -13,7 +13,6 @@ class Visitor extends CI_Controller {
 
     public function index()
     {
-//        $this->manageUniqueUserId();
         $this->load->view('visitor/HomeView');
     }
 
@@ -26,9 +25,6 @@ class Visitor extends CI_Controller {
             $visitorId = uniqid();
             $this->load->model('BookModel');
             $result = $this->BookModel->addVisitor($visitorId);
-            if (!$result) {
-                //TODO: Add a error message: php error handling
-            }
             $session_data = array('visitorId' => $visitorId);
             $this->session->set_userdata($session_data);
         }
@@ -257,7 +253,6 @@ class Visitor extends CI_Controller {
         } else {
             return false;
         }
-
         $this->load->model('BookModel');
         $result = $this->BookModel->getBookByISBN($isbn);
         if (!$result) {
@@ -265,11 +260,37 @@ class Visitor extends CI_Controller {
             $data['errorMessage'] = $errorMessage;
             $this->load->view('visitor/BookDetails', $data);
         } else {
-            $data['book'] = $result[0];
-            $this->load->view('visitor/BookDetails', $data);
+            $visitorId = $this->session->userdata('visitorId');
+            $result2 = $this->BookModel->addUserBookView($visitorId, $isbn);
+            if (!$result2) {
+                $errorMessage = "Error occurred";
+                $data['errorMessage'] = $errorMessage;
+                $this->load->view('visitor/BookDetails', $data);
+            } else {
+                $data['book'] = $result[0];
+                $data['similarBooks'] = $this->getSimilarViewedBooks($isbn);
+                $this->load->view('visitor/BookDetails', $data);
+            }
         }
     }
 
+    /**
+     * Returns top 5 of similar viewed books by users who viewed the given book as an array.
+     * @param $isbn String isbn number of the currently viewing book
+     * @return array top five book object s array
+     */
+    private function getSimilarViewedBooks($isbn) {
+        $this->load->model('BookModel');
+        $result = $this->BookModel->getTopSixBooks($isbn);
+        $books = array();
+        foreach ($result as $bookInfo) {
+            if ($bookInfo->isbnNo !== $isbn) {
+                $result = $this->BookModel->getBookByISBN($bookInfo->isbnNo);
+                $books[] = $result[0];
+            }
+        }
+        return $books;
+    }
     /**
      * Controls returning all the books to the view.
      */
@@ -487,43 +508,6 @@ class Visitor extends CI_Controller {
             $data['result'] = $result;
             $this->load->view('visitor/SearchResults', $data);
         }
-    }
-
-    /**
-     * Controls getting data(book title) from view and returning the searched book to the view.
-     */
-    public function searchBookByTitle() {
-
-    }
-
-    /**
-     * Controls getting data(author name) from view and returning the searched book to the view.
-     */
-    public function searchBooksByAuthor() {
-
-    }
-
-    /**
-     * Controls getting data(book title and author name) from view and returning the searched book to the view.
-     */
-    public function searchBookByTitleAndAuthor() {
-
-    }
-
-    /**
-     * Controls getting data(book title, author name and main category) from view and returning the searched book to
-     * the view.
-     */
-    public function searchBookByTitleAuthorCategory() {
-
-    }
-
-    /**
-     * Controls getting data(book title, author name, main category, sub category) from view and returning the searched
-     * book to the view.
-     */
-    public function searchBookByTitleAuthorCategorySubCategory() {
-
     }
 
 }

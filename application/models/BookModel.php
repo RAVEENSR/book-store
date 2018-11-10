@@ -523,6 +523,46 @@ class BookModel extends CI_Model {
     }
 
     /**
+     * Gives top 6 books viewed by users who also viewed the given book.
+     * @param $bookId String ISBN number of the viewed book
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getTopSixBooks($bookId) {
+        $this->db->select('userId');
+        $this->db->where('isbnNo', $bookId);
+        $this->db->from('user_viewed_book');
+        $subQuery = $this->db->get_compiled_select();
+
+        $this->db->distinct();
+        $this->db->select('isbnNo');
+        $this->db->select('count(isbnNo) as total');
+        $this->db->where("userId IN ($subQuery)", NULL, FALSE);
+        $this->db->group_by("isbnNo");
+        $this->db->order_by('total', 'DESC');
+        $this->db->limit(6);
+        $result = $this->db->get('user_viewed_book');
+        /*
+         SELECT DISTINCT isbnNo, COUNT(isbnNo) as total
+         FROM user_viewed_book
+         WHERE userId IN (
+            SELECT userId
+            FROM user_viewed_book
+            WHERE isbnNo = '6240934'
+              )
+              GROUP BY isbnNo
+              ORDER BY total DESC
+              LIMIT 6;
+        */
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
      * Checks whether a Main Category title is available in the database.
      * @param $mainCategory String Name of the Main Category
      * @return bool Returns true if main category title is available, false if not.
@@ -645,12 +685,24 @@ class BookModel extends CI_Model {
 
     /**
      * Adds a new visitor to the database.
-     * @param $visitorId Number Unique id of the visitor
+     * @param $visitorId String Unique id of the visitor
      * @return bool Returns true if result is successful or false if not found.
      */
     public function addVisitor($visitorId) {
         $this->db->insert('temp_user',  array('userId' => $visitorId));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
+
+    /**
+     * Adds a record for a visitor  book view.
+     * @param $visitorId String Unique id of the visitor
+     * @param $bookId String ISBN number of the viewed book
+     * @return bool Returns true if result is successful or false if not found.
+     */
+    public function addUserBookView($visitorId, $bookId) {
+        $this->db->insert('user_viewed_book',  array('userId' => $visitorId, 'isbnNo' => $bookId));
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
 }
 ?>

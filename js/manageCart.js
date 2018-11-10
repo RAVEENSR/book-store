@@ -37,14 +37,3 @@ function addToCart(bookId) {
         });
     }
 }
-
-/*
-* Removes an item to cart
-* */
-function removeFromCart(bookId) {
-    var tableRow= $('#row-'+bookId);
-    // remove the item
-    tableRow.remove();
-    // update the cart
-    // $('#cartForm')[0].submit();
-}

@@ -129,32 +129,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12"></div>
                         <div class="col-lg-8 col-md-8 col-sm-4 col-xs-12">
                     <div class="tab-active-2 owl-carousel">
-                        <?php for ($x=1; $x<= 5; $x++) { ?>
+                        <?php foreach($similarBooks as $book) { ?>
                         <!-- single-product-start -->
                         <div class="product-wrapper">
                             <div class="product-img">
-                                <a href="#">
-                                    <img src="<?php echo base_url();?>img/product/1.jpg" alt="book" class="primary" />
+                                <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                    .$book->isbnNo;?>">
+                                    <img src="<?php echo base_url().$book->imageURL;?>" alt="book" class="primary" />
                                 </a>
                             </div>
                             <div class="product-details text-center">
-                                <h4><a href="#">Strive Shoulder Pack</a></h4>
+                                <h4><a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                        .$book->isbnNo;?>"><?php echo $book->title;?></a></h4>
                                 <div class="product-price">
                                     <ul>
-                                        <li>$30.00</li>
+                                        <li>$<?php echo $book->price;?></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="product-link">
                                 <div class="product-button">
-                                    <!-- TODO: changethis <?php //echo  $book->isbnNo;?>"-->
-                                    <button type="button" id=""
+                                    <button type="button" id="<?php echo $book->isbnNo;?>"
                                             class="btn btn-default"
                                             onclick="addToCart(this.id)">Add to Cart</button>
                                 </div>
                                 <div class="add-to-link">
                                     <ul>
-                                        <li><a href="product-details.html" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                        <li><a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                                .$book->isbnNo;?>" title="Details"><i class="fa fa-external-link"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
