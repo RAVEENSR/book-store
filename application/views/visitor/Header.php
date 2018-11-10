@@ -210,9 +210,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="header-search">
-                <form action="#">
-                    <input type="text" placeholder="Search a book by title or author..."/>
-                    <a href="#"><i class="fa fa-search"></i></a>
+                <form id="searchForm" action="<?php echo site_url();?>/visitor/searchBookByTitleOrAuthor"
+                      method="post">
+                    <input type="text" name="searchTerm" placeholder="Search a book by title or author..."/>
+                    <a href="#" onclick="document.getElementById('searchForm').submit();"><i class="fa
+                    fa-search"></i></a>
                 </form>
             </div>
         </div>

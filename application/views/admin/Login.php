@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'Header.php' ?>
     <!-- js file for Admin Login -->
     <script src="<?php echo base_url();?>js/adminLogin.js"></script>
     <!-- breadcrumbs-area-start -->
@@ -61,4 +60,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- user-login-area-end -->
-<?php include 'Footer.php' ?>

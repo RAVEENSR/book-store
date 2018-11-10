@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'AdminHeader.php' ?>
+<?php include 'Header.php' ?>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-20">
     <div class="container">
@@ -68,30 +68,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="pagination-area mt-50">
                         <div class="page-number">
                             <ul class="pagination ">
-                                <li class="page-item ">
-                                    <a class="page-link" href="<?php echo $first;?>">First</a>
-                                </li>
+                                <?php if(isset($first)) { ?>
+                                    <li class="page-item ">
+                                        <a class="page-link" href="<?php echo $first;?>">First</a>
+                                    </li>
+                                <?php }?>
                                 <?php if(isset($previous)) { ?>
                                     <li class="page-item ">
                                         <a class="page-link" href="<?php echo $previous;?>">Previous</a>
                                     </li>
-                                <?php} else { ?>
-                                    <li class="page-item ">
-                                        <a class="page-link disabled" href="">Previous</a>
-                                    </li>
-                                <?php } ?>
+                                <?php }?>
                                 <?php if(isset($next)) { ?>
                                     <li class="page-item ">
                                         <a class="page-link" href="<?php echo $next;?>">Next</a>
                                     </li>
-                                <?php} else { ?>
+                                <?php } ?>
+                                <?php if(isset($last)) { ?>
                                     <li class="page-item ">
-                                        <a class="page-link disabled" href="">Next</a>
+                                        <a class="page-link" href="<?php echo $last;?>">Last</a>
                                     </li>
                                 <?php } ?>
-                                <li class="page-item ">
-                                    <a class="page-link" href="<?php echo $last;?>">Last</a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -102,4 +98,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- search-results-main-area-start -->
-<?php include 'AdminFooter.php' ?>
+<?php include 'Footer.php' ?>

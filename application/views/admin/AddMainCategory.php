@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'AdminHeader.php' ?>
+<?php include 'Header.php' ?>
     <!-- js file for Add main category -->
     <script src="<?php echo base_url(); ?>js/addMainCategory.js"></script>
     <!-- breadcrumbs-area-start -->
@@ -66,4 +66,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- add-main-category-area-end -->
-<?php include 'AdminFooter.php' ?>
+<?php include 'Footer.php' ?>

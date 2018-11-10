@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="section-title-5 ">
                     <h2>Book Results<?php
                         if(isset($mainCategoryTitle)) {
-                            echo ' of Category: '.$mainCategoryTitle;
+                            echo ' for Category: '.$mainCategoryTitle;
                         }
                         if(isset($subCategoryTitle)) {
                             echo ' and Sub Category: '.$subCategoryTitle;

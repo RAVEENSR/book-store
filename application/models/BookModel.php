@@ -80,10 +80,46 @@ class BookModel extends CI_Model {
         $this->db->where('isbnNo', $isbnNo);
         $result = $this->db->get('book');
         // check the number of rows in the result
-        if ($result->num_rows() == 0) {
+        if ($result->num_rows() != 1) {
             return false;
         } else {
             return $result->result();
+        }
+    }
+
+    /**
+     * Gets the main category title by the main category id.
+     * @param $mainCategoryId integer id of the main category
+     * @return bool|String Returns the result string if found or false if not found.
+     */
+    public function getMainCategoryTitleById($mainCategoryId) {
+        // get the result row from the 'category' table
+        $this->db->select('categoryTitle');
+        $this->db->where('categoryId', $mainCategoryId);
+        $result = $this->db->get('category');
+        // check the number of rows in the result
+        if ($result->num_rows() != 1) {
+            return false;
+        } else {
+            return ($result->result())[0]->categoryTitle;
+        }
+    }
+
+    /**
+     * Gets the sub category title by the sub category id.
+     * @param $subCategoryId integer id of the sub category
+     * @return bool|String Returns the result string if found or false if not found.
+     */
+    public function getSubCategoryTitleById($subCategoryId) {
+        // get the result row from the 'subcategory' table
+        $this->db->select('subCategoryTitle');
+        $this->db->where('subCategoryId', $subCategoryId);
+        $result = $this->db->get('subcategory');
+        // check the number of rows in the result
+        if ($result->num_rows() != 1) {
+            return false;
+        } else {
+            return ($result->result())[0]->subCategoryTitle;
         }
     }
 
@@ -211,7 +247,80 @@ class BookModel extends CI_Model {
         }
     }
 
+    /**
+     * Get count of the books of a search term likely having title or author name.
+     * @param $searchTerm String text to be search in author name or title
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooksByTitleOrAuthor($searchTerm) {
+        // get the result row from the 'book' table
+        $this->db->like(array('title' => $searchTerm));
+        $this->db->or_like('authorName', $searchTerm);
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
 
+    /**
+     * Get books by a search terms of likely having title or author name with a limit.
+     * @param $searchTerm String text to be search in author name or title
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLimitedBooksByTitleOrAuthor($searchTerm, $pageNo, $itemsPerPage)
+    {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
+        // get the result row from the 'book' table
+        $this->db->like(array('title' => $searchTerm));
+        $this->db->or_like('authorName', $searchTerm);
+        $this->db->limit($limit, $offset);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Get the count of the books having the given main category and sub category.
+     * @param $mainCategory String Main category title
+     * @param $subCategory String Sub Category title
+     * @return integer Returns the count of books.
+     */
+    public function getCountBooksByMainCategoryAndSubCategory($mainCategory, $subCategory) {
+        // get the result row from the 'book' table
+        $this->db->where(array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory));
+        $this->db->from('book');
+        $result = $this->db->count_all_results();
+        return $result;
+    }
+
+    /**
+     * Get books of likely having author name with a limit.
+     * @param $mainCategory String Main category title
+     * @param $subCategory String Sub Category title
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLimitedBooksByMainCategoryAndSubCategory($mainCategory, $subCategory, $pageNo, $itemsPerPage) {
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
+        // get the result row from the 'book' table
+        $this->db->where(array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory));
+        $this->db->limit($limit, $offset);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
 //    /**
 //     * Get publisher by publisher name.
 //     * @param $publisherName String Name of the publisher
@@ -531,6 +640,16 @@ class BookModel extends CI_Model {
      */
     public function createBookSubCategories($subCategoryArray) {
         $this->db->insert_batch('subCategory', $subCategoryArray);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    /**
+     * Adds a new visitor to the database.
+     * @param $visitorId Number Unique id of the visitor
+     * @return bool Returns true if result is successful or false if not found.
+     */
+    public function addVisitor($visitorId) {
+        $this->db->insert('temp_user',  array('userId' => $visitorId));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 }

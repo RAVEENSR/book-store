@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'AdminHeader.php' ?>
+<?php include 'Header.php' ?>
 <!-- js file for Add Book -->
 <script src="<?php echo base_url();?>js/addBook.js"></script>
 <!-- breadcrumbs-area-start -->
@@ -134,4 +134,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 <?php } ?>
 <!-- add-book-area-end -->
-<?php include 'AdminFooter.php' ?>
+<?php include 'Footer.php' ?>

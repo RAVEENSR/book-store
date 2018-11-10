@@ -58,7 +58,7 @@
             <div class="row bt-2">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="copy-right-area">
-                        <p>Copyright ©<a href="www.raveen.me">Raveen S Rathnayake</a>. All Right Reserved.</p>
+                        <p>Copyright ©<a href="https://www.raveen.me">Raveen S Rathnayake</a>. All Right Reserved.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">

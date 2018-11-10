@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require(APPPATH . 'models/Book.php');
 
 /**
  * This class represent all the controller work related to an Administrator.
@@ -13,9 +12,19 @@ class Administrator extends CI_Controller
     {
         // Parent constructor call
         parent::__construct();
-        if (!$this->session->userdata('username')) {
+        if (!$this->session->userdata('adminUsername')) {
             // if the admin user is not logged in redirect them to the login page
             redirect(site_url() . '/login/loadAdminLogin');
+        }
+    }
+
+    public function index()
+    {
+        if (!$this->session->userdata('adminUsername')) {
+            // if the admin user is not logged in redirect them to the login page
+            redirect(site_url() . '/login/loadAdminLogin');
+        } else{
+            $this->loadAddminPortal();
         }
     }
 
@@ -239,39 +248,39 @@ class Administrator extends CI_Controller
         return $this->BookModel->addPublisher($newEntry);
     }
 
-    /**
-     * Controls getting data(new category title/s) from view and adding the main category to the database.
-     */
-    public function createMainCategory()
-    {
-        //TODO: use  isCategoryAvailable and give a proper error message
-        if (!isset($_POST['categories'])) {
-            return false;
-        }
-        $data = array();
-        foreach ($_POST['categories'] as $category) {
-            $newEntry = array('categoryTitle' => $category);
-            array_push($data, $newEntry);
-        }
-        $this->load->model('BookModel');
-        return $this->BookModel->createBookCategories($data);
-    }
-
-    /**
-     * Controls getting data(sub category title/s) from view and adding the sub category to the database.
-     */
-    public function createSubCategory()
-    {
-        //TODO: use this isSubCategoryAvailableInMainCategory and give a proper error message
-        $mainCategory = $_POST['mainCategory'];
-        $data = array();
-        foreach ($_POST['subCategories'] as $subCategory) {
-            $newEntry = array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory);
-            array_push($data, $newEntry);
-        }
-        $this->load->model('BookModel');
-        return $this->BookModel->createBookSubCategories($data);
-    }
+//    /**
+//     * Controls getting data(new category title/s) from view and adding the main category to the database.
+//     */
+//    public function createMainCategory()
+//    {
+//        //TODO: use  isCategoryAvailable and give a proper error message
+//        if (!isset($_POST['categories'])) {
+//            return false;
+//        }
+//        $data = array();
+//        foreach ($_POST['categories'] as $category) {
+//            $newEntry = array('categoryTitle' => $category);
+//            array_push($data, $newEntry);
+//        }
+//        $this->load->model('BookModel');
+//        return $this->BookModel->createBookCategories($data);
+//    }
+//
+//    /**
+//     * Controls getting data(sub category title/s) from view and adding the sub category to the database.
+//     */
+//    public function createSubCategory()
+//    {
+//        //TODO: use this isSubCategoryAvailableInMainCategory and give a proper error message
+//        $mainCategory = $_POST['mainCategory'];
+//        $data = array();
+//        foreach ($_POST['subCategories'] as $subCategory) {
+//            $newEntry = array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory);
+//            array_push($data, $newEntry);
+//        }
+//        $this->load->model('BookModel');
+//        return $this->BookModel->createBookSubCategories($data);
+//    }
 
     /**
      * Controls getting data(book title) from view and returning the searched book to the view.
@@ -310,23 +319,22 @@ class Administrator extends CI_Controller
         if ($pageNo != $lastPage) {
             $nextPage = $pageNo + 1;
             $data['next'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$nextPage&title=$title";
+            $data['last'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$lastPage&title=$title";
         }
         if ($pageNo !== 1) {
             $previousPage = $pageNo - 1;
             $data['previous'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$previousPage&title=$title";
+            $data['first'] = site_url() . "/administrator/searchBookByTitle/?pageNo=1&title=$title";
         }
         $data['result'] = $result;
-        $data['first'] = site_url() . "/administrator/searchBookByTitle/?pageNo=1&title=$title";
-        $data['last'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$lastPage&title=$title";
-
         $data['title'] = $title;
         if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         }
     }
 
@@ -367,23 +375,22 @@ class Administrator extends CI_Controller
         if ($pageNo != $lastPage) {
             $nextPage = $pageNo + 1;
             $data['next'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$nextPage&author=$author";
+            $data['last'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$lastPage&author=$author";
         }
         if ($pageNo !== 1) {
             $previousPage = $pageNo - 1;
             $data['previous'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$previousPage&author=$author";
+            $data['first'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=1&author=$author";
         }
         $data['result'] = $result;
-        $data['first'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=1&author=$author";
-        $data['last'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$lastPage&author=$author";
-
         $data['author'] = $author;
         if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         }
     }
 
@@ -433,23 +440,22 @@ class Administrator extends CI_Controller
         if ($pageNo != $lastPage) {
             $nextPage = $pageNo + 1;
             $data['next'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$nextPage&title=$title&author=$author";
+            $data['last'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$lastPage&title=$title&author=$author";
         }
         if ($pageNo !== 1) {
             $previousPage = $pageNo - 1;
             $data['previous'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$previousPage&title=$title&author=$author";
+            $data['first'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=1&title=$title&author=$author";
         }
         $data['result'] = $result;
-        $data['first'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=1&title=$title&author=$author";
-        $data['last'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$lastPage&title=$title&author=$author";
-
         $data['author'] = $author;
         if (!$result) {
             $errorMessage = "No Search Results found";
             $data['errorMessage'] = $errorMessage;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('AdminSearchResults', $data);
+            $this->load->view('admin/SearchResults', $data);
         }
     }
 
@@ -469,10 +475,10 @@ class Administrator extends CI_Controller
         if (!$result) {
             $errorMessage = "Error occurred";
             $data['errorMessage'] = $errorMessage;
-            $this->load->view('AdminBookDetails', $data);
+            $this->load->view('admin/BookDetails', $data);
         } else {
             $data['book'] = $result[0];
-            $this->load->view('AdminBookDetails', $data);
+            $this->load->view('admin/BookDetails', $data);
         }
     }
 
@@ -481,7 +487,7 @@ class Administrator extends CI_Controller
      */
     public function loadAdminPortal()
     {
-        $this->load->view('AdminHomeView');
+        $this->load->view('admin/HomeView');
     }
 
     /**
@@ -500,10 +506,10 @@ class Administrator extends CI_Controller
             $data['authors'] = $authors;
         }
         if (!$publishers) {
-            $this->load->view('AddBook');
+            $this->load->view('admin/AddBook');
         } else {
             $data['publishers'] = $publishers;
-            $this->load->view('AddBook', $data);
+            $this->load->view('admin/AddBook', $data);
         }
     }
 
@@ -512,7 +518,7 @@ class Administrator extends CI_Controller
      */
     public function loadAddPublisher()
     {
-        $this->load->view('AddPublisher');
+        $this->load->view('admin/AddPublisher');
     }
 
     /**
@@ -520,7 +526,7 @@ class Administrator extends CI_Controller
      */
     public function loadAddMainCategory()
     {
-        $this->load->view('AddMainCategory');
+        $this->load->view('admin/AddMainCategory');
     }
 
     /**
@@ -530,10 +536,10 @@ class Administrator extends CI_Controller
     {
         $result = $this->getAllCategories();
         if (!$result) {
-            $this->load->view('AddSubCategory');
+            $this->load->view('admin/AddSubCategory');
         } else {
             $data['mainCategories'] = $result;
-            $this->load->view('AddSubCategory', $data);
+            $this->load->view('admin/AddSubCategory', $data);
         }
     }
 
@@ -542,9 +548,8 @@ class Administrator extends CI_Controller
      */
     public function loadSearchBook()
     {
-        $this->load->view('AdminSearch');
+        $this->load->view('admin/Search');
     }
-
 }
 
 ?>

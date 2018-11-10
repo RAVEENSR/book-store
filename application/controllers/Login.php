@@ -17,23 +17,25 @@ class Login extends CI_Controller
      * Loads the view for searching a book.
      */
     public function loadAdminLogin() {
-        if($this->session->userdata('username') != '') {
-            $this->load->view('AdminHomeView');
+        if($this->session->userdata('adminUsername') != '') {
+            redirect(site_url() . '/administrator/loadAdminPortal');
         } else {
-            $this->load->view('AdminLogin');
+            $this->load->view('visitor/Header');
+            $this->load->view('admin/Login');
+            $this->load->view('visitor/Footer');
         }
     }
 
-    /**
-     * Loads the view of Admin Portal.
-     */
-    public function loadAdminPortal() {
-        if($this->session->userdata('username') != '') {
-            $this->load->view('AdminHomeView');
-        } else {
-            redirect(site_url() . '/login/loadAdminLogin');
-        }
-    }
+//    /**
+//     * Loads the view of Admin Portal.
+//     */
+//    public function loadAdminPortal() {
+//        if($this->session->userdata('username') != '') {
+//            $this->load->view('admin/HomeView');
+//        } else {
+//            redirect(site_url() . '/login/loadAdminLogin');
+//        }
+//    }
 
     /**
      * Controls authenticating the admin login credentials.
@@ -48,9 +50,9 @@ class Login extends CI_Controller
             $this->load->model('LoginModel');
             $result = $this->LoginModel->login($username, $password);
             if ($result) {
-                $session_data = array('username' => $username);
+                $session_data = array('adminUsername' => $username);
                 $this->session->set_userdata($session_data);
-                redirect(site_url() . '/login/loadAdminPortal');
+                redirect(site_url() . '/administrator/loadAdminPortal');
             } else {
                 $this->session->set_flashdata('error', 'Invalid Username and Password!');
                 redirect(site_url() . '/login/loadAdminLogin');
@@ -64,7 +66,7 @@ class Login extends CI_Controller
      * Controls admin user logging out process.
      */
     public function logout() {
-        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('adminUsername');
         redirect(site_url() . '/login/loadAdminLogin');
     }
 
