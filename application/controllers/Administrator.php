@@ -248,6 +248,43 @@ class Administrator extends CI_Controller
         return $this->BookModel->addPublisher($newEntry);
     }
 
+    /**
+     * Returns number of views of a book per day for a given date limit.
+     * 0: Error occurred when getting the number of views
+     * 1: Request successful
+     */
+    public function getViewsForBookForLastDays() {
+        if (isset($_POST['isbn']) && isset($_POST['numberOfDays'])) {
+            $isbn = $_POST['isbn'];
+            $numberOfDays = ceil($_POST['numberOfDays']);
+            $this->load->model('BookModel');
+            $results = $this->BookModel->getLastDaysViewsOfABook($isbn, $numberOfDays);
+            $dates = array();
+            $views = array();
+            if(!$results){
+                $data['status'] = '1';
+                $data['dates'] = $dates;
+                $data['views'] = $views;
+                echo json_encode($data);
+                exit;
+            } else {
+                foreach ($results as $bookView) {
+                    $dates[] = $bookView->visitedDate;
+                    $views[] = $bookView->NumberOfViews;
+                }
+                $data['status'] = '1';
+                $data['dates'] = $dates;
+                $data['views'] = $views;
+                echo json_encode($data);
+                exit;
+            }
+        } else {
+            $data['status'] = '0';
+            echo json_encode($data);
+            exit;
+        }
+    }
+
 //    /**
 //     * Controls getting data(new category title/s) from view and adding the main category to the database.
 //     */
@@ -479,6 +516,81 @@ class Administrator extends CI_Controller
         } else {
             $data['book'] = $result[0];
             $this->load->view('admin/BookDetails', $data);
+        }
+    }
+
+    /**
+     * Controls displaying statistics of books.
+     */
+    public function loadStatistics()
+    {
+        $this->load->view('admin/BookStatistics');
+    }
+
+    /**
+     * Returns information required to disply statistics graphs in BookStatistics page.
+     * 0: Error occurred when getting the number of views
+     * 1: Request successful
+     */
+    public function getStatGraphInfo() {
+        if (isset($_POST['numberOfDays'])) {
+            $numberOfDays = ceil($_POST['numberOfDays']);
+            $this->load->model('BookModel');
+
+            $result1 = $this->BookModel->getMostViewedBooks(5);
+            $result2 = $this->BookModel->getMostViewedCategories(5);
+            $result3 = $this->BookModel->getMostViewedSubCategories(5);
+            $result4 = $this->BookModel->getTotalNumberOfBookViews($numberOfDays);
+
+            $topBooks = array();
+            $topBookViews = array();
+            $topCategories = array();
+            $topCategoryViews = array();
+            $topSubCategories = array();
+            $topSubCategoryViews = array();
+            $totalViews = array();
+            $dates = array();
+
+            if($result1){
+                foreach ($result1 as $topBook) {
+                    $topBooks[] = $topBook->title;
+                    $topBookViews[] = $topBook->total;
+                }
+                $data['topBooks'] = $topBooks;
+                $data['topBookViews'] = $topBookViews;
+            }
+            if($result2){
+                foreach ($result2 as $topCategory) {
+                    $topCategories[] = $topCategory->categoryTitle;
+                    $topCategoryViews[] = $topCategory->total;
+                }
+                $data['topCategories'] = $topCategories;
+                $data['topCategoryViews'] = $topCategoryViews;
+            }
+            if($result3){
+                foreach ($result3 as $topSubCategory) {
+                    $topSubCategories[] = $topSubCategory->subCategoryTitle;
+                    $topSubCategoryViews[] = $topSubCategory->total;
+                }
+                $data['topSubCategories'] = $topSubCategories;
+                $data['topSubCategoryViews'] = $topSubCategoryViews;
+            }
+            if($result4){
+                foreach ($result4 as $viewPerDay) {
+                    $totalViews[] = $viewPerDay->NumberOfViews;
+                    $dates[] = $viewPerDay->visitedDate;
+                }
+                $data['totalViews'] = $totalViews;
+                $data['dates'] = $dates;
+            }
+
+            $data['status'] = '1';
+            echo json_encode($data);
+            exit;
+        } else {
+            $data['status'] = '0';
+            echo json_encode($data);
+            exit;
         }
     }
 

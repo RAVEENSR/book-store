@@ -84,7 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <div class="row pt-100 pb-145">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <a href="<?php echo site_url();?>/administrator/loadAddPublisher">
@@ -100,6 +100,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <a href="<?php echo site_url();?>/administrator/loadStatistics">
+                    <div class="single-banner">
+                        <div class="banner-img">
+                            <img src="<?php echo base_url();?>img/banner/stats.png" alt="Book Stats" />
+                        </div>
+                        <div class="banner-text">
+                            <h3>Books Statistics</h3>
+                            <p>View statistics related to books.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
             </div>
         </div>
     </div>

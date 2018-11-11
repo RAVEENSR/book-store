@@ -93,7 +93,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="active"><a href="#description" data-toggle="tab"
                                                           aria-expanded="true">Description</a></li>
-                                    <li><a href="#stats" data-toggle="tab" aria-expanded="true">Statistics</a></li>
+                                    <li><a href="#stats" data-toggle="tab" aria-expanded="true"
+                                           onclick="loadSingleBookStats(this.id);" id="<?php echo $book->isbnNo;
+                                           ?>">Statistics</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="description">
@@ -103,9 +105,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="tab-pane" id="stats">
                                         <div class="chartContainer">
-                                            <h2>Number of views in last 5 days</h2>
+                                            <h2>Number of views in last 30 days</h2>
+                                            <!-- store the base url to access in the js file -->
+                                            <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
                                             <div>
-                                                <canvas id="canvas"></canvas>
+                                                <canvas id="singleBookViews"></canvas>
                                             </div>
                                         </div>
                                     </div>

@@ -133,6 +133,12 @@ $(document).ready(function(){
                     alertSection.html('<div class="alert alert-success">Successfully added the book.</div>');
                     $('#addBookForm').trigger("reset");
                 }
+            },
+            error: function (XHR, status, response) {
+                console.log(XHR.response);
+                console.log(status);
+                console.log(response);
+                alertSection.html('<div class="alert alert-danger">Error occurred when adding the book.</div>');
             }
         });
     });

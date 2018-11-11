@@ -531,28 +531,243 @@ class BookModel extends CI_Model {
         $this->db->select('userId');
         $this->db->where('isbnNo', $bookId);
         $this->db->from('user_viewed_book');
-        $subQuery = $this->db->get_compiled_select();
+        $subQuery1 = $this->db->get_compiled_select();
 
         $this->db->distinct();
         $this->db->select('isbnNo');
         $this->db->select('count(isbnNo) as total');
-        $this->db->where("userId IN ($subQuery)", NULL, FALSE);
+        $this->db->from('user_viewed_book');
+        $this->db->where("userId IN ($subQuery1)", NULL, FALSE);
         $this->db->group_by("isbnNo");
         $this->db->order_by('total', 'DESC');
         $this->db->limit(6);
-        $result = $this->db->get('user_viewed_book');
+        $subQuery2 = $this->db->get_compiled_select();
+
+        $this->db->select('*');
+        $this->db->from('book AS bookTable');
+        $this->db->join("($subQuery2) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->order_by('viewTable.total', 'DESC');
+        $result = $this->db->get();
+
         /*
-         SELECT DISTINCT isbnNo, COUNT(isbnNo) as total
-         FROM user_viewed_book
-         WHERE userId IN (
-            SELECT userId
-            FROM user_viewed_book
-            WHERE isbnNo = '6240934'
-              )
-              GROUP BY isbnNo
-              ORDER BY total DESC
-              LIMIT 6;
+        SELECT
+            *
+        FROM
+            book AS bookTable
+        INNER JOIN(
+            SELECT DISTINCT
+                isbnNo,
+                COUNT(isbnNo) AS total
+            FROM
+                user_viewed_book
+            WHERE
+                userId IN(
+                SELECT
+                    userId
+                FROM
+                    user_viewed_book
+                WHERE
+                    isbnNo = '6240934'
+            )
+        GROUP BY
+            isbnNo
+        ORDER BY
+            total
+        DESC
+        LIMIT 6
+        ) AS viewTable
+        ON
+            bookTable.isbnNo = viewTable.isbnNo
+        ORDER BY
+            viewTable.total
+        DESC;
         */
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Returns number of views of a book per day for a given date limit.
+     * @param $isbn String isbn number of the book
+     * @param $numberOfDates Number number of dates to limit
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getLastDaysViewsOfABook($isbn, $numberOfDates) {
+        // get the result row from the 'category' table
+        /*
+         * SELECT
+                DATE(date) as visitedDate,
+                COUNT(userId) AS NumberOfViews
+            FROM
+                user_viewed_book
+            WHERE
+                isbnNo = '6240934'
+            GROUP BY
+                visitedDate
+                ORDER  BY visitedDate DESC
+                LIMIT 5;
+         * */
+        $this->db->select('DATE(date) as visitedDate, COUNT(userId) AS NumberOfViews');
+        $this->db->where('isbnNo', $isbn);
+        $this->db->group_by("visitedDate");
+        $this->db->order_by('visitedDate', 'DESC');
+        $this->db->limit($numberOfDates);
+        $result = $this->db->get('user_viewed_book');
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+
+    /**
+     * Returns most viewed book titles for a given book limit.
+     * @param $numberOfBooks Number required top most book titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getMostViewedBooks($numberOfBooks) {
+        $this->db->distinct();
+        $this->db->select('isbnNo');
+        $this->db->select('count(userId) as total');
+        $this->db->from('user_viewed_book');
+        $this->db->group_by("isbnNo");
+        $this->db->order_by('total', 'DESC');
+        $subQuery1 = $this->db->get_compiled_select();
+
+        $this->db->select('title, total');
+        $this->db->from('book AS bookTable');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->group_by("title");
+        $this->db->order_by('viewTable.total', 'DESC');
+        $this->db->limit($numberOfBooks);
+        $result = $this->db->get();
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Returns most viewed category titles for a given book limit.
+     * @param $numberOfCategories Number required top most category titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getMostViewedCategories($numberOfCategories) {
+        /*
+        SELECT
+            categoryTitle,
+            total
+        FROM
+            book AS bookTable
+        INNER JOIN(
+            SELECT DISTINCT
+                isbnNo,
+                COUNT(userId) AS total
+            FROM
+                user_viewed_book
+            GROUP BY
+                isbnNo
+            ORDER BY
+                total DESC
+        ) AS viewTable
+        ON
+            bookTable.isbnNo = viewTable.isbnNo
+        GROUP BY
+            categoryTitle
+        ORDER BY
+            total
+        DESC
+        LIMIT 10;
+         * */
+        $this->db->distinct();
+        $this->db->select('isbnNo');
+        $this->db->select('count(userId) as total');
+        $this->db->from('user_viewed_book');
+        $this->db->group_by("isbnNo");
+        $this->db->order_by('total', 'DESC');
+        $subQuery1 = $this->db->get_compiled_select();
+
+        $this->db->select('categoryTitle, total');
+        $this->db->from('book AS bookTable');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->group_by("categoryTitle");
+        $this->db->order_by('viewTable.total', 'DESC');
+        $this->db->limit($numberOfCategories);
+        $result = $this->db->get();
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+    
+    /**
+     * Returns most viewed sub category titles for a given date limit.
+     * @param $numberOfSubCategories Number required top most sub category titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getMostViewedSubCategories($numberOfSubCategories) {
+        $this->db->distinct();
+        $this->db->select('isbnNo');
+        $this->db->select('count(userId) as total');
+        $this->db->from('user_viewed_book');
+        $this->db->group_by("isbnNo");
+        $this->db->order_by('total', 'DESC');
+        $subQuery1 = $this->db->get_compiled_select();
+
+        $this->db->select('subCategoryTitle, total');
+        $this->db->from('book AS bookTable');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->group_by("subCategoryTitle");
+        $this->db->order_by('viewTable.total', 'DESC');
+        $this->db->limit($numberOfSubCategories);
+        $result = $this->db->get();
+
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Returns most viewed sub category titles for a given date limit.
+     * @param $numberOfDays Number how long in past the result should be given
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getTotalNumberOfBookViews($numberOfDays) {
+        /*
+        SELECT
+            DATE(DATE) AS visitedDate,
+            COUNT(userId) AS NumberOfViews
+        FROM
+            user_viewed_book
+        GROUP BY
+            visitedDate
+        ORDER BY
+            visitedDate
+        LIMIT 30;
+         */
+
+        $this->db->select('DATE(DATE) AS visitedDate, COUNT(userId) AS NumberOfViews');
+        $this->db->group_by("visitedDate");
+        $this->db->order_by('visitedDate', 'ASC');
+        $this->db->limit($numberOfDays);
+        $result = $this->db->get('user_viewed_book');
 
         // check the number of rows in the result
         if ($result->num_rows() == 0) {

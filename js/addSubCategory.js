@@ -26,7 +26,6 @@ function validateSubCategoryForm() {
             type: "POST",
             data: {mainCategory : mainCategory, subCategories : data},
             success: function (data) {
-                console.log(data);
                 alertSection.html('<div class="alert alert-success">Successfully added categories.</div>');
                 $('#subCategoryForm').trigger("reset");
             },

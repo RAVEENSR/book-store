@@ -30,46 +30,46 @@ class Visitor extends CI_Controller {
         }
     }
 
-    /**
-     * Controls getting all the categories from the database.
-     */
-    public function getAllCategories()
-    {
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getAllMainCategories();
-        // if results not found false will be returned
-        if (!$result) {
-            return false;
-        }
-        $categories = array();
-        foreach ($result as $row) {
-            // row is an object, attributes are columns in the table
-            $categories[] = $row->categoryTitle;
-        }
-        return $categories;
-    }
+//    /**
+//     * Controls getting all the categories from the database.
+//     */
+//    public function getAllCategories()
+//    {
+//        $this->load->model('BookModel');
+//        $result = $this->BookModel->getAllMainCategories();
+//        // if results not found false will be returned
+//        if (!$result) {
+//            return false;
+//        }
+//        $categories = array();
+//        foreach ($result as $row) {
+//            // row is an object, attributes are columns in the table
+//            $categories[] = $row->categoryTitle;
+//        }
+//        return $categories;
+//    }
 
-    /**
-     * Controls getting all the sub categories from the database.
-     */
-    public function getAllSubCategoriesOfMainCategory()
-    {
-        $mainCategory = $_POST['mainCategory'];
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getSubCategoriesOfAMainCategory($mainCategory);
-        // if results not found false will be returned
-        if (!$result) {
-            return false;
-        }
-        $subCategories = array();
-        foreach ($result as $row) {
-            // row is an object, attributes are columns in the table
-            $subCategories[] = $row->subCategoryTitle;
-        }
-        $data['result'] = $subCategories;
-        echo json_encode($data);
-        exit;
-    }
+//    /**
+//     * Controls getting all the sub categories from the database.
+//     */
+//    public function getAllSubCategoriesOfMainCategory()
+//    {
+//        $mainCategory = $_POST['mainCategory'];
+//        $this->load->model('BookModel');
+//        $result = $this->BookModel->getSubCategoriesOfAMainCategory($mainCategory);
+//        // if results not found false will be returned
+//        if (!$result) {
+//            return false;
+//        }
+//        $subCategories = array();
+//        foreach ($result as $row) {
+//            // row is an object, attributes are columns in the table
+//            $subCategories[] = $row->subCategoryTitle;
+//        }
+//        $data['result'] = $subCategories;
+//        echo json_encode($data);
+//        exit;
+//    }
 
     /**
      * Controls adding an item to the cart.
@@ -281,12 +281,11 @@ class Visitor extends CI_Controller {
      */
     private function getSimilarViewedBooks($isbn) {
         $this->load->model('BookModel');
-        $result = $this->BookModel->getTopSixBooks($isbn);
+        $results = $this->BookModel->getTopSixBooks($isbn);
         $books = array();
-        foreach ($result as $bookInfo) {
-            if ($bookInfo->isbnNo !== $isbn) {
-                $result = $this->BookModel->getBookByISBN($bookInfo->isbnNo);
-                $books[] = $result[0];
+        foreach ($results as $book) {
+            if ($book->isbnNo !== $isbn) {
+                $books[] = $book;
             }
         }
         return $books;
@@ -509,7 +508,6 @@ class Visitor extends CI_Controller {
             $this->load->view('visitor/SearchResults', $data);
         }
     }
-
 }
 
 ?>

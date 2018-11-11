@@ -16,8 +16,7 @@ function addToCart(bookId) {
             type: "POST",
             data: {isbn: bookId, quantity: quantity},
             success: function (data) {
-                console.log(data);
-                var flag =data;
+                var flag = data;
                 if (flag === '0') {
                     alert('Quantity should be less than the available copies');
                 } else if(flag === '1') {
