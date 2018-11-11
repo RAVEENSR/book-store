@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
     <!-- js file for Add to Cart -->
     <script src="<?php echo base_url(); ?>js/manageCart.js"></script>
     <!-- breadcrumbs-area-start -->
@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="panel-body">
                                                     <p>
                                                         <?php if (isset($mainCategory[1])) foreach ($mainCategory[1] as $subCategory) { ?>
-                                                        <a href="<?php echo site_url(); ?>/visitor/view_books_by_category?mainCatId=<?php echo $mainCategory[0]->categoryId ?>&subCatId=<?php echo $subCategory->subCategoryId ?>">
+                                                        <a href="<?php echo site_url(); ?>/visitor/viewBooksByCategory?mainCatId=<?php echo $mainCategory[0]->categoryId ?>&subCatId=<?php echo $subCategory->subCategoryId ?>">
                                                             <?php echo $subCategory->subCategoryTitle ?>
                                                         </a><br/>
                                                     </p>
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <!-- single-product-start -->
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                    <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                         . $book->isbnNo; ?>">
                                                         <img src="<?php echo base_url() . $book->imageURL; ?>"
                                                              alt="book" class="primary"/>
@@ -104,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                                 <div class="product-details text-center">
                                                     <h4>
-                                                        <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                        <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                             . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
                                                     <div class="product-price">
                                                         <ul>
@@ -122,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="add-to-link">
                                                         <ul>
                                                             <li>
-                                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                                <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                                     . $book->isbnNo; ?>" title="Details"><i
                                                                             class="fa fa-external-link"></i></a></li>
                                                         </ul>
@@ -142,7 +142,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <div class="product-wrapper-2">
                                                     <div class="product-img">
-                                                        <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                        <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                             . $book->isbnNo; ?>">
                                                             <img src="<?php echo base_url() . $book->imageURL; ?>"
                                                                  alt="book" class="primary"/>
@@ -154,11 +154,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="product-wrapper-content">
                                                     <div class="product-details">
                                                         <h4>
-                                                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                            <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                                 . $book->isbnNo; ?>"><?php echo $book->title; ?></a>
                                                         </h4>
                                                         <h5>
-                                                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                            <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                                 . $book->isbnNo; ?>">By <?php echo " " . $book->authorName; ?></a>
                                                         </h5>
                                                         <div class="product-price">
@@ -178,7 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <div class="add-to-link">
                                                             <ul>
                                                                 <li>
-                                                                    <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                                    <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                                         . $book->isbnNo; ?>" title="Details"><i
                                                                                 class="fa fa-external-link"></i></a>
                                                                 </li>
@@ -228,4 +228,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- shop-main-area-end -->
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

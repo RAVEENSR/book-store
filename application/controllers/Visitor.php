@@ -43,47 +43,6 @@ class Visitor extends CI_Controller
         }
     }
 
-//    /**
-//     * Controls getting all the categories from the database.
-//     */
-//    public function get_all_categories()
-//    {
-//        $this->load->model('Book');
-//        $result = $this->Book->get_all_main_categories();
-//        // if results not found FALSE will be returned
-//        if (!$result) {
-//            return FALSE;
-//        }
-//        $categories = array();
-//        foreach ($result as $row) {
-//            // row is an object, attributes are columns in the table
-//            $categories[] = $row->categoryTitle;
-//        }
-//        return $categories;
-//    }
-
-//    /**
-//     * Controls getting all the sub categories from the database.
-//     */
-//    public function get_all_subcategories_of_main_category()
-//    {
-//        $mainCategory = $_POST['mainCategory'];
-//        $this->load->model('Book');
-//        $result = $this->Book->get_subcategories_of_main_category($mainCategory);
-//        // if results not found FALSE will be returned
-//        if (!$result) {
-//            return FALSE;
-//        }
-//        $subCategories = array();
-//        foreach ($result as $row) {
-//            // row is an object, attributes are columns in the table
-//            $subCategories[] = $row->subCategoryTitle;
-//        }
-//        $data['result'] = $subCategories;
-//        echo json_encode($data);
-//        exit;
-//    }
-
     /**
      * Controls adding an item to the cart.
      * Returns String 0, 1, 2, 3

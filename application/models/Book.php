@@ -23,42 +23,6 @@ class Book extends CI_Model
         $this->load->database();
     }
 
-//    /**
-//     * Gets all the books named under a main category.
-//     * @param $main_categoryTitle String Main category name
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function get_books_under_main_category($main_categoryTitle) {
-//        // get the result row from the 'book' table
-//        $this->db->select('*');
-//        $this->db->where('categoryTitle', $main_categoryTitle);
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
-//
-//    /**
-//     * Gets all the books named under a sub category.
-//     * @param $subcategoryTitle String Sub category name
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function get_books_under_subcategory($subcategoryTitle) {
-//        // get the result row from the 'book' table
-//        $this->db->select('subCategoryTitle');
-//        $this->db->where('subCategoryTitle', $subcategoryTitle);
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
-
     /**
      * Gets books which are likely having title.
      * @param $title String Title of the book
@@ -132,23 +96,6 @@ class Book extends CI_Model
             return ($result->result())[0]->subCategoryTitle;
         }
     }
-
-//    /**
-//     * Get books which are likely having author name.
-//     * @param $author_name String Name of the author of the book
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function get_books_by_author($author_name) {
-//        // get the result row from the 'book' table
-//        $this->db->like('authorName', $author_name);
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
 
     /**
      * Get count of the books of likely having title.
@@ -340,59 +287,6 @@ class Book extends CI_Model
             return $result->result();
         }
     }
-
-//    /**
-//     * There can be authors with the same name. In order to separately identify each author an author code is used.
-//     * This method returns all the author codes matches to a certain author name.
-//     * @param $authorFirstName String First name of the author
-//     * @param $authorLastName String Last name of the author
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function getAuthorCodes($authorFirstName, $authorLastName) {
-//        // get the result row from the 'book' table
-//        $this->db->where(array('firstName' => $authorFirstName, 'lastName' => $authorLastName));
-//        $result = $this->db->get('author');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
-
-//    /**
-//     * Get books which are likely having similar title and author name.
-//     * @param $title String Title of the book
-//     * @param $author_name String Name of the author
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function get_book_by_title_and_author($title, $author_name) {
-//        // get the result row from the 'book' table
-//        $this->db->like(array('title' => $title, 'authorName' => $author_name));
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
-
-//    /**
-//     * Gets all the books in the database.
-//     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-//     */
-//    public function get_all_books() {
-//        // get the result rows from the 'book' table
-//        $this->db->select('*');
-//        $result = $this->db->get('book');
-//        // check the number of rows in the result
-//        if ($result->num_rows() == 0) {
-//            return FALSE;
-//        } else {
-//            return $result->result();
-//        }
-//    }
 
     /**
      * Get count of the books.
