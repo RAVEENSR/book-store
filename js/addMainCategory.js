@@ -17,11 +17,10 @@ function validateMainCategoryForm() {
         alertSection.html('<div class="alert alert-danger">"Main Category 1" field cannot be blank.</div>');
     } else {
         $.ajax({
-            url: siteURL + "/administrator/createMainCategory",
+            url: siteURL + "/administrator/create_main_category",
             type: "POST",
             data: {categories: data},
             success: function (data) {
-                console.log(data);
                 alertSection.html('<div class="alert alert-success">Successfully added categories.</div>');
                 $('#mainCategoryForm').trigger("reset");
             },
@@ -47,7 +46,7 @@ function validateMainCategoryName(categoryName, fieldId) {
         categoryName = $('#' + fieldId)[0].value;
     }
     $.ajax({
-        url: siteURL + "/administrator/validateMainCategory",
+        url: siteURL + "/administrator/validate_main_category",
         type: "POST",
         data: {categoryName: categoryName},
         success: function (data) {

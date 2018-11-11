@@ -1,11 +1,13 @@
 <?php
-/**
- * This class represents a database activities regarding the administrator login operation.
- */
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-class LoginModel extends CI_Model {
+/**
+ * Login_model Class
+ *
+ * This class represents a database activities regarding the administrator login operation.
+ *
+ * @author Raveen Savinda Rathnayake
+ */
+class Login_model extends CI_Model {
 
     /**
      * LoginModel constructor.
@@ -17,10 +19,17 @@ class LoginModel extends CI_Model {
         $this->load->database();
     }
 
-    public function register($username, $password, $firstName, $lastName){
-        $hashedPassword =$password;
-        $data = array('username' => $username, 'password' => $hashedPassword, 'firstName' => $firstName, 'lastName' =>
-            $lastName);
+    /**
+     * Add admin details to the database.
+     * @param $username String Username of the admin
+     * @param $password String Password of the admin
+     * @param $first_name String first name of the admin
+     * @param $last_name String  last name of the admin
+     * @return bool Returns true if successful, false otherwise.
+     */
+    public function register($username, $password, $first_name, $last_name){
+        $data = array('username' => $username, 'password' => $password, 'firstName' => $first_name, 'lastName' =>
+            $last_name);
         $this->db->insert('admin',$data);
         return ($this->db->affected_rows() != 1) ? false : true;
     }

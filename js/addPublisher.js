@@ -19,9 +19,9 @@ function validatePublisherForm() {
     data['contactNo'] = contactNo;
 
     $.ajax({
-        url: siteURL + "/administrator/addPublisher",
+        url: siteURL + "/administrator/add_publisher",
         type: "POST",
-        data: {publisherData : data},
+        data: {publisherData: data},
         success: function (data) {
             console.log(data);
             alertSection.html('<div class="alert alert-success">Successfully added the Publisher.</div>');
@@ -39,18 +39,18 @@ function validatePublisherForm() {
 /*
 * validates the name of the publisher.
 * */
-function  validatePublisherName () {
+function validatePublisherName() {
     var publisherName = $('#publisherName')[0].value;
     var alertSection = $('#publisherAlertSection');
     var siteURL = $('#siteURL')[0].value;
 
     $.ajax({
-        url: siteURL + "/administrator/validatePublisherName",
+        url: siteURL + "/administrator/validate_publisher_name",
         type: "POST",
         data: {publisherName: publisherName},
         success: function (data) {
             var flag = $.parseJSON(data);
-            if(!flag) {
+            if (!flag) {
                 alertSection.html('<div class="alert alert-danger">Publisher Name already exists in database.</div>');
                 $('#addPublisherBtn').prop('disabled', true);
                 return false;

@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'Header.php' ?>
+<?php include 'header.php' ?>
     <!-- js file for Add to Cart -->
-    <script src="<?php echo base_url();?>js/manageCart.js"></script>
+    <script src="<?php echo base_url(); ?>js/manageCart.js"></script>
     <!-- breadcrumbs-area-start -->
     <div class="breadcrumbs-area mb-70">
         <div class="container">
@@ -27,22 +27,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <div class="entry-header-title">
                         <h2>Shopping Cart</h2>
-                        <?php if(isset($errorMessage)) {
-                        echo "<h3>".$errorMessage."</h3>";
-                        }?>
+                        <?php if (isset($errorMessage)) {
+                            echo "<h3>" . $errorMessage . "</h3>";
+                        } ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- entry-header-area-end -->
-<?php if(!isset($errorMessage)) {?>
+<?php if (!isset($errorMessage)) { ?>
     <!-- cart-main-area-start -->
     <div class="cart-main-area mb-70">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="cartForm" action="<?php echo site_url().'/visitor/updateCart'?>" method="post">
+                    <form id="cartForm" action="<?php echo site_url() . '/visitor/update_cart' ?>" method="post">
                         <div class="table-content table-responsive">
                             <table>
                                 <thead>
@@ -56,35 +56,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php if(isset($userCart)) {
-                                    foreach($userCart as $item) { ?>
-                                <tr id="row-<?php echo $item['isbn']?>">
-                                    <td class="product-thumbnail">
-                                        <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='.$item['isbn'];
-                                        ?> ">
-                                            <img src="<?php echo base_url().$item['imgURL'];?>" alt="book" />
-                                        </a>
-                                    </td>
-                                    <td class="product-name">
-                                        <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='.$item['isbn'];
-                                            ?>"><?php echo $item['title'];?>
-                                        </a>
-                                    </td>
-                                    <td class="product-price"><span class="amount">$<?php echo $item['price']; ?></span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <input type="number" name="quantity[]" value="<?php echo $item['qty']; ?>">
-                                        <!-- store the book id -->
-                                        <input type="text" class="hide" name="isbn[]" value="<?php echo $item['isbn'];
-                                        ?>"/>
-                                    </td>
-                                    <td class="product-subtotal" >$<?php echo $item['total'];?></td>
-                                    <td class="product-remove"><a href="<?php echo site_url();
-                                    ?>/visitor/removeCartItem?bookId=<?php echo $item['isbn']?>"><i class="fa fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php }} ?>
+                                <?php if (isset($userCart)) {
+                                    foreach ($userCart as $item) { ?>
+                                        <tr id="row-<?php echo $item['isbn'] ?>">
+                                            <td class="product-thumbnail">
+                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn=' . $item['isbn'];
+                                                ?> ">
+                                                    <img src="<?php echo base_url() . $item['imgURL']; ?>" alt="book"/>
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn=' . $item['isbn'];
+                                                ?>"><?php echo $item['title']; ?>
+                                                </a>
+                                            </td>
+                                            <td class="product-price"><span
+                                                        class="amount">$<?php echo $item['price']; ?></span>
+                                            </td>
+                                            <td class="product-quantity">
+                                                <input type="number" name="quantity[]"
+                                                       value="<?php echo $item['qty']; ?>">
+                                                <!-- store the book id -->
+                                                <input type="text" class="hide" name="isbn[]"
+                                                       value="<?php echo $item['isbn'];
+                                                       ?>"/>
+                                            </td>
+                                            <td class="product-subtotal">$<?php echo $item['total']; ?></td>
+                                            <td class="product-remove"><a href="<?php echo site_url();
+                                                ?>/visitor/remove_cart_item?bookId=<?php echo $item['isbn'] ?>"><i
+                                                            class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php }
+                                } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -123,5 +128,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- cart-main-area-end -->
-    <?php } ?>
-<?php include 'Footer.php' ?>
+<?php } ?>
+<?php include 'footer.php' ?>

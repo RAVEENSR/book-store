@@ -442,7 +442,7 @@
         tags: true
     });
 
-    /* Load sub categories after selecting the main category in AddBook.php*/
+    /* Load sub categories after selecting the main category in add_book.php*/
     $('#sub-category-div').hide();
     $('#mainCategorySelect').change(function () {
         var selected = $('#mainCategorySelect option:selected').text();

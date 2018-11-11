@@ -8,7 +8,7 @@ function loadSubCategories() {
     var subCategorySelectSection = $('#subCategorySelect');
     if (selectedMainCategory !== "") {
         $.ajax({
-            url: siteURL + "/administrator/getAllSubCategoriesOfMainCategory",
+            url: siteURL + "/administrator/get_all_subcategories_of_main_category",
             type: "POST",
             data: {mainCategory: selectedMainCategory},
             success: function (data) {
@@ -111,21 +111,21 @@ function validateAddBookForm() {
 }
 
 
-$(document).ready(function(){
+$(document).ready(function () {
     var alertSection = $('#addBookAlertSection');
     var siteURL = $('#siteURL')[0].value;
 
-    $('#addBookForm').submit(function(e){
+    $('#addBookForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
-            url: siteURL + '/administrator/addBook',
-            type:"post",
-            data:new FormData(this),
-            processData:false,
-            contentType:false,
-            cache:false,
-            async:false,
-            success: function(data){
+            url: siteURL + '/administrator/add_book',
+            type: "post",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: false,
+            success: function (data) {
                 var flag = $.parseJSON(data);
                 if (!flag) {
                     alertSection.html('<div class="alert alert-danger">Error occurred when adding the book.</div>');
@@ -153,7 +153,7 @@ function validateISBN() {
     var siteURL = $('#siteURL')[0].value;
 
     $.ajax({
-        url: siteURL + "/administrator/validateBookISBN",
+        url: siteURL + "/administrator/validate_book_isbn",
         type: "POST",
         data: {isbn: isbn},
         success: function (data) {

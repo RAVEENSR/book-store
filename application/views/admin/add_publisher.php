@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'Header.php' ?>
+<?php include 'header.php' ?>
     <!-- js file for Add main category -->
     <script src="<?php echo base_url(); ?>js/addPublisher.js"></script>
     <!-- breadcrumbs-area-start -->
@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <div class="breadcrumbs-menu">
                         <ul>
-                            <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
+                            <li><a href="<?php echo site_url(); ?>/administrator/load_admin_portal">Home</a></li>
                             <li><a href="#" class="active">Add Publisher</a></li>
                         </ul>
                     </div>
@@ -35,7 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <form id="publisherForm">
                             <div class="form-group">
                                 <label for="publisherName">Publisher Name<span>*</span></label>
-                                <input type="text" onkeyup="validatePublisherName()" class="form-control" id="publisherName"
+                                <input type="text" onkeyup="validatePublisherName()" class="form-control"
+                                       id="publisherName"
                                        placeholder="Ex: Elsevier" required/>
                             </div>
                             <div class="form-group">
@@ -44,7 +45,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="single-login single-login-2">
                                 <button type="button" id="addPublisherBtn" class="btn btn-default"
-                                        onclick="validatePublisherForm()">Add</button>
+                                        onclick="validatePublisherForm()">Add
+                                </button>
                             </div>
                             <!-- store the base url to access in the js file -->
                             <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
@@ -56,4 +58,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- add-publisher-area-end -->
-<?php include 'Footer.php' ?>
+<?php include 'footer.php' ?>

@@ -13,7 +13,7 @@ function validateSubCategoryForm() {
         }
     }
     // check for main category field whether it is empty
-    if(mainCategory === '') {
+    if (mainCategory === '') {
         alertSection.html('<div class="alert alert-danger">Please select a "Main Category"</div>');
         return;
     }
@@ -22,9 +22,9 @@ function validateSubCategoryForm() {
         alertSection.html('<div class="alert alert-danger">"Sub Category 1" field cannot be blank.</div>');
     } else {
         $.ajax({
-            url: siteURL + "/administrator/createSubCategory",
+            url: siteURL + "/administrator/create_subcategory",
             type: "POST",
-            data: {mainCategory : mainCategory, subCategories : data},
+            data: {mainCategory: mainCategory, subCategories: data},
             success: function (data) {
                 alertSection.html('<div class="alert alert-success">Successfully added categories.</div>');
                 $('#subCategoryForm').trigger("reset");
@@ -42,22 +42,22 @@ function validateSubCategoryForm() {
 /*
 * validates the name of the main category.
 * */
-function  validateSubCategoryName (subCategoryName, subCategoryFieldId) {
+function validateSubCategoryName(subCategoryName, subCategoryFieldId) {
     var alertSection = $('#subCategoryAlertSection');
     var siteURL = $('#siteURL')[0].value;
 
-    if(!subCategoryName && subCategoryFieldId) {
+    if (!subCategoryName && subCategoryFieldId) {
         subCategoryName = $('#' + subCategoryFieldId)[0].value;
     }
 
     $.ajax({
-        url: siteURL + "/administrator/validateSubCategory",
+        url: siteURL + "/administrator/validate_subcategory",
         type: "POST",
         data: {subCategoryName: subCategoryName},
         success: function (data) {
             var flag = $.parseJSON(data);
-            if(!flag) {
-                alertSection.html('<div class="alert alert-danger">Sub Category "'+ subCategoryName + '" already ' +
+            if (!flag) {
+                alertSection.html('<div class="alert alert-danger">Sub Category "' + subCategoryName + '" already ' +
                     'exists in database.</div>');
                 $('#addSubCategoryBtn').prop('disabled', true);
                 return false;

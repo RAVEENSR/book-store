@@ -1,13 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-/**
- * This class controls the login operation of an admin all the controller work related to an Administrator.
- */
 
+/**
+ * Login Class
+ *
+ * This class controls the login operation related to an Administrator.
+ *
+ * @author Raveen Savinda Rathnayake
+ */
 class Login extends CI_Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         // Parent constructor call
         parent::__construct();
         $this->load->library('form_validation');
@@ -16,9 +21,10 @@ class Login extends CI_Controller
     /**
      * Loads the view for searching a book.
      */
-    public function loadAdminLogin() {
-        if($this->session->userdata('adminUsername') != '') {
-            redirect(site_url() . '/administrator/loadAdminPortal');
+    public function load_admin_login()
+    {
+        if ($this->session->userdata('admin_username') != '') {
+            redirect(site_url() . '/administrator/load_admin_portal');
         } else {
             $this->load->view('visitor/Header');
             $this->load->view('admin/Login');
@@ -26,53 +32,49 @@ class Login extends CI_Controller
         }
     }
 
-//    /**
-//     * Loads the view of Admin Portal.
-//     */
-//    public function loadAdminPortal() {
-//        if($this->session->userdata('username') != '') {
-//            $this->load->view('admin/HomeView');
-//        } else {
-//            redirect(site_url() . '/login/loadAdminLogin');
-//        }
-//    }
-
     /**
      * Controls authenticating the admin login credentials.
      */
-    public function authenticate() {
+    public function authenticate()
+    {
         // load the form validation library
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-        if($this->form_validation->run()){
+        if ($this->form_validation->run()) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $this->load->model('LoginModel');
-            $result = $this->LoginModel->login($username, $password);
+            $this->load->model('Login_model');
+            $result = $this->Login_model->login($username, $password);
             if ($result) {
-                $session_data = array('adminUsername' => $username);
+                $session_data = array('admin_username' => $username);
                 $this->session->set_userdata($session_data);
-                redirect(site_url() . '/administrator/loadAdminPortal');
+                redirect(site_url() . '/administrator/load_admin_portal');
             } else {
                 $this->session->set_flashdata('error', 'Invalid Username and Password!');
-                redirect(site_url() . '/login/loadAdminLogin');
+                redirect(site_url() . '/login/load_admin_login');
             }
         } else {
-            $this->loadAdminLogin();
+            $this->load_admin_login();
         }
     }
 
     /**
      * Controls admin user logging out process.
      */
-    public function logout() {
-        $this->session->unset_userdata('adminUsername');
-        redirect(site_url() . '/login/loadAdminLogin');
+    public function logout()
+    {
+        $this->session->unset_userdata('admin_username');
+        redirect(site_url() . '/login/load_admin_login');
     }
 
-    private function register() {
-        $this->load->model('LoginModel');
-        $this->LoginModel->register('admin', 'password', 'John', 'Doe');
+    /**
+     * Controls admin registering process.
+     */
+    private function register()
+    {
+        $this->load->model('Login_Model');
+        $this->Login_model->register('admin', 'password', 'John', 'Doe');
     }
 }
+
 ?>

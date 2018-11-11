@@ -1,10 +1,10 @@
 function loadSingleBookStats($isbn) {
     var siteURL = $('#siteURL')[0].value;
     $.ajax({
-        url: siteURL + '/administrator/getViewsForBookForLastDays',
-        type:"post",
+        url: siteURL + '/administrator/get_views_for_book_for_last_days',
+        type: "post",
         data: {isbn: $isbn, numberOfDays: 30},
-        success: function(data){
+        success: function (data) {
             var flag = $.parseJSON(data).status;
             if (flag === '1') {
                 var dates = $.parseJSON(data).dates;
@@ -30,7 +30,7 @@ function loadSingleBookStats($isbn) {
             console.log(XHR.response);
             console.log(status);
             console.log(response);
-           alert('Error occurred when validating the isbn number');
+            alert('Error occurred when validating the isbn number');
         }
     });
 }
@@ -38,10 +38,10 @@ function loadSingleBookStats($isbn) {
 function loadStatGraphs() {
     var siteURL = $('#siteURL')[0].value;
     $.ajax({
-        url: siteURL + '/administrator/getStatGraphInfo',
-        type:"post",
+        url: siteURL + '/administrator/get_stat_graph_info',
+        type: "post",
         data: {numberOfDays: 30},
-        success: function(data){
+        success: function (data) {
             var flag = $.parseJSON(data).status;
             if (flag === '1') {
                 var topBooks = $.parseJSON(data).topBooks;
@@ -69,7 +69,7 @@ function loadStatGraphs() {
                         }],
                     }
                 });
-/*--------------------------------------------------------------------------------------------------------------------*/
+                /*--------------------------------------------------------------------------------------------------------------------*/
                 // bar chart for top categories
                 var barChart2 = new Chart($('#topCategories')[0], {
                     type: 'bar',
@@ -83,7 +83,7 @@ function loadStatGraphs() {
                         }],
                     }
                 });
-/*--------------------------------------------------------------------------------------------------------------------*/
+                /*--------------------------------------------------------------------------------------------------------------------*/
                 // bar chart for top subCategories
                 var barChart3 = new Chart($('#topSubCategories')[0], {
                     type: 'bar',
@@ -97,7 +97,7 @@ function loadStatGraphs() {
                         }],
                     }
                 });
-/*---------------------------------------------------------------------------------------------------------------------*/
+                /*---------------------------------------------------------------------------------------------------------------------*/
                 // line chart for total book views
                 var lineChart = new Chart($('#topSingleBookViews')[0], {
                     type: 'line',

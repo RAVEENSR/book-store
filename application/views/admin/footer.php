@@ -20,6 +20,6 @@
 </footer>
 <!-- footer-area-end -->
 <!-- main js; this should load last -->
-<script src="<?php echo base_url();?>js/main.js"></script>
+<script src="<?php echo base_url(); ?>js/main.js"></script>
 </body>
 </html>

@@ -11,9 +11,9 @@
                         </div>
                         <div class="footer-mid-menu">
                             <ul>
-                                <li><a href="<?php echo site_url();?>/visitor/viewAllBooks">Categories</a></li>
-                                <li><a href="<?php echo site_url();?>#newReleases">New books</a></li>
-                                <li><a href="<?php echo site_url();?>#editorsCorner">Editors' Corner</a></li>
+                                <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">Categories</a></li>
+                                <li><a href="<?php echo site_url(); ?>#newReleases">New books</a></li>
+                                <li><a href="<?php echo site_url(); ?>#editorsCorner">Editors' Corner</a></li>
                             </ul>
                         </div>
                     </div>
@@ -25,9 +25,9 @@
                         </div>
                         <div class="footer-mid-menu">
                             <ul>
-                                <li><a href="<?php echo site_url();?>">Home</a></li>
-                                <li><a href="<?php echo site_url();?>/visitor/viewCart">My Cart</a></li>
-                                <li><a href="<?php echo site_url();?>/visitor/viewAllBooks">Search a book</a></li>
+                                <li><a href="<?php echo site_url(); ?>">Home</a></li>
+                                <li><a href="<?php echo site_url(); ?>/visitor/view_cart">My Cart</a></li>
+                                <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">Search a book</a></li>
                             </ul>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 <span>Address: #1 Flower Road, Colombo 03, Sri Lanka</span>
                             </p>
                             <p><span>Call:</span> (+94)11-22-12345</p>
-                            <p><span>Email:</span>  contact@buyBooks.lk</p>
+                            <p><span>Email:</span> contact@buyBooks.lk</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    <p><a href="<?php echo site_url();?>/login/loadAdminLogin">Admin Portal</a></p>
+                    <p><a href="<?php echo site_url(); ?>/login/load_admin_login">Admin Portal</a></p>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
 </footer>
 <!-- footer-area-end -->
 <!-- main js -->
-<script src="<?php echo base_url();?>js/main.js"></script>
+<script src="<?php echo base_url(); ?>js/main.js"></script>
 
 </body>
 </html>

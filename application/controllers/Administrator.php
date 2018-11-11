@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
 /**
+ * Administrator Class
+ *
  * This class represent all the controller work related to an Administrator.
+ *
+ * @author Raveen Savinda Rathnayake
  */
 class Administrator extends CI_Controller
 {
@@ -12,34 +15,33 @@ class Administrator extends CI_Controller
     {
         // Parent constructor call
         parent::__construct();
-        if (!$this->session->userdata('adminUsername')) {
+        if (!$this->session->userdata('admin_username')) {
             // if the admin user is not logged in redirect them to the login page
-            redirect(site_url() . '/login/loadAdminLogin');
+            redirect(site_url() . '/login/load_admin_login');
         }
     }
 
     public function index()
     {
-        if (!$this->session->userdata('adminUsername')) {
+        if (!$this->session->userdata('admin_username')) {
             // if the admin user is not logged in redirect them to the login page
-            redirect(site_url() . '/login/loadAdminLogin');
-        } else{
-            $this->loadAddminPortal();
+            redirect(site_url() . '/login/load_admin_login');
+        } else {
+            $this->load_admin_portal();
         }
     }
 
-//TODO: add params and return types to all the methods
-
     /**
      * Controls getting all the categories from the database.
+     * @return array|bool
      */
-    public function getAllCategories()
+    public function get_all_categories()
     {
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getAllMainCategories();
-        // if results not found false will be returned
+        $this->load->model('Book');
+        $result = $this->Book->get_all_main_categories();
+        // if results not found FALSE will be returned
         if (!$result) {
-            return false;
+            return FALSE;
         }
         $categories = array();
         foreach ($result as $row) {
@@ -51,39 +53,41 @@ class Administrator extends CI_Controller
 
     /**
      * Controls getting all the sub categories from the database.
+     * @return array|bool
      */
-    public function getAllSubCategoriesOfMainCategory()
+    public function get_all_subcategories_of_main_category()
     {
-        $mainCategory = $_POST['mainCategory'];
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getSubCategoriesOfAMainCategory($mainCategory);
-        // if results not found false will be returned
+        $main_category = $_POST['mainCategory'];
+        $this->load->model('Book');
+        $result = $this->Book->get_subcategories_of_main_category($main_category);
+        // if results not found FALSE will be returned
         if (!$result) {
-            return false;
+            return FALSE;
         }
-        $subCategories = array();
+        $subcategories = array();
         foreach ($result as $row) {
             // row is an object, attributes are columns in the table
-            $subCategories[] = $row->subCategoryTitle;
+            $subcategories[] = $row->subCategoryTitle;
         }
-        $data['result'] = $subCategories;
+        $data['result'] = $subcategories;
         echo json_encode($data);
         exit;
     }
 
     /**
      * Controls validating the ISBN number of a book.
+     * @return String
      */
-    public function validateBookISBN()
+    public function validate_book_isbn()
     {
         $isbn = $_POST['isbn'];
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getBookByISBN($isbn);
+        $this->load->model('Book');
+        $result = $this->Book->get_book_by_isbn($isbn);
         // flag determines the validity of the isbn number
-        $flag = false;
+        $flag = FALSE;
         if (!$result) {
-            // if results not found that means isbn is not in the db. Hence flag will be true.
-            $flag = true;
+            // if results not found that means isbn is not in the db. Hence flag will be TRUE.
+            $flag = TRUE;
         }
         echo json_encode($flag);
         exit;
@@ -91,53 +95,57 @@ class Administrator extends CI_Controller
 
     /**
      * Controls validating the ISBN number of a book.
+     * @return String
      */
-    public function validatePublisherName()
+    public function validate_publisher_name()
     {
-        $publisherName = $_POST['publisherName'];
-        $this->load->model('BookModel');
+        $publisher_name = $_POST['publisherName'];
+        $this->load->model('Book');
         // flag determines the validity of the isbn number
-        $flag = $this->BookModel->isPublisherAvailable($publisherName);
+        $flag = $this->Book->is_publisher_available($publisher_name);
         echo json_encode(!$flag);
         exit;
     }
 
     /**
      * Controls validating the main category title.
+     * @return String
      */
-    public function validateMainCategory()
+    public function validate_main_category()
     {
-        $categoryName = $_POST['categoryName'];
-        $this->load->model('BookModel');
+        $category_name = $_POST['categoryName'];
+        $this->load->model('Book');
         // flag determines the validity of the isbn number
-        $flag = $this->BookModel->isCategoryAvailable($categoryName);
+        $flag = $this->Book->is_category_available($category_name);
         echo json_encode(!$flag);
         exit;
     }
 
     /**
      * Controls validating the sub category title.
+     * @return String
      */
-    public function validateSubCategory()
+    public function validate_subcategory()
     {
-        $subCategoryName = $_POST['subCategoryName'];
-        $this->load->model('BookModel');
+        $subcategory_name = $_POST['subCategoryName'];
+        $this->load->model('Book');
         // flag determines the validity of the isbn number
-        $flag = $this->BookModel->isSubCategoryAvailable($subCategoryName);
+        $flag = $this->Book->is_subcategory_available($subcategory_name);
         echo json_encode(!$flag);
         exit;
     }
 
     /**
      * Controls getting all the authors from the database.
+     * @return array|bool
      */
-    public function getAllAuthors()
+    public function get_all_authors()
     {
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getAllAuthors();
-        // if results not found false will be returned
+        $this->load->model('Book');
+        $result = $this->Book->get_all_authors();
+        // if results not found FALSE will be returned
         if (!$result) {
-            return false;
+            return FALSE;
         }
         $authors = array();
         foreach ($result as $row) {
@@ -149,14 +157,15 @@ class Administrator extends CI_Controller
 
     /**
      * Controls getting all the publishers from the database.
+     * @return array|bool
      */
-    public function getAllPublishers()
+    public function get_all_publishers()
     {
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getAllPublishers();
-        // if results not found false will be returned
+        $this->load->model('Book');
+        $result = $this->Book->get_all_publishers();
+        // if results not found FALSE will be returned
         if (!$result) {
-            return false;
+            return FALSE;
         }
         $publishers = array();
         foreach ($result as $row) {
@@ -168,8 +177,9 @@ class Administrator extends CI_Controller
 
     /**
      * Controls getting data(book details) from view and adding the book to the database.
+     * @return String
      */
-    public function addBook()
+    public function add_book()
     {
         $config['upload_path'] = './img/product';
         $config['allowed_types'] = 'gif|jpg|png';
@@ -183,51 +193,52 @@ class Administrator extends CI_Controller
             $title = $this->input->post('title');
             $author = $this->input->post('author');
             $isbn = $this->input->post('isbn');
-            $mainCategory = $this->input->post('mainCategorySelect');
-            $subCategory = $this->input->post('subCategorySelect');
+            $main_category = $this->input->post('mainCategorySelect');
+            $subcategory = $this->input->post('subCategorySelect');
             $publisher = $this->input->post('publisher');
             $edition = $this->input->post('edition');
             $price = $this->input->post('price');
-            $qty = $this->input->post('quantity');
+            $quantity = $this->input->post('quantity');
             $description = $this->input->post('description');
             $img = 'img/product/' . $image;
 
-            $this->load->model('BookModel');
+            $this->load->model('Book');
             // check whether the entered author name exists. If not add the author.
-            if (!$this->BookModel->isAuthorAvailable($author)) {
-                $this->BookModel->addAuthor(array('authorName' => $author));
+            if (!$this->Book->is_author_available($author)) {
+                $this->Book->add_author(array('authorName' => $author));
             }
 
             // check whether the entered main category exists. If not add the main category.
-            if (!$this->BookModel->isCategoryAvailable($mainCategory)) {
-                $categoryData = array();
-                array_push($categoryData, array('categoryTitle' => $mainCategory));
-                $this->BookModel->createBookCategories($categoryData);
+            if (!$this->Book->is_category_available($main_category)) {
+                $category_data = array();
+                array_push($category_data, array('categoryTitle' => $main_category));
+                $this->Book->create_book_categories($category_data);
             }
 
             // check whether the entered sub category exists. If not add the sub category.
-            if (!$this->BookModel->isSubCategoryAvailableInMainCategory($subCategory, $mainCategory)) {
-                $subCategoryData = array();
-                array_push($subCategoryData, array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory));
-                $this->BookModel->createBookSubCategories($subCategoryData);
+            if (!$this->Book->is_subcategory_available_in_main_category($subcategory, $main_category)) {
+                $subcategory_data = array();
+                array_push($subcategory_data, array('subCategoryTitle' => $subcategory, 'categoryTitle' => 
+                    $main_category));
+                $this->Book->create_book_subcategories($subcategory_data);
             }
 
             $newEntry = array('isbnNo' => $isbn,
                 'title' => $title,
-                'categoryTitle' => $mainCategory,
-                'subCategoryTitle' => $subCategory,
+                'categoryTitle' => $main_category,
+                'subCategoryTitle' => $subcategory,
                 'authorName' => $author,
                 'publisherName' => $publisher,
                 'price' => number_format((float)$price, 2, '.', ''),
-                'availableCopies' => $qty,
+                'availableCopies' => $quantity,
                 'description' => $description,
                 'edition' => $edition,
                 'imageURL' => $img);
-            $result = $this->BookModel->addBook($newEntry);
+            $result = $this->Book->add_book($newEntry);
             // flag determines the validity
-            $flag = false;
+            $flag = FALSE;
             if ($result) {
-                $flag = true;
+                $flag = TRUE;
             }
             echo json_encode($flag);
         }
@@ -235,33 +246,36 @@ class Administrator extends CI_Controller
 
     /**
      * Controls getting data(new publisher data) from view and adding the publisher to the database.
+     * @return bool
      */
-    public function addPublisher()
+    public function add_publisher()
     {
         if (!isset($_POST['publisherData'])) {
-            return false; //TODO: check whether to return a ajax error message(edit in other places as well)
+            return FALSE;
         }
-        $receivedData = $_POST['publisherData'];
-        $newEntry = array('publisherName' => $receivedData['publisherName'],
-            'contactNo' => $receivedData['contactNo']);
-        $this->load->model('BookModel');
-        return $this->BookModel->addPublisher($newEntry);
+        $received_data = $_POST['publisherData'];
+        $new_entry = array('publisherName' => $received_data['publisherName'],
+            'contactNo' => $received_data['contactNo']);
+        $this->load->model('Book');
+        return $this->Book->add_publisher($new_entry);
     }
 
     /**
      * Returns number of views of a book per day for a given date limit.
+     * @return String
      * 0: Error occurred when getting the number of views
      * 1: Request successful
      */
-    public function getViewsForBookForLastDays() {
+    public function get_views_for_book_for_last_days()
+    {
         if (isset($_POST['isbn']) && isset($_POST['numberOfDays'])) {
             $isbn = $_POST['isbn'];
-            $numberOfDays = ceil($_POST['numberOfDays']);
-            $this->load->model('BookModel');
-            $results = $this->BookModel->getLastDaysViewsOfABook($isbn, $numberOfDays);
+            $number_of_days = ceil($_POST['numberOfDays']);
+            $this->load->model('Book');
+            $results = $this->Book->get_last_days_views_of_book($isbn, $number_of_days);
             $dates = array();
             $views = array();
-            if(!$results){
+            if (!$results) {
                 $data['status'] = '1';
                 $data['dates'] = $dates;
                 $data['views'] = $views;
@@ -270,7 +284,7 @@ class Administrator extends CI_Controller
             } else {
                 foreach ($results as $bookView) {
                     $dates[] = $bookView->visitedDate;
-                    $views[] = $bookView->NumberOfViews;
+                    $views[] = $bookView->numberOfViews;
                 }
                 $data['status'] = '1';
                 $data['dates'] = $dates;
@@ -285,156 +299,169 @@ class Administrator extends CI_Controller
         }
     }
 
-//    /**
-//     * Controls getting data(new category title/s) from view and adding the main category to the database.
-//     */
-//    public function createMainCategory()
-//    {
-//        //TODO: use  isCategoryAvailable and give a proper error message
-//        if (!isset($_POST['categories'])) {
-//            return false;
-//        }
-//        $data = array();
-//        foreach ($_POST['categories'] as $category) {
-//            $newEntry = array('categoryTitle' => $category);
-//            array_push($data, $newEntry);
-//        }
-//        $this->load->model('BookModel');
-//        return $this->BookModel->createBookCategories($data);
-//    }
-//
-//    /**
-//     * Controls getting data(sub category title/s) from view and adding the sub category to the database.
-//     */
-//    public function createSubCategory()
-//    {
-//        //TODO: use this isSubCategoryAvailableInMainCategory and give a proper error message
-//        $mainCategory = $_POST['mainCategory'];
-//        $data = array();
-//        foreach ($_POST['subCategories'] as $subCategory) {
-//            $newEntry = array('subCategoryTitle' => $subCategory, 'categoryTitle' => $mainCategory);
-//            array_push($data, $newEntry);
-//        }
-//        $this->load->model('BookModel');
-//        return $this->BookModel->createBookSubCategories($data);
-//    }
+    /**
+     * Controls getting data(new category title/s) from view and adding the main category to the database.
+     * @return bool
+     */
+    public function create_main_category()
+    {
+
+        if (!isset($_POST['categories'])) {
+            return FALSE;
+        }
+        $data = array();
+        $this->load->model('Book');
+        foreach ($_POST['categories'] as $category) {
+            // check whether the entered main category exists. If not add the main category.
+            if (!$this->Book->is_category_available($category)) {
+                $new_entry = array('categoryTitle' => $category);
+                array_push($data, $new_entry);
+            }
+        }
+        return $this->Book->create_book_categories($data);
+    }
+
+    /**
+     * Controls getting data(sub category title/s) from view and adding the sub category to the database.
+     * @return bool
+     */
+    public function create_subcategory()
+    {
+        if (!isset($_POST['mainCategory']) OR !isset($_POST['subCategories'])) {
+            return FALSE;
+        }
+        $main_category = $_POST['mainCategory'];
+        $data = array();
+        $this->load->model('Book');
+        foreach ($_POST['subCategories'] as $subcategory) {
+            // check whether the entered sub category exists. If not add the sub category.
+            if (!$this->Book->is_subcategory_available_in_main_category($subcategory, $main_category)) {
+                $new_Entry = array('subCategoryTitle' => $subcategory, 'categoryTitle' => $main_category);
+                array_push($data, $new_Entry);
+            }
+        }
+        return $this->Book->create_book_subcategories($data);
+    }
 
     /**
      * Controls getting data(book title) from view and returning the searched book to the view.
+     * @return bool
      */
-    public function searchBookByTitle()
+    public function search_book_by_title()
     {
         if (isset($_POST['title'])) {
             $title = $_POST['title'];
         } else if (isset($_GET['title'])) {
             $title = $_GET['title'];
         } else {
-            return false;
+            return FALSE;
         }
 
         if (isset($_GET['pageNo'])) {
-            $pageNo = $_GET['pageNo'];
+            $page_no = $_GET['pageNo'];
         } else {
-            $pageNo = 1;
+            $page_no = 1;
         }
-        $this->load->model('BookModel');
-        $count = $this->BookModel->getCountBooksByTitle($title);
-        $itemsPerPage = 20;
-        $lastPage = ceil($count / $itemsPerPage);
+        $this->load->model('Book');
+        $count = $this->Book->get_count_books_by_title($title);
+        $items_per_page = 20;
+        $last_page = ceil($count / $items_per_page);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $pageNo = (int)$pageNo;
-        if ($pageNo > $lastPage) {
-            $pageNo = $lastPage;
+        $page_no = (int)$page_no;
+        if ($page_no > $last_page) {
+            $page_no = $last_page;
         }
 
-        if ($pageNo < 1) {
-            $pageNo = 1;
+        if ($page_no < 1) {
+            $page_no = 1;
         }
 
-        $result = $this->BookModel->getLimitedBooksByTitle($title, $pageNo, $itemsPerPage);
-        if ($pageNo != $lastPage) {
-            $nextPage = $pageNo + 1;
-            $data['next'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$nextPage&title=$title";
-            $data['last'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$lastPage&title=$title";
+        $result = $this->Book->get_limited_books_by_title($title, $page_no, $items_per_page);
+        if ($page_no != $last_page) {
+            $next_page = $page_no + 1;
+            $data['next'] = site_url() . "/administrator/search_book_by_title/?pageNo=$next_page&title=$title";
+            $data['last'] = site_url() . "/administrator/search_book_by_title/?pageNo=$last_page&title=$title";
         }
-        if ($pageNo !== 1) {
-            $previousPage = $pageNo - 1;
-            $data['previous'] = site_url() . "/administrator/searchBookByTitle/?pageNo=$previousPage&title=$title";
-            $data['first'] = site_url() . "/administrator/searchBookByTitle/?pageNo=1&title=$title";
+        if ($page_no !== 1) {
+            $previous_page = $page_no - 1;
+            $data['previous'] = site_url() . "/administrator/search_book_by_title/?pageNo=$previous_page&title=$title";
+            $data['first'] = site_url() . "/administrator/search_book_by_title/?pageNo=1&title=$title";
         }
         $data['result'] = $result;
         $data['title'] = $title;
         if (!$result) {
-            $errorMessage = "No Search Results found";
-            $data['errorMessage'] = $errorMessage;
-            $this->load->view('admin/SearchResults', $data);
+            $error_message = 'No Search Results found';
+            $data['errorMessage'] = $error_message;
+            $this->load->view('admin/search_results', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('admin/SearchResults', $data);
+            $this->load->view('admin/search_results', $data);
         }
     }
 
     /**
      * Controls getting data(author name) from view and returning the searched book to the view.
+     * @return bool
      */
-    public function searchBooksByAuthor()
+    public function search_books_by_author()
     {
         if (isset($_POST['author'])) {
             $author = $_POST['author'];
         } else if (isset($_GET['author'])) {
             $author = $_GET['author'];
         } else {
-            return false;
+            return FALSE;
         }
 
         if (isset($_GET['pageNo'])) {
-            $pageNo = $_GET['pageNo'];
+            $page_no = $_GET['pageNo'];
         } else {
-            $pageNo = 1;
+            $page_no = 1;
         }
-        $this->load->model('BookModel');
-        $count = $this->BookModel->getCountBooksByAuthor($author);
-        $itemsPerPage = 20;
-        $lastPage = ceil($count / $itemsPerPage);
+        $this->load->model('Book');
+        $count = $this->Book->get_count_books_by_author($author);
+        $items_per_page = 20;
+        $last_page = ceil($count / $items_per_page);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $pageNo = (int)$pageNo;
-        if ($pageNo > $lastPage) {
-            $pageNo = $lastPage;
+        $page_no = (int)$page_no;
+        if ($page_no > $last_page) {
+            $page_no = $last_page;
         }
 
-        if ($pageNo < 1) {
-            $pageNo = 1;
+        if ($page_no < 1) {
+            $page_no = 1;
         }
 
-        $result = $this->BookModel->getLimitedBooksByAuthor($author, $pageNo, $itemsPerPage);
-        if ($pageNo != $lastPage) {
-            $nextPage = $pageNo + 1;
-            $data['next'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$nextPage&author=$author";
-            $data['last'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$lastPage&author=$author";
+        $result = $this->Book->get_limited_books_by_author($author, $page_no, $items_per_page);
+        if ($page_no != $last_page) {
+            $next_page = $page_no + 1;
+            $data['next'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$next_page&author=$author";
+            $data['last'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$last_page&author=$author";
         }
-        if ($pageNo !== 1) {
-            $previousPage = $pageNo - 1;
-            $data['previous'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$previousPage&author=$author";
+        if ($page_no !== 1) {
+            $previous_page = $page_no - 1;
+            $data['previous'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=$previous_page&author=$author";
             $data['first'] = site_url() . "/administrator/searchBookByAuthor/?pageNo=1&author=$author";
         }
         $data['result'] = $result;
         $data['author'] = $author;
         if (!$result) {
-            $errorMessage = "No Search Results found";
-            $data['errorMessage'] = $errorMessage;
-            $this->load->view('admin/SearchResults', $data);
+            $error_message = 'No Search Results found';
+            $data['errorMessage'] = $error_message;
+            $this->load->view('admin/search_results', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('admin/SearchResults', $data);
+            $this->load->view('admin/search_results', $data);
         }
     }
 
     /**
      * Controls getting data(book title and author name) from view and returning the searched book to the view.
+     * @return bool
      */
-    public function searchBookByTitleAndAuthor()
+    public function search_book_by_title_and_author()
     {
 
         if (isset($_POST['author'])) {
@@ -442,7 +469,7 @@ class Administrator extends CI_Controller
         } else if (isset($_GET['author'])) {
             $author = $_GET['author'];
         } else {
-            return false;
+            return FALSE;
         }
 
         if (isset($_POST['title'])) {
@@ -450,137 +477,141 @@ class Administrator extends CI_Controller
         } else if (isset($_GET['title'])) {
             $title = $_GET['title'];
         } else {
-            return false;
+            return FALSE;
         }
 
         if (isset($_GET['pageNo'])) {
-            $pageNo = $_GET['pageNo'];
+            $page_no = $_GET['pageNo'];
         } else {
-            $pageNo = 1;
+            $page_no = 1;
         }
-        $this->load->model('BookModel');
-        $count = $this->BookModel->getCountBooksByTitleAndAuthor($title, $author);
-        $itemsPerPage = 20;
-        $lastPage = ceil($count / $itemsPerPage);
+        $this->load->model('Book');
+        $count = $this->Book->get_count_books_by_title_and_author($title, $author);
+        $items_per_page = 20;
+        $last_page = ceil($count / $items_per_page);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $pageNo = (int)$pageNo;
-        if ($pageNo > $lastPage) {
-            $pageNo = $lastPage;
+        $page_no = (int)$page_no;
+        if ($page_no > $last_page) {
+            $page_no = $last_page;
         }
 
-        if ($pageNo < 1) {
-            $pageNo = 1;
+        if ($page_no < 1) {
+            $page_no = 1;
         }
 
-        $result = $this->BookModel->getLimitedBooksByTitleAndAuthor($title, $author, $pageNo, $itemsPerPage);
-        if ($pageNo != $lastPage) {
-            $nextPage = $pageNo + 1;
-            $data['next'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$nextPage&title=$title&author=$author";
-            $data['last'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$lastPage&title=$title&author=$author";
+        $result = $this->Book->get_limited_books_by_title_and_author($title, $author, $page_no, $items_per_page);
+        if ($page_no != $last_page) {
+            $next_page = $page_no + 1;
+            $data['next'] = site_url() . "/administrator/search_book_by_title_and_author/?pageNo=$next_page&title=$title&author=$author";
+            $data['last'] = site_url() . "/administrator/search_book_by_title_and_author/?pageNo=$last_page&title=$title&author=$author";
         }
-        if ($pageNo !== 1) {
-            $previousPage = $pageNo - 1;
-            $data['previous'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=$previousPage&title=$title&author=$author";
-            $data['first'] = site_url() . "/administrator/searchBookByTitleAndAuthor/?pageNo=1&title=$title&author=$author";
+        if ($page_no !== 1) {
+            $previous_page = $page_no - 1;
+            $data['previous'] = site_url() . "/administrator/search_book_by_title_and_author/?pageNo=$previous_page&title=$title&author=$author";
+            $data['first'] = site_url() . "/administrator/search_book_by_title_and_author/?pageNo=1&title=$title&author=$author";
         }
         $data['result'] = $result;
         $data['author'] = $author;
         if (!$result) {
-            $errorMessage = "No Search Results found";
-            $data['errorMessage'] = $errorMessage;
-            $this->load->view('admin/SearchResults', $data);
+            $error_message = 'No Search Results found';
+            $data['errorMessage'] = $error_message;
+            $this->load->view('admin/search_results', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('admin/SearchResults', $data);
+            $this->load->view('admin/search_results', $data);
         }
     }
 
     /**
      * Controls displaying details of a book in the view.
+     * @return bool
      */
-    public function viewBookDetails()
+    public function view_book_details()
     {
         if (isset($_GET['isbn'])) {
             $isbn = $_GET['isbn'];
         } else {
-            return false;
+            return FALSE;
         }
 
-        $this->load->model('BookModel');
-        $result = $this->BookModel->getBookByISBN($isbn);
+        $this->load->model('Book');
+        $result = $this->Book->get_book_by_isbn($isbn);
         if (!$result) {
-            $errorMessage = "Error occurred";
-            $data['errorMessage'] = $errorMessage;
-            $this->load->view('admin/BookDetails', $data);
+            $error_message = 'Error occurred';
+            $data['errorMessage'] = $error_message;
+            $this->load->view('admin/book_details', $data);
         } else {
             $data['book'] = $result[0];
-            $this->load->view('admin/BookDetails', $data);
+            $this->load->view('admin/book_details', $data);
         }
     }
 
     /**
      * Controls displaying statistics of books.
+     * @return void
      */
-    public function loadStatistics()
+    public function load_statistics()
     {
-        $this->load->view('admin/BookStatistics');
+        $this->load->view('admin/book_statistics');
     }
 
     /**
      * Returns information required to disply statistics graphs in BookStatistics page.
+     * @return String
      * 0: Error occurred when getting the number of views
      * 1: Request successful
      */
-    public function getStatGraphInfo() {
+    public function get_stat_graph_info()
+    {
         if (isset($_POST['numberOfDays'])) {
-            $numberOfDays = ceil($_POST['numberOfDays']);
-            $this->load->model('BookModel');
+            $number_of_days = ceil($_POST['numberOfDays']);
+            $this->load->model('Book');
 
-            $result1 = $this->BookModel->getMostViewedBooks(5);
-            $result2 = $this->BookModel->getMostViewedCategories(5);
-            $result3 = $this->BookModel->getMostViewedSubCategories(5);
-            $result4 = $this->BookModel->getTotalNumberOfBookViews($numberOfDays);
+            $result1 = $this->Book->get_most_viewed_books(5);
+            $result2 = $this->Book->get_most_viewed_categories(5);
+            $result3 = $this->Book->get_most_viewed_subcategories(5);
+            $result4 = $this->Book->get_total_number_of_book_views($number_of_days);
 
-            $topBooks = array();
-            $topBookViews = array();
-            $topCategories = array();
-            $topCategoryViews = array();
-            $topSubCategories = array();
-            $topSubCategoryViews = array();
-            $totalViews = array();
+            $top_books = array();
+            $top_book_views = array();
+            $top_categories = array();
+            $top_category_views = array();
+            $top_subcategories = array();
+            $top_subcategory_views = array();
+            $total_views = array();
             $dates = array();
 
-            if($result1){
-                foreach ($result1 as $topBook) {
-                    $topBooks[] = $topBook->title;
-                    $topBookViews[] = $topBook->total;
+            if ($result1) {
+                foreach ($result1 as $top_book) {
+                    $top_books[] = $top_book->title;
+                    $top_book_views[] = $top_book->total;
                 }
-                $data['topBooks'] = $topBooks;
-                $data['topBookViews'] = $topBookViews;
+                $data['topBooks'] = $top_books;
+                $data['topBookViews'] = $top_book_views;
             }
-            if($result2){
-                foreach ($result2 as $topCategory) {
-                    $topCategories[] = $topCategory->categoryTitle;
-                    $topCategoryViews[] = $topCategory->total;
+            if ($result2) {
+                foreach ($result2 as $top_category) {
+                    $top_categories[] = $top_category->categoryTitle;
+                    $top_category_views[] = $top_category->total;
                 }
-                $data['topCategories'] = $topCategories;
-                $data['topCategoryViews'] = $topCategoryViews;
+                $data['topCategories'] = $top_categories;
+                $data['topCategoryViews'] = $top_category_views;
             }
-            if($result3){
-                foreach ($result3 as $topSubCategory) {
-                    $topSubCategories[] = $topSubCategory->subCategoryTitle;
-                    $topSubCategoryViews[] = $topSubCategory->total;
+            if ($result3) {
+                foreach ($result3 as $top_subcategory) {
+                    $top_subcategories[] = $top_subcategory->subCategoryTitle;
+                    $top_subcategory_views[] = $top_subcategory->total;
                 }
-                $data['topSubCategories'] = $topSubCategories;
-                $data['topSubCategoryViews'] = $topSubCategoryViews;
+                $data['topSubCategories'] = $top_subcategories;
+                $data['topSubCategoryViews'] = $top_subcategory_views;
             }
-            if($result4){
-                foreach ($result4 as $viewPerDay) {
-                    $totalViews[] = $viewPerDay->NumberOfViews;
-                    $dates[] = $viewPerDay->visitedDate;
+            if ($result4) {
+                foreach ($result4 as $view_per_day) {
+                    $total_views[] = $view_per_day->NumberOfViews;
+                    $dates[] = $view_per_day->visitedDate;
                 }
-                $data['totalViews'] = $totalViews;
+                $data['totalViews'] = $total_views;
                 $data['dates'] = $dates;
             }
 
@@ -596,71 +627,77 @@ class Administrator extends CI_Controller
 
     /**
      * Loads the view for adding a book.
+     * @return void
      */
-    public function loadAdminPortal()
+    public function load_admin_portal()
     {
-        $this->load->view('admin/HomeView');
+        $this->load->view('admin/home_view');
     }
 
     /**
      * Loads the view for adding a book.
+     * @return void
      */
-    public function loadAddBook()
+    public function load_add_book()
     {
         $this->load->helper('form');
-        $mainCategories = $this->getAllCategories();
-        $authors = $this->getAllAuthors();
-        $publishers = $this->getAllPublishers();
-        if ($mainCategories) {
-            $data['mainCategories'] = $mainCategories;
+        $main_categories = $this->get_all_categories();
+        $authors = $this->get_all_authors();
+        $publishers = $this->get_all_publishers();
+        if ($main_categories) {
+            $data['mainCategories'] = $main_categories;
         }
         if ($authors) {
             $data['authors'] = $authors;
         }
         if (!$publishers) {
-            $this->load->view('admin/AddBook');
+            $this->load->view('admin/add_book');
         } else {
             $data['publishers'] = $publishers;
-            $this->load->view('admin/AddBook', $data);
+            $this->load->view('admin/add_book', $data);
         }
     }
 
     /**
      * Loads the view for adding a publisher.
+     * @return void
      */
-    public function loadAddPublisher()
+    public function load_add_publisher()
     {
-        $this->load->view('admin/AddPublisher');
+        $this->load->view('admin/add_publisher');
     }
 
     /**
      * Loads the view for adding a Main Category.
+     * @return void
      */
-    public function loadAddMainCategory()
+    public function load_add_main_category()
     {
-        $this->load->view('admin/AddMainCategory');
+        $this->load->view('admin/add_main_category');
     }
 
     /**
      * Loads the view for adding a Sub Category.
+     * @return void
      */
-    public function loadAddSubCategory()
+    public function load_add_subcategory()
     {
-        $result = $this->getAllCategories();
+        $result = $this->get_all_categories();
         if (!$result) {
-            $this->load->view('admin/AddSubCategory');
+            $this->load->view('admin/add_subcategory');
         } else {
             $data['mainCategories'] = $result;
-            $this->load->view('admin/AddSubCategory', $data);
+            $this->load->view('admin/add_subcategory', $data);
         }
     }
 
     /**
      * Loads the view for searching a book.
+     * @return void
      */
-    public function loadSearchBook()
+    public function load_search_book()
     {
-        $this->load->view('admin/Search');
+        $this->load->view('admin/search');
     }
 }
 

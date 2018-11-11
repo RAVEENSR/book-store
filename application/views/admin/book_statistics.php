@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'Header.php' ?>
+<?php include 'header.php' ?>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
+                        <li><a href="<?php echo site_url(); ?>/administrator/load_admin_portal">Home</a></li>
                         <li><a href="#" class="active">Book Statistics</a></li>
                     </ul>
                 </div>
@@ -38,7 +38,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="tab-pane active" id="stats1">
                                         <div class="chartContainer">
                                             <!-- store the base url to access in the js file -->
-                                            <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
+                                            <input type="text" class="hide" id="siteURL"
+                                                   value="<?php echo site_url(); ?>"/>
                                             <div>
                                                 <canvas id="topBooks"></canvas>
                                             </div>
@@ -113,4 +114,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </script>
 <?php } ?>
 <!-- product-main-area-end -->
-<?php include 'Footer.php' ?>
+<?php include 'footer.php' ?>
