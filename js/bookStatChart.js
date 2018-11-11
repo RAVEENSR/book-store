@@ -9,18 +9,18 @@ function loadSingleBookStats($isbn) {
             if (flag === '1') {
                 var dates = $.parseJSON(data).dates;
                 var views = $.parseJSON(data).views;
-                var barChartData = {
-                    labels: dates,
-                    datasets: [{
-                        fillColor: "rgba(255,128,0,1)",
-                        strokeColor: "black",
-                        data: [views]
-                    }]
-                };
-                var ctx = $('#singleBookViews')[0].getContext("2d");
-                var barChart = new Chart(ctx).Bar(barChartData, {
-                    responsive: true,
-                    barValueSpacing: 2
+
+                var barChart = new Chart($('#singleBookViews')[0], {
+                    type: 'bar',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: "Book Views",
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            data: views
+                        }],
+                    }
                 });
             } else {
                 alert('Error occurred when loading the statistics graph');
@@ -57,63 +57,59 @@ function loadStatGraphs() {
                 var dates = $.parseJSON(data).dates;
 
                 // bar chart for top books
-                var bookBarChartData = {
-                    labels: topBooks,
-                    datasets: [{
-                        fillColor: "rgba(255,128,0,1)",
-                        strokeColor: "black",
-                        data: topBookViews
-                    }]
-                };
-                var ctx = $('#topBooks')[0].getContext("2d");
-                var barChart1 = new Chart(ctx).Bar(bookBarChartData, {
-                    responsive: true,
-                    barValueSpacing: 2
+                var barChart1 = new Chart($('#topBooks')[0], {
+                    type: 'bar',
+                    data: {
+                        labels: topBooks,
+                        datasets: [{
+                            label: "Top Books",
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            data: topBookViews
+                        }],
+                    }
                 });
 /*--------------------------------------------------------------------------------------------------------------------*/
                 // bar chart for top categories
-                var categoryBarChartData = {
-                    labels: topCategories,
-                    datasets: [{
-                        fillColor: "rgba(255,128,0,1)",
-                        strokeColor: "black",
-                        data: topCategoryViews
-                    }]
-                };
-                var ctx = $('#topCategories')[0].getContext("2d");
-                var barChart2 = new Chart(ctx).Bar(categoryBarChartData, {
-                    responsive: true,
-                    barValueSpacing: 2
+                var barChart2 = new Chart($('#topCategories')[0], {
+                    type: 'bar',
+                    data: {
+                        labels: topCategories,
+                        datasets: [{
+                            label: "Main Categories",
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            data: topCategoryViews
+                        }],
+                    }
                 });
 /*--------------------------------------------------------------------------------------------------------------------*/
                 // bar chart for top subCategories
-                var subCategoryBarChartData = {
-                    labels: topSubCategories,
-                    datasets: [{
-                        fillColor: "rgba(255,128,0,1)",
-                        strokeColor: "black",
-                        data: topSubCategoryViews
-                    }]
-                };
-                var ctx = $('#topSubCategories')[0].getContext("2d");
-                var barChart3 = new Chart(ctx).Bar(subCategoryBarChartData, {
-                    responsive: true,
-                    barValueSpacing: 2
+                var barChart3 = new Chart($('#topSubCategories')[0], {
+                    type: 'bar',
+                    data: {
+                        labels: topSubCategories,
+                        datasets: [{
+                            label: "Sub Categories",
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            data: topSubCategoryViews
+                        }],
+                    }
                 });
 /*---------------------------------------------------------------------------------------------------------------------*/
                 // line chart for total book views
-                var totalViewBarChartData = {
-                    labels: dates,
-                    datasets: [{
-                        fillColor: "rgba(255,128,0,1)",
-                        strokeColor: "black",
-                        data: totalViews
-                    }]
-                };
-                var ctx = $('#topSingleBookViews')[0].getContext("2d");
-                var barChart4 = new Chart(ctx).Bar(totalViewBarChartData, {
-                    responsive: true,
-                    barValueSpacing: 1
+                var lineChart = new Chart($('#topSingleBookViews')[0], {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: "Book Views",
+                            borderColor: "#000000",
+                            borderWidth: 3,
+                            data: totalViews
+                        }],
+                    }
                 });
             } else {
                 alert('Error occurred when loading the statistics graphs');

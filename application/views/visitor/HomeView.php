@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php include 'Header.php' ?>
-
+<!-- js file for Add to Cart -->
+<script src="<?php echo base_url();?>js/manageCart.js"></script>
 <!-- slider-area-start -->
 <div class="slider-area mt-30">
     <div class="container">
@@ -11,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row">
                     <div class="col-md-12">
                         <div class="slider-content-3 slider-animated-1 pl-100">
-                            <h1>A Game <br>Fuck up</h1>
+                            <h1>Read More <br>Spend Less</h1>
                             <p class="slider-sale">
                                 <span class="sale1">-20%</span>
                                 <span class="sale2">
@@ -19,23 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             £60.00
                                         </span>
                             </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="single-slider pt-100 pb-145 bg-img" style="background-image:url(<?php echo base_url();?>img/slider/12.jpg);">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="slider-content-3 slider-animated-1 pl-100">
-                            <h1>Wake The <br>of Thrones</h1>
-                            <p class="slider-sale">
-                                <span class="sale1">-20%</span>
-                                <span class="sale2">
-                                            <strong>£80.00</strong>
-                                            £60.00
-                                        </span>
-                            </p>
-                            <a href="#">Shop now!</a>
                         </div>
                     </div>
                 </div>
@@ -57,36 +41,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <div class="tab-active owl-carousel">
-            <?php for ($x=1; $x<= 6; $x++) { ?>
+            <?php foreach($newBooks as $book) { ?>
             <div class="tab-total">
                 <!-- single-product-start -->
                 <div class="product-wrapper">
                     <div class="product-img">
-                        <a href="#">
-                            <img src="<?php echo base_url();?>img/product/1.jpg" alt="book" class="primary" />
+                        <a href="<?php echo site_url().'/administrator/viewBookDetails/?isbn='
+                            .$book->isbnNo;?>">
+                            <img src="<?php echo base_url().$book->imageURL;?>" alt="book" class="primary" />
                         </a>
-                        <div class="product-flag">
-                            <ul>
-                                <li><span class="sale">new</span> <br></li>
-                                <li><span class="discount-percentage">-5%</span></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="product-details text-center">
-                        <h4><a href="#">Joust Duffle Bag</a></h4>
+                        <h4><a href="<?php echo site_url().'/administrator/viewBookDetails/?isbn='
+                                .$book->isbnNo;?>"><?php echo $book->title;?></a></h4>
                         <div class="product-price">
                             <ul>
-                                <li>$60.00</li>
+                                <li>$<?php echo $book->price;?></li>
                             </ul>
                         </div>
                     </div>
                     <div class="product-link">
                         <div class="product-button">
-                            <a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <button type="button" id="<?php echo $book->isbnNo;?>"
+                                    class="btn btn-default"
+                                    onclick="addToCart(this.id)">Add to Cart</button>
                         </div>
                         <div class="add-to-link">
                             <ul>
-                                <li><a href="product-details.html" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                <li><a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                        .$book->isbnNo;?>" title="Details"><i class="fa fa-external-link"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -120,7 +103,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- new releases-area-start -->
 <div class="new-book-area  pb-50">
     <div class="container">
-        <div class="row">
+        <div class="row" id="newReleases">
             <div class="col-lg-12">
                 <div class="section-title section-title-res text-center mb-30">
                     <h2>New Releases</h2>
@@ -129,13 +112,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <div class="tab-active owl-carousel">
-            <?php for ($x=1; $x<= 5; $x++) { ?>
+            <!-- store the base url to access in the js file -->
+            <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
+            <?php foreach($editorBooks as $book) { ?>
                 <div class="tab-total">
                     <!-- single-product-start -->
                     <div class="product-wrapper">
                         <div class="product-img">
-                            <a href="#">
-                                <img src="<?php echo base_url();?>img/product/1.jpg" alt="book" class="primary" />
+                            <a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                .$book->isbnNo;?>">
+                                <img src="<?php echo base_url().$book->imageURL;?>" alt="book" class="primary" />
                             </a>
                             <div class="product-flag">
                                 <ul>
@@ -144,20 +130,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="product-details text-center">
-                            <h4><a href="#">Joust Duffle Bag</a></h4>
+                            <h4><a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                    .$book->isbnNo;?>"><?php echo $book->title;?></a></h4>
                             <div class="product-price">
                                 <ul>
-                                    <li>$60.00</li>
+                                    <li>$<?php echo $book->price;?></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="product-link">
                             <div class="product-button">
-                                <a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                <button type="button" id="<?php echo $book->isbnNo;?>"
+                                        class="btn btn-default"
+                                        onclick="addToCart(this.id)">Add to Cart</button>
                             </div>
                             <div class="add-to-link">
                                 <ul>
-                                    <li><a href="product-details.html" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                    <li><a href="<?php echo site_url().'/visitor/viewBookDetails/?isbn='
+                                            .$book->isbnNo;?>" title="Details"><i class="fa fa-external-link"></i></a></li>
                                 </ul>
                             </div>
                         </div>

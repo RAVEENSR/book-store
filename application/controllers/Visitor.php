@@ -13,7 +13,12 @@ class Visitor extends CI_Controller {
 
     public function index()
     {
-        $this->load->view('visitor/HomeView');
+        $this->load->model('BookModel');
+        $result1 = $this->BookModel->getNewestBooks(5);
+        $result2 = $this->BookModel->getEditorPickedBooks(5);
+        $data['newBooks'] = $result1;
+        $data['editorBooks'] = $result2;
+        $this->load->view('visitor/HomeView', $data);
     }
 
     /**

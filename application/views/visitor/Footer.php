@@ -11,9 +11,9 @@
                         </div>
                         <div class="footer-mid-menu">
                             <ul>
-                                <li><a href="about.html">Categories</a></li>
-                                <li><a href="#">New books</a></li>
-                                <li><a href="#">Editors' Corner</a></li>
+                                <li><a href="<?php echo site_url();?>/visitor/viewAllBooks">Categories</a></li>
+                                <li><a href="<?php echo site_url();?>#newReleases">New books</a></li>
+                                <li><a href="<?php echo site_url();?>#editorsCorner">Editors' Corner</a></li>
                             </ul>
                         </div>
                     </div>
@@ -25,11 +25,9 @@
                         </div>
                         <div class="footer-mid-menu">
                             <ul>
-                                <li><a href="contact.html">My Cart</a></li>
-                                <li><a href="#">Recommended for you</a></li>
-                                <li><a href="#">Search a book</a></li>
-                                <li></li>
-                                <li></li>
+                                <li><a href="<?php echo site_url();?>">Home</a></li>
+                                <li><a href="<?php echo site_url();?>/visitor/viewCart">My Cart</a></li>
+                                <li><a href="<?php echo site_url();?>/visitor/viewAllBooks">Search a book</a></li>
                             </ul>
                         </div>
                     </div>

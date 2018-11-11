@@ -125,7 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 <?php } ?>
 <!-- book stat chart js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
 <script src="<?php echo base_url(); ?>js/bookStatChart.js"></script>
 <!-- product-main-area-end -->
 <?php include 'Footer.php' ?>

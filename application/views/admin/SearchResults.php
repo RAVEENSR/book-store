@@ -49,7 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </a>
                                     </div>
                                     <div class="product-details text-center">
-                                        <h4><a href="#abc"><?php echo $book->title;?></a></h4>
+                                        <h4><a href="<?php echo site_url().'/administrator/viewBookDetails/?isbn='
+                                                .$book->isbnNo;?>"><?php echo $book->title;?></a></h4>
                                         <div class="product-price">
                                             <ul>
                                                 <li>$<?php echo $book->price;?></li>

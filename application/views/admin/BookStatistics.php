@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="active"><a href="#stats1" data-toggle="tab"
-                                                          aria-expanded="true">Top 5 Books</a></li>
+                                                          aria-expanded="true">Top 5 Book Views</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="stats1">
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="active"><a href="#stats2" data-toggle="tab"
-                                                          aria-expanded="true">Top 5 Main Book Categories</a></li>
+                                                          aria-expanded="true">Top 5 Main Book Category Views</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="stats2">
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="active"><a href="#stats3" data-toggle="tab"
-                                                          aria-expanded="true">Top 5 Sub Book Categories</a></li>
+                                                          aria-expanded="true">Top 5 Sub Book Category Views</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="stats3">
@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="active"><a href="#stats4" data-toggle="tab"
-                                                          aria-expanded="true">Total book views in past 30 days</a></li>
+                                                          aria-expanded="true">Total Book Views in past 30 days</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="stats4">
@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <!-- book stat chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
     <script src="<?php echo base_url(); ?>js/bookStatChart.js"></script>
 
     <script>// loads the graphs

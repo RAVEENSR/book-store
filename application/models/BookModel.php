@@ -778,6 +778,44 @@ class BookModel extends CI_Model {
     }
 
     /**
+     * Gets the newest books  in the database.
+     * @param $numberOfBooks Number number of result books needed
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getNewestBooks($numberOfBooks) {
+        // get the result rows from the 'book' table
+        $this->db->select('*');
+        $this->db->order_by('isbnNo', 'DESC');
+        $this->db->limit($numberOfBooks);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
+     * Gets the vary first books in the database.
+     * @param $numberOfBooks Number number of result books needed
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
+     */
+    public function getEditorPickedBooks($numberOfBooks) {
+        // get the result rows from the 'book' table
+        $this->db->select('*');
+        $this->db->order_by('isbnNo', 'ASC');
+        $this->db->limit($numberOfBooks);
+        $result = $this->db->get('book');
+        // check the number of rows in the result
+        if ($result->num_rows() == 0) {
+            return false;
+        } else {
+            return $result->result();
+        }
+    }
+
+    /**
      * Checks whether a Main Category title is available in the database.
      * @param $mainCategory String Name of the Main Category
      * @return bool Returns true if main category title is available, false if not.
