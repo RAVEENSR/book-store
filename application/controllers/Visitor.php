@@ -62,14 +62,14 @@ class Visitor extends CI_Controller
             $book_result = $this->Book->get_book_by_isbn($isbn);
             if (!$book_result) {
                 echo '3';
-                exit;
+                return;
             }
 
             $book = $book_result[0];
             $available_copies = $book->availableCopies;
             if ($quantity > $available_copies) {
                 echo '0';
-                exit;
+                return;
             }
 
             // get the cart from the session
@@ -78,7 +78,7 @@ class Visitor extends CI_Controller
                 $found_item = $this->_is_book_available_in_cart($user_cart, $isbn);
                 if ($found_item) {
                     echo '1';
-                    exit;
+                    return;
                 }
                 // add the book to the cart if book is not in the cart
                 $book_item = array(
@@ -91,7 +91,6 @@ class Visitor extends CI_Controller
                 $user_cart[] = $book_item;
                 $this->session->set_userdata('bookCart', $user_cart);
                 echo '2';
-                exit;
 
             } else {
                 // if the user do not has a cart create a cart and save the book item
@@ -106,11 +105,9 @@ class Visitor extends CI_Controller
                 $user_cart[] = $book_item;
                 $this->session->set_userdata('bookCart', $user_cart);
                 echo '2';
-                exit;
             }
         } else {
             echo '3';
-            exit;
         }
     }
 
@@ -187,7 +184,6 @@ class Visitor extends CI_Controller
         } else {
             $data['status'] = '2';
             echo json_encode($data);
-            exit;
         }
     }
 

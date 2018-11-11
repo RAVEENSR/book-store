@@ -44,13 +44,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- single-product-start -->
                     <div class="product-wrapper">
                         <div class="product-img">
-                            <a href="<?php echo site_url() . '/administrator/view_book_details/?isbn='
+                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
                                 . $book->isbnNo; ?>">
                                 <img src="<?php echo base_url() . $book->imageURL; ?>" alt="book" class="primary"/>
                             </a>
                         </div>
                         <div class="product-details text-center">
-                            <h4><a href="<?php echo site_url() . '/administrator/view_book_details/?isbn='
+                            <h4><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
                                     . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
                             <div class="product-price">
                                 <ul>
