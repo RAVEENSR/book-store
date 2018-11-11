@@ -71,7 +71,6 @@ class Administrator extends CI_Controller
         }
         $data['result'] = $subcategories;
         echo json_encode($data);
-        exit;
     }
 
     /**
@@ -90,7 +89,6 @@ class Administrator extends CI_Controller
             $flag = TRUE;
         }
         echo json_encode($flag);
-        exit;
     }
 
     /**
@@ -104,7 +102,6 @@ class Administrator extends CI_Controller
         // flag determines the validity of the isbn number
         $flag = $this->Book->is_publisher_available($publisher_name);
         echo json_encode(!$flag);
-        exit;
     }
 
     /**
@@ -118,7 +115,6 @@ class Administrator extends CI_Controller
         // flag determines the validity of the isbn number
         $flag = $this->Book->is_category_available($category_name);
         echo json_encode(!$flag);
-        exit;
     }
 
     /**
@@ -132,7 +128,6 @@ class Administrator extends CI_Controller
         // flag determines the validity of the isbn number
         $flag = $this->Book->is_subcategory_available($subcategory_name);
         echo json_encode(!$flag);
-        exit;
     }
 
     /**
@@ -280,7 +275,6 @@ class Administrator extends CI_Controller
                 $data['dates'] = $dates;
                 $data['views'] = $views;
                 echo json_encode($data);
-                exit;
             } else {
                 foreach ($results as $bookView) {
                     $dates[] = $bookView->visitedDate;
@@ -290,12 +284,10 @@ class Administrator extends CI_Controller
                 $data['dates'] = $dates;
                 $data['views'] = $views;
                 echo json_encode($data);
-                exit;
             }
         } else {
             $data['status'] = '0';
             echo json_encode($data);
-            exit;
         }
     }
 
@@ -617,11 +609,9 @@ class Administrator extends CI_Controller
 
             $data['status'] = '1';
             echo json_encode($data);
-            exit;
         } else {
             $data['status'] = '0';
             echo json_encode($data);
-            exit;
         }
     }
 

@@ -229,3 +229,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <!-- shop-main-area-end -->
 <?php include 'Footer.php' ?>
+
