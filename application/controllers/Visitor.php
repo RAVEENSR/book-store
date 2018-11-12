@@ -23,9 +23,14 @@ class Visitor extends CI_Controller
         $this->load->model('Book');
         $result1 = $this->Book->get_newest_books(5);
         $result2 = $this->Book->get_editor_picked_books(5);
-        $data['newBooks'] = $result1;
-        $data['editorBooks'] = $result2;
-        $this->load->view('visitor/home_view', $data);
+        if ($result1 && $result2) {
+            $data['newBooks'] = $result1;
+            $data['editorBooks'] = $result2;
+            $this->load->view('visitor/home_view', $data);
+        } else {
+            $this->load->view('visitor/home_view');
+        }
+
     }
 
     /**

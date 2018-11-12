@@ -158,7 +158,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </li>
                                 <li><a href="<?php echo site_url(); ?>/#editorsCorner">Editors' Corner</a>
                                 </li>
-                                <li><a href="#contactUs">Contact Us</a>
+                                <li><a href="<?php echo site_url(); ?>/#contactUs">Contact Us</a>
                                 </li>
                             </ul>
                         </nav>
@@ -181,13 +181,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li><a href="#">Categories</a>
                                     <ul>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1">Education</a></li>
+                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=1">Education</a></li>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2">Technology</a></li>
+                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=5">Technology</a
+                                            ></li>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3">Science</a></li>
-                                        <li><a href=<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4">Mathematics</a></li>
+                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=9">Science</a></li>
+                                        <li><a href="<?php echo site_url();
+                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=13">Mathematics</a></li>
                                         <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">View all
                                                 categories <i class="fa fa-angle-right"></i></a></li>
                                     </ul>
@@ -196,7 +197,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </li>
                                 <li><a href="<?php echo site_url(); ?>/#editorsCorner">Editors' Corner</a>
                                 </li>
-                                <li><a href="#contactUs">Contact Us</a>
+                                <li><a href="<?php echo site_url(); ?>/#contactUs">Contact Us</a>
                                 </li>
                             </ul>
                         </nav>

@@ -56,61 +56,70 @@ function loadStatGraphs() {
                 var totalViews = $.parseJSON(data).totalViews;
                 var dates = $.parseJSON(data).dates;
 
+
                 // bar chart for top books
-                var barChart1 = new Chart($('#topBooks')[0], {
-                    type: 'bar',
-                    data: {
-                        labels: topBooks,
-                        datasets: [{
-                            label: "Top Books",
-                            borderColor: "#000000",
-                            borderWidth: 3,
-                            data: topBookViews
-                        }],
-                    }
-                });
+                if(topBookViews && topBooks) {
+                    var barChart1 = new Chart($('#topBooks')[0], {
+                        type: 'bar',
+                        data: {
+                            labels: topBooks,
+                            datasets: [{
+                                label: "Top Books",
+                                borderColor: "#000000",
+                                borderWidth: 3,
+                                data: topBookViews
+                            }],
+                        }
+                    });
+                }
                 /*----------------------------------------------------------------------------------------------------*/
                 // bar chart for top categories
-                var barChart2 = new Chart($('#topCategories')[0], {
-                    type: 'bar',
-                    data: {
-                        labels: topCategories,
-                        datasets: [{
-                            label: "Main Categories",
-                            borderColor: "#000000",
-                            borderWidth: 3,
-                            data: topCategoryViews
-                        }],
-                    }
-                });
+                if(topCategories && topCategoryViews) {
+                    var barChart2 = new Chart($('#topCategories')[0], {
+                        type: 'bar',
+                        data: {
+                            labels: topCategories,
+                            datasets: [{
+                                label: "Main Categories",
+                                borderColor: "#000000",
+                                borderWidth: 3,
+                                data: topCategoryViews
+                            }],
+                        }
+                    });
+                }
                 /*----------------------------------------------------------------------------------------------------*/
                 // bar chart for top subCategories
-                var barChart3 = new Chart($('#topSubCategories')[0], {
-                    type: 'bar',
-                    data: {
-                        labels: topSubCategories,
-                        datasets: [{
-                            label: "Sub Categories",
-                            borderColor: "#000000",
-                            borderWidth: 3,
-                            data: topSubCategoryViews
-                        }],
-                    }
-                });
+                if(topSubCategories && topSubCategoryViews) {
+                    var barChart3 = new Chart($('#topSubCategories')[0], {
+                        type: 'bar',
+                        data: {
+                            labels: topSubCategories,
+                            datasets: [{
+                                label: "Sub Categories",
+                                borderColor: "#000000",
+                                borderWidth: 3,
+                                data: topSubCategoryViews
+                            }],
+                        }
+                    });
+                }
                 /*----------------------------------------------------------------------------------------------------*/
                 // line chart for total book views
-                var lineChart = new Chart($('#topSingleBookViews')[0], {
-                    type: 'line',
-                    data: {
-                        labels: dates,
-                        datasets: [{
-                            label: "Book Views",
-                            borderColor: "#000000",
-                            borderWidth: 3,
-                            data: totalViews
-                        }],
-                    }
-                });
+                if(dates && totalViews) {
+                    var lineChart = new Chart($('#topSingleBookViews')[0], {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [{
+                                label: "Book Views",
+                                borderColor: "#000000",
+                                borderWidth: 3,
+                                data: totalViews
+                            }],
+                        }
+                    });
+                }
             } else {
                 alert('Error occurred when loading the statistics graphs');
             }

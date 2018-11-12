@@ -39,7 +39,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <div class="tab-active owl-carousel">
-            <?php foreach ($newBooks as $book) { ?>
+            <?php if(isset($editorBooks)) {
+                foreach ($editorBooks as $book) { ?>
                 <div class="tab-total">
                     <!-- single-product-start -->
                     <div class="product-wrapper">
@@ -76,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- single-product-end -->
                 </div>
-            <?php } ?>
+            <?php } } ?>
         </div>
     </div>
 </div>
@@ -114,7 +115,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="tab-active owl-carousel">
             <!-- store the base url to access in the js file -->
             <input type="text" class="hide" id="siteURL" value="<?php echo site_url(); ?>"/>
-            <?php foreach ($editorBooks as $book) { ?>
+            <?php if(isset($newBooks))
+                foreach ($newBooks as $book) { ?>
                 <div class="tab-total">
                     <!-- single-product-start -->
                     <div class="product-wrapper">

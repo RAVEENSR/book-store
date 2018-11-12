@@ -230,12 +230,27 @@ class Administrator extends CI_Controller
                 'edition' => $edition,
                 'imageURL' => $img);
             $result = $this->Book->add_book($newEntry);
+            $data = array();
             // flag determines the validity
             $flag = FALSE;
             if ($result) {
                 $flag = TRUE;
             }
-            echo json_encode($flag);
+            // get updated authors
+            $result2 = $this->Book->get_all_authors();
+            // if results not found FALSE will be returned
+            $authors = array();
+            if (!$result2) {
+                $flag = FALSE;
+            } else {
+                foreach ($result2 as $row) {
+                    // row is an object, attributes are columns in the table
+                    $authors[] = $row->authorName;
+                }
+            }
+            $data['result'] = $flag;
+            $data['authors'] = $authors;
+            echo json_encode($data);
         }
     }
 

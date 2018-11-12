@@ -70,9 +70,9 @@ class Login extends CI_Controller
     /**
      * Controls admin registering process.
      */
-    private function register()
+    private function _register()
     {
-        $this->load->model('Login_Model');
+        $this->load->model('Login_model');
         $this->Login_model->register('admin', 'password', 'John', 'Doe');
     }
 }

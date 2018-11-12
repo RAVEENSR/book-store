@@ -126,12 +126,28 @@ $(document).ready(function () {
             cache: false,
             async: false,
             success: function (data) {
-                var flag = $.parseJSON(data);
+                var flag = $.parseJSON(data).result;
                 if (!flag) {
                     alertSection.html('<div class="alert alert-danger">Error occurred when adding the book.</div>');
                 } else {
                     alertSection.html('<div class="alert alert-success">Successfully added the book.</div>');
                     $('#addBookForm').trigger("reset");
+                    var authorSelectSection = $('#author');
+                    if ($.parseJSON(data).hasOwnProperty('authors')) {
+                        var authors = $.parseJSON(data).authors;
+
+                        var htmlString = "<select class=\"form-control author-select\" id=\"author\" required>\n" +
+                            "                            <option value=\"\" disabled selected>Select an author or add new author</option>";
+                        for (var i = 0; i < authors.length; i++) {
+                            htmlString += "<option>" + authors[i] + "</option>";
+                        }
+                        htmlString += "</select>";
+                        authorSelectSection.html(htmlString);
+                    } else {
+                        var htmlString = "<select class=\"form-control author-select\" id=\"author\" required>\n" +
+                            "                            <option value=\"\" disabled selected>Select an author or add new author</option></select>";
+                        authorSelectSection.html(htmlString);
+                    }
                 }
             },
             error: function (XHR, status, response) {
