@@ -1,7 +1,7 @@
 function loadSingleBookStats($isbn) {
     var siteURL = $('#siteURL')[0].value;
     $.ajax({
-        url: siteURL + '/administrator/get_views_for_book_for_last_days',
+        url: siteURL + '/administrator/getViewsForBookForLastDays',
         type: "post",
         data: {isbn: $isbn, numberOfDays: 30},
         success: function (data) {
@@ -38,7 +38,7 @@ function loadSingleBookStats($isbn) {
 function loadStatGraphs() {
     var siteURL = $('#siteURL')[0].value;
     $.ajax({
-        url: siteURL + '/administrator/get_stat_graph_info',
+        url: siteURL + '/administrator/getStatGraphInfo',
         type: "post",
         data: {numberOfDays: 30},
         success: function (data) {

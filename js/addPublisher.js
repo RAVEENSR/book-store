@@ -19,7 +19,7 @@ function validatePublisherForm() {
     data['contactNo'] = contactNo;
 
     $.ajax({
-        url: siteURL + "/administrator/add_publisher",
+        url: siteURL + "/administrator/addPublisher",
         type: "POST",
         data: {publisherData: data},
         success: function (data) {
@@ -45,7 +45,7 @@ function validatePublisherName() {
     var siteURL = $('#siteURL')[0].value;
 
     $.ajax({
-        url: siteURL + "/administrator/validate_publisher_name",
+        url: siteURL + "/administrator/validatePublisherName",
         type: "POST",
         data: {publisherName: publisherName},
         success: function (data) {

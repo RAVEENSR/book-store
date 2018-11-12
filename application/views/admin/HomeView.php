@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
     <!-- breadcrumbs-area-start -->
     <div class="breadcrumbs-area mb-70">
         <div class="container">
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_add_book">
+                    <a href="<?php echo site_url(); ?>/administrator/loadAddBook">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/addBook.png" alt="Add Book"/>
@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_search_book">
+                    <a href="<?php echo site_url(); ?>/administrator/loadSearchBook">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/searchBook.png" alt="Search Book"/>
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_add_main_category">
+                    <a href="<?php echo site_url(); ?>/administrator/loadAddMainCategory">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/mainCategory.png"
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_add_subcategory">
+                    <a href="<?php echo site_url(); ?>/administrator/loadAddSubCategory">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/subCategory.png"
@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_add_publisher">
+                    <a href="<?php echo site_url(); ?>/administrator/loadAddPublisher">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/publisher.png" alt="Add Publisher"/>
@@ -102,7 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="<?php echo site_url(); ?>/administrator/load_statistics">
+                    <a href="<?php echo site_url(); ?>/administrator/loadStatistics">
                         <div class="single-banner">
                             <div class="banner-img">
                                 <img src="<?php echo base_url(); ?>img/banner/stats.png" alt="Book Stats"/>
@@ -120,4 +120,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- banner-area-end -->
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

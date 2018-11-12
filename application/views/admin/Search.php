@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
 
     <!-- breadcrumbs-area-start -->
     <div class="breadcrumbs-area mb-20">
@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <div class="breadcrumbs-menu">
                         <ul>
-                            <li><a href="<?php echo site_url(); ?>/administrator/load_admin_portal">Home</a></li>
+                            <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
                             <li><a href="#" class="active">Book Search</a></li>
                         </ul>
                     </div>
@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="tab-content">
                         <div class="tab-pane active" id="Title">
                             <div class="login-form">
-                                <form action="<?php echo site_url(); ?>/administrator/search_book_by_title"
+                                <form action="<?php echo site_url(); ?>/administrator/searchBookByTitle"
                                       method="POST">
                                     <div class="form-group">
                                         <label for="title">Title<span>*</span></label>
@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="tab-pane" id="Author">
                             <div class="login-form">
-                                <form action="<?php echo site_url(); ?>/administrator/search_books_by_author"
+                                <form action="<?php echo site_url(); ?>/administrator/searchBooksByAuthor"
                                       method="POST">
                                     <div class="form-group">
                                         <label for="author">Author<span>*</span></label>
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="tab-pane" id="TitleAuthor">
                             <div class="login-form">
-                                <form action="<?php echo site_url(); ?>/administrator/search_book_by_title_and_author"
+                                <form action="<?php echo site_url(); ?>/administrator/searchBookByTitleAndAuthor"
                                       method="POST">
                                     <div class="form-group">
                                         <label for="title">Title<span>*</span></label>
@@ -93,4 +93,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <!-- admin-search-area-end -->
 
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

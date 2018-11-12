@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
 <!-- js file for Add to Cart -->
 <script src="<?php echo base_url(); ?>js/manageCart.js"></script>
 <!-- slider-area-start -->
@@ -45,13 +45,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- single-product-start -->
                     <div class="product-wrapper">
                         <div class="product-img">
-                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                            <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                 . $book->isbnNo; ?>">
                                 <img src="<?php echo base_url() . $book->imageURL; ?>" alt="book" class="primary"/>
                             </a>
                         </div>
                         <div class="product-details text-center">
-                            <h4><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                            <h4><a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                     . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
                             <div class="product-price">
                                 <ul>
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="add-to-link">
                                 <ul>
-                                    <li><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                    <li><a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                             . $book->isbnNo; ?>" title="Details"><i class="fa fa-external-link"></i></a>
                                     </li>
                                 </ul>
@@ -121,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- single-product-start -->
                     <div class="product-wrapper">
                         <div class="product-img">
-                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                            <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                 . $book->isbnNo; ?>">
                                 <img src="<?php echo base_url() . $book->imageURL; ?>" alt="book" class="primary"/>
                             </a>
@@ -132,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="product-details text-center">
-                            <h4><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                            <h4><a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                     . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
                             <div class="product-price">
                                 <ul>
@@ -149,7 +149,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="add-to-link">
                                 <ul>
-                                    <li><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                    <li><a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                             . $book->isbnNo; ?>" title="Details"><i class="fa fa-external-link"></i></a>
                                     </li>
                                 </ul>
@@ -217,4 +217,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- banner-area-end -->
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

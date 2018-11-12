@@ -12,7 +12,7 @@ function addToCart(bookId) {
         }
 
         $.ajax({
-            url: siteURL + "/visitor/add_to_cart",
+            url: siteURL + "/visitor/addToCart",
             type: "POST",
             data: {isbn: bookId, quantity: quantity},
             success: function (data) {

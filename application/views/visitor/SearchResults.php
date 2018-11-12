@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
     <!-- breadcrumbs-area-start -->
     <div class="breadcrumbs-area mb-20">
         <div class="container">
@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <!-- single-product-start -->
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                    <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                         . $book->isbnNo; ?>">
                                                         <img src="<?php echo base_url() . $book->imageURL; ?>"
                                                              alt="book"
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                                 <div class="product-details text-center">
                                                     <h4>
-                                                        <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
+                                                        <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                             . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
                                                     <div class="product-price">
                                                         <ul>
@@ -99,4 +99,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- search-results-main-area-start -->
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

@@ -107,54 +107,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <span>
                                             <a href="#" class="title">Education</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=1">Finance</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=1&subCatId=1">Finance</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=2">Higher</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=1&subCatId=2">Higher</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=3">History</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=1&subCatId=3">History</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=4">Health</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=1&subCatId=4">Health</a>
                                         </span>
                                         <span>
                                             <a href="#" class="title">Technology</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=5">Electricity</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=2&subCatId=5">Electricity</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=6">Engineering</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=2&subCatId=6">Engineering</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=7">Food</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=2&subCatId=7">Food</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=8">Robotics</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=2&subCatId=8">Robotics</a>
                                         </span>
                                         <span>
                                             <a href="#" class="title">Science</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=9">Biology</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=3&subCatId=9">Biology</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=10">Chemistry</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=3&subCatId=10">Chemistry</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=11">Energy</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=3&subCatId=11">Energy</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=12">Physics</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=3&subCatId=12">Physics</a>
                                         </span>
                                         <span>
                                             <a href="#" class="title">Mathematics</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=13">General</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=4&subCatId=13">General</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=14">Applied</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=4&subCatId=14">Applied</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=15">Geometry</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=4&subCatId=15">Geometry</a>
                                             <a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=16">Logic</a>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=4&subCatId=16">Logic</a>
                                         </span>
                                         <span>
-                                            <a href="<?php echo site_url(); ?>/visitor/view_all_books">View all
+                                            <a href="<?php echo site_url(); ?>/visitor/viewAllBooks">View all
                                                 categories<i class="fa fa-angle-right"></i></a>
                                         </span>
                                     </div>
                                 </li>
-                                <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">Browse</a>
+                                <li><a href="<?php echo site_url(); ?>/visitor/viewAllBooks">Browse</a>
                                 </li>
                                 <li><a href="<?php echo site_url(); ?>/#editorsCorner">Editors' Corner</a>
                                 </li>
@@ -181,19 +181,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li><a href="#">Categories</a>
                                     <ul>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=1&subCatId=1">Education</a></li>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=1&subCatId=1">Education</a></li>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=2&subCatId=5">Technology</a
+                                            ?>/visitor/viewBooksByCategory?mainCatId=2&subCatId=5">Technology</a
                                             ></li>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=3&subCatId=9">Science</a></li>
+                                            ?>/visitor/viewBooksByCategory?mainCatId=3&subCatId=9">Science</a></li>
                                         <li><a href="<?php echo site_url();
-                                            ?>/visitor/view_books_by_category?mainCatId=4&subCatId=13">Mathematics</a></li>
-                                        <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">View all
+                                            ?>/visitor/viewBooksByCategory?mainCatId=4&subCatId=13">Mathematics</a></li>
+                                        <li><a href="<?php echo site_url(); ?>/visitor/viewAllBooks">View all
                                                 categories <i class="fa fa-angle-right"></i></a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<?php echo site_url(); ?>/visitor/view_all_books">Browse</a>
+                                <li><a href="<?php echo site_url(); ?>/visitor/viewAllBooks">Browse</a>
                                 </li>
                                 <li><a href="<?php echo site_url(); ?>/#editorsCorner">Editors' Corner</a>
                                 </li>
@@ -214,7 +214,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="header-search">
-                <form id="searchForm" action="<?php echo site_url(); ?>/visitor/search_book_by_title_or_author"
+                <form id="searchForm" action="<?php echo site_url(); ?>/visitor/searchBookByTitleOrAuthor"
                       method="post">
                     <input type="text" name="searchTerm" placeholder="Search a book by title or author..."/>
                     <a href="#" onclick="document.getElementById('searchForm').submit();"><i class="fa

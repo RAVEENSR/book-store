@@ -1,9 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
-<!-- js file for Add to Cart -->
-<script src="<?php echo base_url(); ?>js/manageCart.js"></script>
+<?php include 'Header.php' ?>
 <!-- breadcrumbs-area-start -->
 <div class="breadcrumbs-area mb-70">
     <div class="container">
@@ -11,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12">
                 <div class="breadcrumbs-menu">
                     <ul>
-                        <li><a href="<?php echo site_url(); ?>">Home</a></li>
+                        <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a></li>
                         <li><a href="#" class="active">Book Details</a></li>
                     </ul>
                 </div>
@@ -81,21 +79,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="product-add-form">
-                                        <form>
-                                            <div class="quality-button">
-                                                <input class="qty" type="number" value="1" min="1" id="quantity"
-                                                       name="quantity">
-                                            </div>
-                                            <!-- store the base url to access in the js file -->
-                                            <input type="text" class="hide" id="siteURL"
-                                                   value="<?php echo site_url(); ?>"/>
-                                            <button type="button" id="<?php echo $book->isbnNo; ?>"
-                                                    class="btn btn-default"
-                                                    onclick="addToCart(this.id)">Add to Cart
-                                            </button>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -108,13 +91,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-10 col-md-10 col-sm-4 col-xs-12">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li class="active"><a href="" data-toggle="tab" aria-expanded="true">Description</a>
-                                    </li>
+                                    <li class="active"><a href="#description" data-toggle="tab"
+                                                          aria-expanded="true">Description</a></li>
+                                    <li><a href="#stats" data-toggle="tab" aria-expanded="true"
+                                           onclick="loadSingleBookStats(this.id);" id="<?php echo $book->isbnNo;
+                                        ?>">Statistics</a></li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="Description">
+                                    <div class="tab-pane active" id="description">
                                         <div class="valu">
                                             <p><?php echo $book->description; ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="stats">
+                                        <div class="chartContainer">
+                                            <h2>Number of views in last 30 days</h2>
+                                            <!-- store the base url to access in the js file -->
+                                            <input type="text" class="hide" id="siteURL"
+                                                   value="<?php echo site_url(); ?>"/>
+                                            <div>
+                                                <canvas id="singleBookViews"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -123,63 +120,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- product-info-area-end -->
-                    <!-- new-book-area-start -->
-                    <div class="new-book-area mt-60">
-                        <div class="section-title text-center mb-30">
-                            <h3>You May Also Like</h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12"></div>
-                            <div class="col-lg-8 col-md-8 col-sm-4 col-xs-12">
-                                <div class="tab-active-2 owl-carousel">
-                                    <?php foreach ($similarBooks as $book) { ?>
-                                        <!-- single-product-start -->
-                                        <div class="product-wrapper">
-                                            <div class="product-img">
-                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
-                                                    . $book->isbnNo; ?>">
-                                                    <img src="<?php echo base_url() . $book->imageURL; ?>" alt="book"
-                                                         class="primary"/>
-                                                </a>
-                                            </div>
-                                            <div class="product-details text-center">
-                                                <h4><a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
-                                                        . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
-                                                <div class="product-price">
-                                                    <ul>
-                                                        <li>$<?php echo $book->price; ?></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-link">
-                                                <div class="product-button">
-                                                    <button type="button" id="<?php echo $book->isbnNo; ?>"
-                                                            class="btn btn-default"
-                                                            onclick="addToCart(this.id)">Add to Cart
-                                                    </button>
-                                                </div>
-                                                <div class="add-to-link">
-                                                    <ul>
-                                                        <li>
-                                                            <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn='
-                                                                . $book->isbnNo; ?>" title="Details"><i
-                                                                        class="fa fa-external-link"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- single-product-end -->
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12"></div>
-                        </div>
-                    </div>
-                    <!-- new-book-area-end -->
                 </div>
             </div>
         </div>
     </div>
 <?php } ?>
+<!-- book stat chart js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+<script src="<?php echo base_url(); ?>js/bookStatChart.js"></script>
 <!-- product-main-area-end -->
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

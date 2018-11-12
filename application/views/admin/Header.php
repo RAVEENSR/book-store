@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
                     <div class="logo-area text-center logo-xs-mrg">
-                        <a href="<?php echo site_url(); ?>/administrator/load_admin_portal">
+                        <a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">
                             <img src="<?php echo base_url(); ?>img/logo/logo.png" alt="logo"/>
                         </a>
                     </div>
@@ -95,13 +95,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="menu-area">
                         <nav>
                             <ul>
-                                <li class="active"><a href="<?php echo site_url(); ?>/administrator/load_admin_portal">Home</a>
+                                <li class="active"><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a>
                                 </li>
                                 <li><a href="#">Books<i class="fa fa-angle-down"></i></a>
                                     <div class="sub-menu sub-menu-2">
                                         <ul>
                                             <li>
-                                                <a href="<?php echo site_url(); ?>/administrator/load_add_book">
+                                                <a href="<?php echo site_url(); ?>/administrator/loadAddBook">
                                                     Add Book</a>
                                             </li>
                                         </ul>
@@ -111,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="sub-menu sub-menu-2">
                                         <ul>
                                             <li>
-                                                <a href="<?php echo site_url(); ?>/administrator/load_add_publisher">
+                                                <a href="<?php echo site_url(); ?>/administrator/loadAddPublisher">
                                                     Add Publisher</a>
                                             </li>
                                         </ul>
@@ -121,16 +121,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="sub-menu sub-menu-2">
                                         <ul>
                                             <li>
-                                                <a href="<?php echo site_url(); ?>/administrator/load_add_main_category">
+                                                <a href="<?php echo site_url(); ?>/administrator/loadAddMainCategory">
                                                     Create Main Category</a></li>
-                                            <li><a href="<?php echo site_url(); ?>/administrator/load_add_subcategory">
+                                            <li><a href="<?php echo site_url(); ?>/administrator/loadAddSubCategory">
                                                     Create Sub Category</a></li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li><a href="<?php echo site_url(); ?>/administrator/load_search_book">Search</a>
+                                <li><a href="<?php echo site_url(); ?>/administrator/loadSearchBook">Search</a>
                                 </li>
-                                <li><a href="#">Hi <?php echo $this->session->userdata('admin_username'); ?><i class="fa
+                                <li><a href="#">Hi <?php echo $this->session->userdata('adminUsername'); ?><i class="fa
                                 fa-angle-down"></i></a>
                                     <div class="sub-menu sub-menu-2 ">
                                         <ul>
@@ -154,31 +154,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="mobile-menu">
                         <nav id="mobile-menu-active">
                             <ul id="nav">
-                                <li><a href="<?php echo site_url(); ?>/administrator/load_admin_portal">Home</a>
+                                <li><a href="<?php echo site_url(); ?>/administrator/loadAdminPortal">Home</a>
                                 </li>
                                 <li><a href="#">Books</a>
                                     <ul>
-                                        <li><a href="<?php echo site_url(); ?>/administrator/load_add_book">
+                                        <li><a href="<?php echo site_url(); ?>/administrator/loadAddBook">
                                                 Add Book</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Publishers</a>
                                     <ul>
-                                        <li><a href="<?php echo site_url(); ?>/administrator/load_add_publisher">
+                                        <li><a href="<?php echo site_url(); ?>/administrator/loadAddPublisher">
                                                 Add Publisher</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Categories</a>
                                     <ul>
-                                        <li><a href="<?php echo site_url(); ?>/administrator/load_add_main_category">
+                                        <li><a href="<?php echo site_url(); ?>/administrator/loadAddMainCategory">
                                                 Create Main Category</a></li>
-                                        <li><a href="<?php echo site_url(); ?>/administrator/load_add_subcategory">
+                                        <li><a href="<?php echo site_url(); ?>/administrator/loadAddSubCategory">
                                                 Create Sub Category</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<?php echo site_url(); ?>/administrator/load_search_book">Search</a>
+                                <li><a href="<?php echo site_url(); ?>/administrator/loadSearchBook">Search</a>
                                 </li>
-                                <li><a href="#">Hi <?php echo $this->session->userdata('admin_username'); ?></a>
+                                <li><a href="#">Hi <?php echo $this->session->userdata('adminUsername'); ?></a>
                                     <ul>
                                         <li><a href="<?php echo site_url(); ?>/login/logout">LogOut</a>
                                     </ul>

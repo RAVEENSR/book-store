@@ -24,36 +24,18 @@ class Book extends CI_Model
     }
 
     /**
-     * Gets books which are likely having title.
-     * @param $title String Title of the book
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
-     */
-    public function get_books_by_title($title)
-    {
-        // get the result row from the 'book' table
-        $this->db->like('title', $title);
-        $result = $this->db->get('book');
-        // check the number of rows in the result
-        if ($result->num_rows() == 0) {
-            return FALSE;
-        } else {
-            return $result->result();
-        }
-    }
-
-    /**
      * Gets a book by the isbn number.
-     * @param $isbn_no String ISBN number of the book
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $isbnNo String ISBN number of the book
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_book_by_isbn($isbn_no)
+    public function getBookByIsbn($isbnNo)
     {
         // get the result row from the 'book' table
-        $this->db->where('isbnNo', $isbn_no);
+        $this->db->where('isbnNo', $isbnNo);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() != 1) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -61,18 +43,18 @@ class Book extends CI_Model
 
     /**
      * Gets the main category title by the main category id.
-     * @param $main_category_id integer id of the main category
-     * @return bool|String Returns the result string if found or FALSE if not found.
+     * @param $mainCategoryId integer id of the main category
+     * @return bool|String Returns the result string if found or false if not found.
      */
-    public function get_main_category_title_by_id($main_category_id)
+    public function getMainCategoryTitleById($mainCategoryId)
     {
         // get the result row from the 'category' table
         $this->db->select('categoryTitle');
-        $this->db->where('categoryId', $main_category_id);
+        $this->db->where('categoryId', $mainCategoryId);
         $result = $this->db->get('category');
         // check the number of rows in the result
         if ($result->num_rows() != 1) {
-            return FALSE;
+            return false;
         } else {
             return ($result->result())[0]->categoryTitle;
         }
@@ -80,18 +62,18 @@ class Book extends CI_Model
 
     /**
      * Gets the sub category title by the sub category id.
-     * @param $subcategory_id integer id of the sub category
-     * @return bool|String Returns the result string if found or FALSE if not found.
+     * @param $subCategoryId integer id of the sub category
+     * @return bool|String Returns the result string if found or false if not found.
      */
-    public function get_subcategory_title_by_id($subcategory_id)
+    public function getSubCategoryTitleById($subCategoryId)
     {
         // get the result row from the 'subcategory' table
         $this->db->select('subCategoryTitle');
-        $this->db->where('subCategoryId', $subcategory_id);
+        $this->db->where('subCategoryId', $subCategoryId);
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
         if ($result->num_rows() != 1) {
-            return FALSE;
+            return false;
         } else {
             return ($result->result())[0]->subCategoryTitle;
         }
@@ -102,7 +84,7 @@ class Book extends CI_Model
      * @param $title String Title of the book
      * @return integer Returns the count of books.
      */
-    public function get_count_books_by_title($title)
+    public function getCountBooksByTitle($title)
     {
         // get the result row from the 'book' table
         $this->db->like('title', $title);
@@ -114,21 +96,21 @@ class Book extends CI_Model
     /**
      * Get books of likely having title with a limit.
      * @param $title String Title of the book
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books_by_title($title, $page_no, $items_per_page)
+    public function getLimitedBooksByTitle($title, $pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
         $this->db->like('title', $title);
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -136,13 +118,13 @@ class Book extends CI_Model
 
     /**
      * Get count of the books of likely having author name.
-     * @param $author_name String Name of the author of the book
+     * @param $authorName String Name of the author of the book
      * @return integer Returns the count of books.
      */
-    public function get_count_books_by_author($author_name)
+    public function getCountBooksByAuthor($authorName)
     {
         // get the result row from the 'book' table
-        $this->db->like('authorName', $author_name);
+        $this->db->like('authorName', $authorName);
         $this->db->from('book');
         $result = $this->db->count_all_results();
         return $result;
@@ -150,22 +132,22 @@ class Book extends CI_Model
 
     /**
      * Get books of likely having author name with a limit.
-     * @param $author_name String Name of the author of the book
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $authorName String Name of the author of the book
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books_by_author($author_name, $page_no, $items_per_page)
+    public function getLimitedBooksByAuthor($authorName, $pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
-        $this->db->like('authorName', $author_name);
+        $this->db->like('authorName', $authorName);
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -174,13 +156,13 @@ class Book extends CI_Model
     /**
      * Get count of the books of likely having title and author name.
      * @param $title String Title of the book
-     * @param $author_name String Name of the author
+     * @param $authorName String Name of the author
      * @return integer Returns the count of books.
      */
-    public function get_count_books_by_title_and_author($title, $author_name)
+    public function getCountBooksByTitleAndAuthor($title, $authorName)
     {
         // get the result row from the 'book' table
-        $this->db->like(array('title' => $title, 'authorName' => $author_name));
+        $this->db->like(array('title' => $title, 'authorName' => $authorName));
         $this->db->from('book');
         $result = $this->db->count_all_results();
         return $result;
@@ -189,22 +171,22 @@ class Book extends CI_Model
     /**
      * Get books of likely having title and author name with a limit.
      * @param $title String Title of the book
-     * @param $author_name String Name of the author of the book
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $authorName String Name of the author of the book
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books_by_title_and_author($title, $author_name, $page_no, $items_per_page)
+    public function getLimitedBooksByTitleAndAuthor($title, $authorName, $pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
-        $this->db->like(array('title' => $title, 'authorName' => $author_name));
+        $this->db->like(array('title' => $title, 'authorName' => $authorName));
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -212,14 +194,14 @@ class Book extends CI_Model
 
     /**
      * Get count of the books of a search term likely having title or author name.
-     * @param $search_term String text to be search in author name or title
+     * @param $searchTerm String text to be search in author name or title
      * @return integer Returns the count of books.
      */
-    public function get_count_books_by_title_or_author($search_term)
+    public function getCountBooksByTitleOrAuthor($searchTerm)
     {
         // get the result row from the 'book' table
-        $this->db->like(array('title' => $search_term));
-        $this->db->or_like('authorName', $search_term);
+        $this->db->like(array('title' => $searchTerm));
+        $this->db->or_like('authorName', $searchTerm);
         $this->db->from('book');
         $result = $this->db->count_all_results();
         return $result;
@@ -227,23 +209,23 @@ class Book extends CI_Model
 
     /**
      * Get books by a search terms of likely having title or author name with a limit.
-     * @param $search_term String text to be search in author name or title
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $searchTerm String text to be search in author name or title
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books_by_title_or_author($search_term, $page_no, $items_per_page)
+    public function getLimitedBooksByTitleOrAuthor($searchTerm, $pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
-        $this->db->like(array('title' => $search_term));
-        $this->db->or_like('authorName', $search_term);
+        $this->db->like(array('title' => $searchTerm));
+        $this->db->or_like('authorName', $searchTerm);
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -251,14 +233,14 @@ class Book extends CI_Model
 
     /**
      * Get the count of the books having the given main category and sub category.
-     * @param $main_category String Main category title
+     * @param $mainCategory String Main category title
      * @param $subcategory String Sub Category title
      * @return integer Returns the count of books.
      */
-    public function get_count_books_by_main_category_and_subcategory($main_category, $subcategory)
+    public function getCountBooksByMainCategoryAndSubCategory($mainCategory, $subcategory)
     {
         // get the result row from the 'book' table
-        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $main_category));
+        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $mainCategory));
         $this->db->from('book');
         $result = $this->db->count_all_results();
         return $result;
@@ -266,23 +248,23 @@ class Book extends CI_Model
 
     /**
      * Get books of likely having author name with a limit.
-     * @param $main_category String Main category title
+     * @param $mainCategory String Main category title
      * @param $subcategory String Sub Category title
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books_by_main_category_and_subcategory($main_category, $subcategory, $page_no, $items_per_page)
+    public function getLimitedBooksByMainCategoryAndSubCategory($mainCategory, $subcategory, $pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
-        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $main_category));
+        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $mainCategory));
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -292,7 +274,7 @@ class Book extends CI_Model
      * Get count of the books.
      * @return integer Returns the count of books.
      */
-    public function get_count_books()
+    public function getCountBooks()
     {
         // get the result row from the 'book' table
         $this->db->from('book');
@@ -302,20 +284,20 @@ class Book extends CI_Model
 
     /**
      * Get all the books with a limit.
-     * @param $page_no Number Page number of the results
-     * @param $items_per_page Number Number of items displayed in a page
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $pageNo Number Page number of the results
+     * @param $itemsPerPage Number Number of items displayed in a page
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_limited_books($page_no, $items_per_page)
+    public function getLimitedBooks($pageNo, $itemsPerPage)
     {
-        $offset = ($page_no - 1) * $items_per_page;
-        $limit = $items_per_page;
+        $offset = ($pageNo - 1) * $itemsPerPage;
+        $limit = $itemsPerPage;
         // get the result row from the 'book' table
         $this->db->limit($limit, $offset);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -323,16 +305,16 @@ class Book extends CI_Model
 
     /**
      * Gets all the authors in the database.
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_all_authors()
+    public function getAllAuthors()
     {
         // get the result rows from the 'book' table
         $this->db->select('authorName');
         $result = $this->db->get('author');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -340,16 +322,16 @@ class Book extends CI_Model
 
     /**
      * Gets all the publishers in the database.
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_all_publishers()
+    public function getAllPublishers()
     {
         // get the result rows from the 'book' table
         $this->db->select('publisherName');
         $result = $this->db->get('publisher');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -357,16 +339,16 @@ class Book extends CI_Model
 
     /**
      * Gets all the Main Categories in the database.
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_all_main_categories()
+    public function getAllMainCategories()
     {
         // get the result rows from the 'category' table
         $this->db->select('categoryTitle');
         $result = $this->db->get('category');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -374,15 +356,15 @@ class Book extends CI_Model
 
     /**
      * Gets all the Main Categories in the database with their ids.
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_all_main_categories_with_main_category_id()
+    public function getAllMainCategoriesWithMainCategoryId()
     {
         // get the result rows from the 'category' table
         $result = $this->db->get('category');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -390,18 +372,18 @@ class Book extends CI_Model
 
     /**
      * Gets all the Sub Categories under a Main Category in the database.
-     * @param $main_category String Name of the Main Category
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $mainCategory String Name of the Main Category
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_subcategories_of_main_category($main_category)
+    public function getSubCategoriesOfMainCategory($mainCategory)
     {
         // get the result row from the 'subCategory' table
         $this->db->select('subCategoryTitle');
-        $this->db->where('categoryTitle', $main_category);
+        $this->db->where('categoryTitle', $mainCategory);
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -409,18 +391,18 @@ class Book extends CI_Model
 
     /**
      * Gets all the Sub Categories with title and id under a Main Category in the database.
-     * @param $main_category String Name of the Main Category
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $mainCategory String Name of the Main Category
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_subcategories_of_main_category_with_subcategory_id($main_category)
+    public function getSubCategoriesOfMainCategoryWithSubCategoryId($mainCategory)
     {
         // get the result row from the 'subCategory' table
         $this->db->select('subCategoryTitle, subCategoryId');
-        $this->db->where('categoryTitle', $main_category);
+        $this->db->where('categoryTitle', $mainCategory);
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
         if ($result->num_rows() == 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -428,21 +410,21 @@ class Book extends CI_Model
 
     /**
      * Gives top 6 books viewed by users who also viewed the given book.
-     * @param $book_id String ISBN number of the viewed book
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $bookId String ISBN number of the viewed book
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_top_six_books($book_id)
+    public function getTopSixBooks($bookId)
     {
         $this->db->select('userId');
-        $this->db->where('isbnNo', $book_id);
+        $this->db->where('isbnNo', $bookId);
         $this->db->from('user_viewed_book');
-        $sub_query1 = $this->db->get_compiled_select();
+        $subQuery1 = $this->db->get_compiled_select();
 
         $this->db->distinct();
         $this->db->select('isbnNo');
         $this->db->select('COUNT(isbnNo) as total');
         $this->db->from('user_viewed_book');
-        $this->db->where("userId IN ($sub_query1)", NULL, FALSE);
+        $this->db->where("userId IN ($subQuery1)", null, false);
         $this->db->group_by("isbnNo");
         $this->db->order_by('total', 'DESC');
         $this->db->limit(6);
@@ -490,7 +472,7 @@ class Book extends CI_Model
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -499,10 +481,10 @@ class Book extends CI_Model
     /**
      * Returns number of views of a book per day for a given date limit.
      * @param $isbn String isbn number of the book
-     * @param $number_of_dates Number number of dates to limit
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfDates Number number of dates to limit
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_last_days_views_of_book($isbn, $number_of_dates)
+    public function getLastDaysViewsOfBook($isbn, $numberOfDates)
     {
         // get the result row from the 'category' table
         /*
@@ -522,12 +504,12 @@ class Book extends CI_Model
         $this->db->where('isbnNo', $isbn);
         $this->db->group_by("visitedDate");
         $this->db->order_by('visitedDate', 'DESC');
-        $this->db->limit($number_of_dates);
+        $this->db->limit($numberOfDates);
         $result = $this->db->get('user_viewed_book');
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -536,10 +518,10 @@ class Book extends CI_Model
 
     /**
      * Returns most viewed book titles for a given book limit.
-     * @param $number_of_books Number required top most book titles
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfBooks Number required top most book titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_most_viewed_books($number_of_books)
+    public function getMostViewedBooks($numberOfBooks)
     {
         $this->db->distinct();
         $this->db->select('isbnNo');
@@ -547,19 +529,19 @@ class Book extends CI_Model
         $this->db->from('user_viewed_book');
         $this->db->group_by("isbnNo");
         $this->db->order_by('total', 'DESC');
-        $sub_query1 = $this->db->get_compiled_select();
+        $subQuery1 = $this->db->get_compiled_select();
 
         $this->db->select('title, total');
         $this->db->from('book AS bookTable');
-        $this->db->join("($sub_query1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
         $this->db->group_by("title");
         $this->db->order_by('viewTable.total', 'DESC');
-        $this->db->limit($number_of_books);
+        $this->db->limit($numberOfBooks);
         $result = $this->db->get();
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -567,10 +549,10 @@ class Book extends CI_Model
 
     /**
      * Returns most viewed category titles for a given book limit.
-     * @param $number_of_categories Number required top most category titles
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfCategories Number required top most category titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_most_viewed_categories($number_of_categories)
+    public function getMostViewedCategories($numberOfCategories)
     {
         /*
         SELECT
@@ -604,19 +586,19 @@ class Book extends CI_Model
         $this->db->from('user_viewed_book');
         $this->db->group_by("isbnNo");
         $this->db->order_by('total', 'DESC');
-        $sub_query1 = $this->db->get_compiled_select();
+        $subQuery1 = $this->db->get_compiled_select();
 
         $this->db->select('categoryTitle, total');
         $this->db->from('book AS bookTable');
-        $this->db->join("($sub_query1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
         $this->db->group_by("categoryTitle");
         $this->db->order_by('viewTable.total', 'DESC');
-        $this->db->limit($number_of_categories);
+        $this->db->limit($numberOfCategories);
         $result = $this->db->get();
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -624,10 +606,10 @@ class Book extends CI_Model
 
     /**
      * Returns most viewed sub category titles for a given date limit.
-     * @param $number_of_subcategories Number required top most sub category titles
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfSubCategories Number required top most sub category titles
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_most_viewed_subcategories($number_of_subcategories)
+    public function getMostViewedSubCategories($numberOfSubCategories)
     {
         $this->db->distinct();
         $this->db->select('isbnNo');
@@ -635,19 +617,19 @@ class Book extends CI_Model
         $this->db->from('user_viewed_book');
         $this->db->group_by("isbnNo");
         $this->db->order_by('total', 'DESC');
-        $sub_query1 = $this->db->get_compiled_select();
+        $subQuery1 = $this->db->get_compiled_select();
 
         $this->db->select('subCategoryTitle, total');
         $this->db->from('book AS bookTable');
-        $this->db->join("($sub_query1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
+        $this->db->join("($subQuery1) AS viewTable", 'bookTable.isbnNo = viewTable.isbnNo', 'INNER');
         $this->db->group_by("subCategoryTitle");
         $this->db->order_by('viewTable.total', 'DESC');
-        $this->db->limit($number_of_subcategories);
+        $this->db->limit($numberOfSubCategories);
         $result = $this->db->get();
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -655,10 +637,10 @@ class Book extends CI_Model
 
     /**
      * Returns most viewed sub category titles for a given date limit.
-     * @param $number_of_days Number how long in past the result should be given
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfDays Number how long in past the result should be given
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_total_number_of_book_views($number_of_days)
+    public function getTotalNumberOfBookViews($numberOfDays)
     {
         /*
         SELECT
@@ -676,12 +658,12 @@ class Book extends CI_Model
         $this->db->select('DATE(DATE) AS visitedDate, COUNT(userId) AS NumberOfViews');
         $this->db->group_by("visitedDate");
         $this->db->order_by('visitedDate', 'ASC');
-        $this->db->limit($number_of_days);
+        $this->db->limit($numberOfDays);
         $result = $this->db->get('user_viewed_book');
 
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -689,19 +671,19 @@ class Book extends CI_Model
 
     /**
      * Gets the newest books  in the database.
-     * @param $number_of_books Number number of result books needed
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfBooks Number number of result books needed
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_newest_books($number_of_books)
+    public function getNewestBooks($numberOfBooks)
     {
         // get the result rows from the 'book' table
         $this->db->select('*');
         $this->db->order_by('isbnNo', 'DESC');
-        $this->db->limit($number_of_books);
+        $this->db->limit($numberOfBooks);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -709,19 +691,19 @@ class Book extends CI_Model
 
     /**
      * Gets the vary first books in the database.
-     * @param $number_of_books Number number of result books needed
-     * @return bool|ArrayObject Returns the result array if found or FALSE if not found.
+     * @param $numberOfBooks Number number of result books needed
+     * @return bool|ArrayObject Returns the result array if found or false if not found.
      */
-    public function get_editor_picked_books($number_of_books)
+    public function getEditorPickedBooks($numberOfBooks)
     {
         // get the result rows from the 'book' table
         $this->db->select('*');
         $this->db->order_by('isbnNo', 'ASC');
-        $this->db->limit($number_of_books);
+        $this->db->limit($numberOfBooks);
         $result = $this->db->get('book');
         // check the number of rows in the result
         if ($result->num_rows() === 0) {
-            return FALSE;
+            return false;
         } else {
             return $result->result();
         }
@@ -729,156 +711,156 @@ class Book extends CI_Model
 
     /**
      * Checks whether a Main Category title is available in the database.
-     * @param $main_category String Name of the Main Category
-     * @return bool Returns TRUE if main category title is available, FALSE if not.
+     * @param $mainCategory String Name of the Main Category
+     * @return bool Returns true if main category title is available, false if not.
      */
-    public function is_category_available($main_category)
+    public function isCategoryAvailable($mainCategory)
     {
         // get the result row from the 'category' table
         $this->db->select('categoryTitle');
-        $this->db->where('categoryTitle', $main_category);;
+        $this->db->where('categoryTitle', $mainCategory);;
         $result = $this->db->get('category');
         // check the number of rows in the result
-        return $result->num_rows() === 0 ? FALSE : TRUE;
+        return $result->num_rows() === 0 ? false : true;
     }
 
     /**
      * Checks whether a Sub Category title is available in the database.
      * @param $subcategory String Name of the Sub Category
-     * @return bool Returns TRUE if sub category title is available, FALSE if not.
+     * @return bool Returns true if sub category title is available, false if not.
      */
-    public function is_subcategory_available($subcategory)
+    public function isSubCategoryAvailable($subcategory)
     {
         // get the result row from the 'subcategory' table
         $this->db->select('subCategoryTitle');
         $this->db->where('subCategoryTitle', $subcategory);;
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
-        return $result->num_rows() === 0 ? FALSE : TRUE;
+        return $result->num_rows() === 0 ? false : true;
     }
 
     /**
      * Checks whether a given Sub Category is available under the given Main Category in the database.
      * @param $subcategory String Name of the Sub Category
-     * @param $main_category String Name of the Main Category
-     * @return bool Returns TRUE if sub category title is available, FALSE if not.
+     * @param $mainCategory String Name of the Main Category
+     * @return bool Returns true if sub category title is available, false if not.
      */
-    public function is_subcategory_available_in_main_category($subcategory, $main_category)
+    public function isSubCategoryAvailableInMainCategory($subcategory, $mainCategory)
     {
         // get the result row from the 'category' table
         $this->db->select('subCategoryTitle');
-        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $main_category));
+        $this->db->where(array('subCategoryTitle' => $subcategory, 'categoryTitle' => $mainCategory));
         $result = $this->db->get('subcategory');
         // check the number of rows in the result
-        return $result->num_rows() === 0 ? FALSE : TRUE;
+        return $result->num_rows() === 0 ? false : true;
     }
 
     /**
      * Checks whether an Author is available in the database.
-     * @param $author_name String Name of the Author
-     * @return bool Returns TRUE if author name is available, FALSE if not.
+     * @param $authorName String Name of the Author
+     * @return bool Returns true if author name is available, false if not.
      */
-    public function is_author_available($author_name)
+    public function isAuthorAvailable($authorName)
     {
         // get the result row from the 'author' table
         $this->db->select('authorName');
-        $this->db->where('authorName', $author_name);;
+        $this->db->where('authorName', $authorName);;
         $result = $this->db->get('author');
         // check the number of rows in the result
-        return $result->num_rows() === 0 ? FALSE : TRUE;
+        return $result->num_rows() === 0 ? false : true;
     }
 
     /**
      * Checks whether a Publisher is available in the database.
-     * @param $publisher_name String Name of the Publiksher
-     * @return bool Returns TRUE if publisher name is available, FALSE if not.
+     * @param $publisherName String Name of the Publiksher
+     * @return bool Returns true if publisher name is available, false if not.
      */
-    public function is_publisher_available($publisher_name)
+    public function isPublisherAvailable($publisherName)
     {
         // get the result row from the 'publisher' table
         $this->db->select('publisherName');
-        $this->db->where('publisherName', $publisher_name);;
+        $this->db->where('publisherName', $publisherName);;
         $result = $this->db->get('publisher');
         // check the number of rows in the result
-        return $result->num_rows() === 0 ? FALSE : TRUE;
+        return $result->num_rows() === 0 ? false : true;
     }
 
     /**
      * Adds a new book to the database.
-     * @param $book_config_array ArrayObject Details of the book as an associative array
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $bookConfigArray ArrayObject Details of the book as an associative array
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function add_book($book_config_array)
+    public function addBook($bookConfigArray)
     {
-        $this->db->insert('book', $book_config_array);
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert('book', $bookConfigArray);
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds a new author to the database.
-     * @param $author_config_array ArrayObject Details of the author as an associative array
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $authorConfigArray ArrayObject Details of the author as an associative array
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function add_author($author_config_array)
+    public function addAuthor($authorConfigArray)
     {
-        $this->db->insert('author', $author_config_array);
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert('author', $authorConfigArray);
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds a new publisher to the database.
-     * @param $publisher_config_array ArrayObject Details of the publisher as an associative array
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $publisherConfigArray ArrayObject Details of the publisher as an associative array
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function add_publisher($publisher_config_array)
+    public function addPublisher($publisherConfigArray)
     {
-        $this->db->insert('publisher', $publisher_config_array);
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert('publisher', $publisherConfigArray);
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds new main category/s of books to the database.
-     * @param $category_array ArrayObject Array of new main category names
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $categoryArray ArrayObject Array of new main category names
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function create_book_categories($category_array)
+    public function createBookCategories($categoryArray)
     {
-        $this->db->insert_batch('category', $category_array);
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert_batch('category', $categoryArray);
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds a new sub category/s of books to the database.
-     * @param $subcategory_array ArrayObject Array of new main category names
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $subCategoryArray ArrayObject Array of new main category names
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function create_book_subcategories($subcategory_array)
+    public function createBookSubCategories($subCategoryArray)
     {
-        $this->db->insert_batch('subCategory', $subcategory_array);
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert_batch('subCategory', $subCategoryArray);
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds a new visitor to the database.
-     * @param $visitor_id String Unique id of the visitor
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $visitorId String Unique id of the visitor
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function add_visitor($visitor_id)
+    public function addVisitor($visitorId)
     {
-        $this->db->insert('temp_user', array('userId' => $visitor_id));
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert('temp_user', array('userId' => $visitorId));
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 
     /**
      * Adds a record for a visitor  book view.
-     * @param $visitor_id String Unique id of the visitor
-     * @param $book_id String ISBN number of the viewed book
-     * @return bool Returns TRUE if result is successful or FALSE if not found.
+     * @param $visitorId String Unique id of the visitor
+     * @param $bookId String ISBN number of the viewed book
+     * @return bool Returns true if result is successful or false if not found.
      */
-    public function add_user_book_view($visitor_id, $book_id)
+    public function addUserBookView($visitorId, $bookId)
     {
-        $this->db->insert('user_viewed_book', array('userId' => $visitor_id, 'isbnNo' => $book_id));
-        return ($this->db->affected_rows() !== 1) ? FALSE : TRUE;
+        $this->db->insert('user_viewed_book', array('userId' => $visitorId, 'isbnNo' => $bookId));
+        return ($this->db->affected_rows() !== 1) ? false : true;
     }
 }
 

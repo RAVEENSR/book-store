@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php include 'header.php' ?>
+<?php include 'Header.php' ?>
     <!-- js file for Add to Cart -->
     <script src="<?php echo base_url(); ?>js/manageCart.js"></script>
     <!-- breadcrumbs-area-start -->
@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="cartForm" action="<?php echo site_url() . '/visitor/update_cart' ?>" method="post">
+                    <form id="cartForm" action="<?php echo site_url() . '/visitor/updateCart' ?>" method="post">
                         <div class="table-content table-responsive">
                             <table>
                                 <thead>
@@ -60,13 +60,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     foreach ($userCart as $item) { ?>
                                         <tr id="row-<?php echo $item['isbn'] ?>">
                                             <td class="product-thumbnail">
-                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn=' . $item['isbn'];
+                                                <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn=' . $item['isbn'];
                                                 ?> ">
                                                     <img src="<?php echo base_url() . $item['imgURL']; ?>" alt="book"/>
                                                 </a>
                                             </td>
                                             <td class="product-name">
-                                                <a href="<?php echo site_url() . '/visitor/view_book_details/?isbn=' . $item['isbn'];
+                                                <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn=' . $item['isbn'];
                                                 ?>"><?php echo $item['title']; ?>
                                                 </a>
                                             </td>
@@ -83,7 +83,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </td>
                                             <td class="product-subtotal">$<?php echo $item['total']; ?></td>
                                             <td class="product-remove"><a href="<?php echo site_url();
-                                                ?>/visitor/remove_cart_item?bookId=<?php echo $item['isbn'] ?>"><i
+                                                ?>/visitor/removeCartItem?bookId=<?php echo $item['isbn'] ?>"><i
                                                             class="fa fa-times"></i>
                                                 </a>
                                             </td>
@@ -129,4 +129,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <!-- cart-main-area-end -->
 <?php } ?>
-<?php include 'footer.php' ?>
+<?php include 'Footer.php' ?>

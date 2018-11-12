@@ -15,36 +15,35 @@ class Visitor extends CI_Controller
     {
         // Parent constructor call
         parent::__construct();
-        $this->_manage_unique_user_id();
+        $this->manageUniqueUserId();
     }
 
     public function index()
     {
         $this->load->model('Book');
-        $result1 = $this->Book->get_newest_books(5);
-        $result2 = $this->Book->get_editor_picked_books(5);
+        $result1 = $this->Book->getNewestBooks(5);
+        $result2 = $this->Book->getEditorPickedBooks(5);
         if ($result1 && $result2) {
             $data['newBooks'] = $result1;
             $data['editorBooks'] = $result2;
-            $this->load->view('visitor/home_view', $data);
+            $this->load->view('visitor/HomeView', $data);
         } else {
-            $this->load->view('visitor/home_view');
+            $this->load->view('visitor/HomeView');
         }
-
     }
 
     /**
      * Creates a unique user id for every new user if it is not created yet. Then will update the database with the id.
      * @return void
      */
-    private function _manage_unique_user_id()
+    private function manageUniqueUserId()
     {
-        if (!$this->session->userdata('visitorId') && !$this->session->userdata('admin_username')) {
+        if (!$this->session->userdata('visitorId') && !$this->session->userdata('adminUsername')) {
             $visitor_id = uniqid();
             $this->load->model('Book');
-            $result = $this->Book->add_visitor($visitor_id);
-            $session_data = array('visitorId' => $visitor_id);
-            $this->session->set_userdata($session_data);
+            $this->Book->addVisitor($visitor_id);
+            $sessionData = array('visitorId' => $visitor_id);
+            $this->session->set_userdata($sessionData);
         }
     }
 
@@ -56,7 +55,7 @@ class Visitor extends CI_Controller
      * 2: Book Added to the Cart Successfully
      * 3: Error occurred when adding the book into the cart
      */
-    public function add_to_cart()
+    public function addToCart()
     {
         if (isset($_POST['isbn']) && isset($_POST['quantity'])) {
             $isbn = $_POST['isbn'];
@@ -64,51 +63,51 @@ class Visitor extends CI_Controller
             $quantity = ceil($quantity);
 
             $this->load->model('Book');
-            $book_result = $this->Book->get_book_by_isbn($isbn);
-            if (!$book_result) {
+            $bookResult = $this->Book->getBookByIsbn($isbn);
+            if (!$bookResult) {
                 echo '3';
                 return;
             }
 
-            $book = $book_result[0];
-            $available_copies = $book->availableCopies;
-            if ($quantity > $available_copies) {
+            $book = $bookResult[0];
+            $availableCopies = $book->availableCopies;
+            if ($quantity > $availableCopies) {
                 echo '0';
                 return;
             }
 
             // get the cart from the session
-            $user_cart = $this->session->userdata('bookCart');
-            if ($user_cart != NULL) {
-                $found_item = $this->_is_book_available_in_cart($user_cart, $isbn);
-                if ($found_item) {
+            $userCart = $this->session->userdata('bookCart');
+            if ($userCart != null) {
+                $foundItem = $this->isBookAvailableInCart($userCart, $isbn);
+                if ($foundItem) {
                     echo '1';
                     return;
                 }
                 // add the book to the cart if book is not in the cart
-                $book_item = array(
+                $bookItem = array(
                     'isbn' => $book->isbnNo,
                     'imgURL' => $book->imageURL,
                     'title' => $book->title,
                     'qty' => $quantity,
                     'price' => $book->price,
                     'total' => ($book->price) * $quantity);
-                $user_cart[] = $book_item;
-                $this->session->set_userdata('bookCart', $user_cart);
+                $userCart[] = $bookItem;
+                $this->session->set_userdata('bookCart', $userCart);
                 echo '2';
 
             } else {
                 // if the user do not has a cart create a cart and save the book item
-                $user_cart = array();
-                $book_item = array(
+                $userCart = array();
+                $bookItem = array(
                     'isbn' => $book->isbnNo,
                     'imgURL' => $book->imageURL,
                     'title' => $book->title,
                     'qty' => $quantity,
                     'price' => $book->price,
                     'total' => ($book->price) * $quantity);
-                $user_cart[] = $book_item;
-                $this->session->set_userdata('bookCart', $user_cart);
+                $userCart[] = $bookItem;
+                $this->session->set_userdata('bookCart', $userCart);
                 echo '2';
             }
         } else {
@@ -120,17 +119,17 @@ class Visitor extends CI_Controller
      * Checks whether a book is already in the cart.
      * @param $cart ArrayObject cart of the visitor
      * @param $isbn String isbn number of the book
-     * @return bool returns TRUE if the book is found in the cart or FALSE otherwise.
+     * @return bool returns true if the book is found in the cart or false otherwise.
      */
-    private function _is_book_available_in_cart($cart, $isbn)
+    private function isBookAvailableInCart($cart, $isbn)
     {
         foreach ($cart as $key => $book) {
             if ($book['isbn'] === $isbn) {
-                return TRUE;
+                return true;
             }
         }
         // if the book is not in the cart
-        return FALSE;
+        return false;
     }
 
     /**
@@ -140,19 +139,19 @@ class Visitor extends CI_Controller
     public function view_cart()
     {
         // get the cart from the session
-        $user_cart = $this->session->userdata('bookCart');
-        if ($user_cart != NULL && sizeof($user_cart) !== 0) {
-            $total_price = 0;
-            foreach ($user_cart as $book) {
-                $total_price += $book['total'];
+        $userCart = $this->session->userdata('bookCart');
+        if ($userCart != null && sizeof($userCart) !== 0) {
+            $totalPrice = 0;
+            foreach ($userCart as $book) {
+                $totalPrice += $book['total'];
             }
-            $data['totalPrice'] = $total_price;
-            $data['userCart'] = $user_cart;
-            $this->load->view('visitor/cart', $data);
+            $data['totalPrice'] = $totalPrice;
+            $data['userCart'] = $userCart;
+            $this->load->view('visitor/Cart', $data);
         } else {
-            $error_message = 'You have no items in the cart';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/cart', $data);
+            $errorMessage = 'You have no items in the cart';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Cart', $data);
         }
     }
 
@@ -163,28 +162,28 @@ class Visitor extends CI_Controller
      * 1: Successfully update the quantity
      * 2: Error occurred when adding the book into the cart
      */
-    public function update_cart()
+    public function updateCart()
     {
         $isbn = $this->input->post('isbn');
         $quantity = $this->input->post('quantity');
         // get the cart from the session
-        $user_cart = $this->session->userdata('bookCart');
-        if ($user_cart != NULL) {
+        $userCart = $this->session->userdata('bookCart');
+        if ($userCart != null) {
             for ($x = 0; $x < sizeof($isbn); $x++) {
-                $book_id = $isbn[$x];
-                $new_quantity = $quantity[$x];
-                $found_array_key_for_item = $this->_get_book_key_in_cart($user_cart, $book_id);
-                $old_details = $user_cart[$found_array_key_for_item];
-                $new_book_item = array(
-                    'isbn' => $old_details['isbn'],
-                    'imgURL' => $old_details['imgURL'],
-                    'title' => $old_details['title'],
-                    'qty' => $new_quantity,
-                    'price' => $old_details['price'],
-                    'total' => ($old_details['price']) * $new_quantity);
-                $user_cart[$found_array_key_for_item] = $new_book_item;
+                $bookId = $isbn[$x];
+                $newQuantity = $quantity[$x];
+                $foundArrayKeyForItem = $this->getBookKeyInCart($userCart, $bookId);
+                $oldDetails = $userCart[$foundArrayKeyForItem];
+                $newBookItem = array(
+                    'isbn' => $oldDetails['isbn'],
+                    'imgURL' => $oldDetails['imgURL'],
+                    'title' => $oldDetails['title'],
+                    'qty' => $newQuantity,
+                    'price' => $oldDetails['price'],
+                    'total' => ($oldDetails['price']) * $newQuantity);
+                $userCart[$foundArrayKeyForItem] = $newBookItem;
             }
-            $this->session->set_userdata('bookCart', $user_cart);
+            $this->session->set_userdata('bookCart', $userCart);
             $this->view_cart();
         } else {
             $data['status'] = '2';
@@ -196,9 +195,9 @@ class Visitor extends CI_Controller
      * Checks whether a book is already in the cart.
      * @param $cart ArrayObject cart of the visitor
      * @param $isbn String isbn number of the book
-     * @return String|NULL returns the key of the row if the book is found in the cart or NULL otherwise.
+     * @return String|null returns the key of the row if the book is found in the cart or null otherwise.
      */
-    private function _get_book_key_in_cart($cart, $isbn)
+    private function getBookKeyInCart($cart, $isbn)
     {
         foreach ($cart as $key => $book) {
             if ($book["isbn"] === $isbn) {
@@ -206,21 +205,21 @@ class Visitor extends CI_Controller
             }
         }
         // if the book is not in the cart
-        return NULL;
+        return null;
     }
 
     /**
      * Controls removing an item from the cart.
      * @return void
      */
-    public function remove_cart_item()
+    public function removeCartItem()
     {
-        $book_id = $_GET['bookId'];
+        $bookId = $_GET['bookId'];
         // get the cart from the session
-        $user_cart = $this->session->userdata('bookCart');
-        $found_array_key_for_item = $this->_get_book_key_in_cart($user_cart, $book_id);
-        unset($user_cart[$found_array_key_for_item]);
-        $this->session->set_userdata('bookCart', $user_cart);
+        $userCart = $this->session->userdata('bookCart');
+        $foundArrayKeyForItem = $this->getBookKeyInCart($userCart, $bookId);
+        unset($userCart[$foundArrayKeyForItem]);
+        $this->session->set_userdata('bookCart', $userCart);
         $this->view_cart();
     }
 
@@ -228,30 +227,30 @@ class Visitor extends CI_Controller
      * Controls displaying details of a book in the view.
      * @return bool
      */
-    public function view_book_details()
+    public function viewBookDetails()
     {
         if (isset($_GET['isbn'])) {
             $isbn = $_GET['isbn'];
         } else {
-            return FALSE;
+            return false;
         }
         $this->load->model('Book');
-        $result = $this->Book->get_book_by_isbn($isbn);
+        $result = $this->Book->getBookByIsbn($isbn);
         if (!$result) {
-            $error_message = 'Error occurred';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/book_details', $data);
+            $errorMessage = 'Error occurred';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/BookDetails', $data);
         } else {
             $visitorId = $this->session->userdata('visitorId');
-            $result2 = $this->Book->add_user_book_view($visitorId, $isbn);
+            $result2 = $this->Book->addUserBookView($visitorId, $isbn);
             if (!$result2) {
-                $error_message = 'Error occurred';
-                $data['errorMessage'] = $error_message;
-                $this->load->view('visitor/book_details', $data);
+                $errorMessage = 'Error occurred';
+                $data['errorMessage'] = $errorMessage;
+                $this->load->view('visitor/BookDetails', $data);
             } else {
                 $data['book'] = $result[0];
-                $data['similarBooks'] = $this->_get_similar_viewed_books($isbn);
-                $this->load->view('visitor/book_details', $data);
+                $data['similarBooks'] = $this->getSimilarViewedBooks($isbn);
+                $this->load->view('visitor/BookDetails', $data);
             }
         }
     }
@@ -261,10 +260,10 @@ class Visitor extends CI_Controller
      * @param $isbn String isbn number of the currently viewing book
      * @return array top five book object s array
      */
-    private function _get_similar_viewed_books($isbn)
+    private function getSimilarViewedBooks($isbn)
     {
         $this->load->model('Book');
-        $results = $this->Book->get_top_six_books($isbn);
+        $results = $this->Book->getTopSixBooks($isbn);
         $books = array();
         foreach ($results as $book) {
             if ($book->isbnNo !== $isbn) {
@@ -278,66 +277,66 @@ class Visitor extends CI_Controller
      * Controls returning all the books to the view.
      * @return void
      */
-    public function view_all_books()
+    public function viewAllBooks()
     {
         if (isset($_GET['pageNo'])) {
-            $page_no = $_GET['pageNo'];
+            $pageNo = $_GET['pageNo'];
         } else {
-            $page_no = 1;
+            $pageNo = 1;
         }
 
         $this->load->model('Book');
         // get all the categories and create an array
         $categories = array();
-        $main_categories = $this->Book->get_all_main_categories_with_main_category_id();
-        if ($main_categories) {
-            for ($x = 0; $x < sizeof($main_categories); $x++) {
-                $categories[$x][0] = $main_categories[$x];
-                $main_category_title = $main_categories[$x]->categoryTitle;
+        $mainCategories = $this->Book->getAllMainCategoriesWithMainCategoryId();
+        if ($mainCategories) {
+            for ($x = 0; $x < sizeof($mainCategories); $x++) {
+                $categories[$x][0] = $mainCategories[$x];
+                $mainCategoryTitle = $mainCategories[$x]->categoryTitle;
                 // get sub categories for the main category
-                $sub_categories = $this->Book->get_subcategories_of_main_category_with_subcategory_id
-                ($main_category_title);
-                if ($sub_categories) {
-                    $categories[$x][1] = $sub_categories;
+                $subCategories = $this->Book->getSubCategoriesOfMainCategoryWithSubCategoryId
+                ($mainCategoryTitle);
+                if ($subCategories) {
+                    $categories[$x][1] = $subCategories;
                 }
             }
         }
         $data['categories'] = $categories;
 
         // get all the books according to the page number
-        $count = $this->Book->get_count_books();
-        $items_per_page = 12;
-        $last_page = ceil($count / $items_per_page);
+        $count = $this->Book->getCountBooks();
+        $itemsPerPage = 12;
+        $lastPage = ceil($count / $itemsPerPage);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $page_no = (int)$page_no;
-        if ($page_no > $last_page) {
-            $page_no = $last_page;
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
         }
-        if ($page_no < 1) {
-            $page_no = 1;
+        if ($pageNo < 1) {
+            $pageNo = 1;
         }
 
-        $result = $this->Book->get_limited_books($page_no, $items_per_page);
-        if ($page_no != $last_page) {
-            $next_page = $page_no + 1;
-            $data['next'] = site_url() . "/visitor/view_all_books/?pageNo=$next_page";
-            $data['last'] = site_url() . "/visitor/view_all_books/?pageNo=$last_page";
+        $result = $this->Book->getLimitedBooks($pageNo, $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/visitor/viewAllBooks/?pageNo=$nextPage";
+            $data['last'] = site_url() . "/visitor/viewAllBooks/?pageNo=$lastPage";
         }
-        if ($page_no != 1) {
-            $previous_page = $page_no - 1;
-            $data['previous'] = site_url() . "/visitor/view_all_books/?pageNo=$previous_page";
-            $data['first'] = site_url() . "/visitor/view_all_books/?pageNo=1";
+        if ($pageNo != 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/visitor/viewAllBooks/?pageNo=$previousPage";
+            $data['first'] = site_url() . "/visitor/viewAllBooks/?pageNo=1";
         }
 
         $data['result'] = $result;
         if (!$result) {
-            $error_message = 'No Results found';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+            $errorMessage = 'No Results found';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('visitor/shop', $data);
+            $this->load->view('visitor/Shop', $data);
         }
     }
 
@@ -345,99 +344,99 @@ class Visitor extends CI_Controller
      * Controls returning all the books to the view.
      * @return void
      */
-    public function view_books_by_category()
+    public function viewBooksByCategory()
     {
         if (isset($_GET['pageNo'])) {
-            $page_no = $_GET['pageNo'];
+            $pageNo = $_GET['pageNo'];
         } else {
-            $page_no = 1;
+            $pageNo = 1;
         }
 
         if (isset($_GET['mainCatId']) && filter_var($_GET['mainCatId'], FILTER_VALIDATE_INT)) {
-            $main_cat_id = $_GET['mainCatId'];
+            $mainCatId = $_GET['mainCatId'];
         } else {
-            $error_message = 'Valid Main Category Id not received';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+            $errorMessage = 'Valid Main Category Id not received';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
             return;
         }
         if (isset($_GET['subCatId']) && filter_var($_GET['subCatId'], FILTER_VALIDATE_INT)) {
             $subCatId = $_GET['subCatId'];
         } else {
-            $error_message = 'Valid Main Category Id not received';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+            $errorMessage = 'Valid Main Category Id not received';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
             return;
         }
 
         $this->load->model('Book');
         // get all the categories and create an array
         $categories = array();
-        $main_categories = $this->Book->get_all_main_categories_with_main_category_id();
-        if ($main_categories) {
-            for ($x = 0; $x < sizeof($main_categories); $x++) {
-                $categories[$x][0] = $main_categories[$x];
-                $main_category_title = $main_categories[$x]->categoryTitle;
+        $mainCategories = $this->Book->getAllMainCategoriesWithMainCategoryId();
+        if ($mainCategories) {
+            for ($x = 0; $x < sizeof($mainCategories); $x++) {
+                $categories[$x][0] = $mainCategories[$x];
+                $mainCategoryTitle = $mainCategories[$x]->categoryTitle;
                 // get sub categories for the main category
-                $sub_categories = $this->Book->get_subcategories_of_main_category_with_subcategory_id($main_category_title);
-                if ($sub_categories) {
-                    $categories[$x][1] = $sub_categories;
+                $subCategories = $this->Book->getSubCategoriesOfMainCategoryWithSubCategoryId($mainCategoryTitle);
+                if ($subCategories) {
+                    $categories[$x][1] = $subCategories;
                 }
             }
         }
         $data['categories'] = $categories;
 
         // get all the books according to the page number
-        $main_category = $this->Book->get_main_category_title_by_id($main_cat_id);
-        if (!$main_category) {
-            $error_message = 'Valid Main Category Id not received';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+        $mainCategory = $this->Book->getMainCategoryTitleById($mainCatId);
+        if (!$mainCategory) {
+            $errorMessage = 'Valid Main Category Id not received';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
             return;
         }
-        $subcategory = $this->Book->get_subcategory_title_by_id($subCatId);
+        $subcategory = $this->Book->getSubCategoryTitleById($subCatId);
         if (!$subcategory) {
-            $error_message = 'Valid Sub Category Id not received';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+            $errorMessage = 'Valid Sub Category Id not received';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
             return;
         }
-        $count = $this->Book->get_count_books_by_main_category_and_subcategory($main_category, $subcategory);
-        $items_per_page = 12;
-        $last_page = ceil($count / $items_per_page);
+        $count = $this->Book->getCountBooksByMainCategoryAndSubCategory($mainCategory, $subcategory);
+        $itemsPerPage = 12;
+        $lastPage = ceil($count / $itemsPerPage);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $page_no = (int)$page_no;
-        if ($page_no > $last_page) {
-            $page_no = $last_page;
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
         }
-        if ($page_no < 1) {
-            $page_no = 1;
-        }
-
-        $result = $this->Book->get_limited_books_by_main_category_and_subcategory($main_category, $subcategory, $page_no,
-            $items_per_page);
-        if ($page_no != $last_page) {
-            $next_page = $page_no + 1;
-            $data['next'] = site_url() . "/visitor/view_books_by_category/?mainCatId=$main_cat_id&subCatId=$subCatId&pageNo=$next_page";
-            $data['last'] = site_url() . "/visitor/view_books_by_category/?mainCatId=$main_cat_id&subCatId=$subCatId&pageNo=$last_page";
-        }
-        if ($page_no != 1) {
-            $previous_page = $page_no - 1;
-            $data['previous'] = site_url() . "/visitor/view_books_by_category/?mainCatId=$main_cat_id&subCatId=$subCatId&pageNo=$previous_page";
-            $data['first'] = site_url() . "/visitor/view_books_by_category/?mainCatId=$main_cat_id&subCatId=$subCatId&pageNo=1";
+        if ($pageNo < 1) {
+            $pageNo = 1;
         }
 
-        $data['mainCategoryTitle'] = $main_category;
+        $result = $this->Book->getLimitedBooksByMainCategoryAndSubCategory($mainCategory, $subcategory, $pageNo,
+            $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/visitor/viewBooksByCategory/?mainCatId=$mainCatId&subCatId=$subCatId&pageNo=$nextPage";
+            $data['last'] = site_url() . "/visitor/viewBooksByCategory/?mainCatId=$mainCatId&subCatId=$subCatId&pageNo=$lastPage";
+        }
+        if ($pageNo != 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/visitor/viewBooksByCategory/?mainCatId=$mainCatId&subCatId=$subCatId&pageNo=$previousPage";
+            $data['first'] = site_url() . "/visitor/viewBooksByCategory/?mainCatId=$mainCatId&subCatId=$subCatId&pageNo=1";
+        }
+
+        $data['mainCategoryTitle'] = $mainCategory;
         $data['subCategoryTitle'] = $subcategory;
         $data['result'] = $result;
         if (!$result) {
-            $error_message = "No Results found for Category: $main_category and Sub Category: $subcategory";
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/shop', $data);
+            $errorMessage = "No Results found for Category: $mainCategory and Sub Category: $subcategory";
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/Shop', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('visitor/shop', $data);
+            $this->load->view('visitor/Shop', $data);
         }
     }
 
@@ -446,55 +445,55 @@ class Visitor extends CI_Controller
      * book to the view.
      * @return bool
      */
-    public function search_book_by_title_or_author()
+    public function searchBookByTitleOrAuthor()
     {
         if (isset($_POST['searchTerm'])) {
-            $search_term = $_POST['searchTerm'];
+            $searchTerm = $_POST['searchTerm'];
         } else if (isset($_GET['searchTerm'])) {
-            $search_term = $_GET['searchTerm'];
+            $searchTerm = $_GET['searchTerm'];
         } else {
-            return FALSE;
+            return false;
         }
         if (isset($_GET['pageNo'])) {
-            $page_no = $_GET['pageNo'];
+            $pageNo = $_GET['pageNo'];
         } else {
-            $page_no = 1;
+            $pageNo = 1;
         }
         $this->load->model('Book');
-        $count = $this->Book->get_count_books_by_title_or_author($search_term);
-        $items_per_page = 12;
-        $last_page = ceil($count / $items_per_page);
+        $count = $this->Book->getCountBooksByTitleOrAuthor($searchTerm);
+        $itemsPerPage = 12;
+        $lastPage = ceil($count / $itemsPerPage);
 
         // ensuring page number is within the range(from 1 to lastPage)
-        $page_no = (int)$page_no;
-        if ($page_no > $last_page) {
-            $page_no = $last_page;
+        $pageNo = (int)$pageNo;
+        if ($pageNo > $lastPage) {
+            $pageNo = $lastPage;
         }
 
-        if ($page_no < 1) {
-            $page_no = 1;
+        if ($pageNo < 1) {
+            $pageNo = 1;
         }
 
-        $result = $this->Book->get_limited_books_by_title_or_author($search_term, $page_no, $items_per_page);
-        if ($page_no != $last_page) {
-            $next_page = $page_no + 1;
-            $data['next'] = site_url() . "/visitor/search_book_by_title_or_author/?searchTerm=$search_term&pageNo=$next_page";
-            $data['last'] = site_url() . "/visitor/search_book_by_title_or_author/?searchTerm=$search_term&pageNo=$last_page";
+        $result = $this->Book->getLimitedBooksByTitleOrAuthor($searchTerm, $pageNo, $itemsPerPage);
+        if ($pageNo != $lastPage) {
+            $nextPage = $pageNo + 1;
+            $data['next'] = site_url() . "/visitor/searchBookByTitleOrAuthor/?searchTerm=$searchTerm&pageNo=$nextPage";
+            $data['last'] = site_url() . "/visitor/searchBookByTitleOrAuthor/?searchTerm=$searchTerm&pageNo=$lastPage";
         }
-        if ($page_no !== 1) {
-            $previous_page = $page_no - 1;
-            $data['previous'] = site_url() . "/visitor/search_book_by_title_or_author/?searchTerm=$search_term&pageNo=$previous_page";
-            $data['first'] = site_url() . "/visitor/search_book_by_title_or_author/?searchTerm=$search_term&pageNo=1";
+        if ($pageNo !== 1) {
+            $previousPage = $pageNo - 1;
+            $data['previous'] = site_url() . "/visitor/searchBookByTitleOrAuthor/?searchTerm=$searchTerm&pageNo=$previousPage";
+            $data['first'] = site_url() . "/visitor/searchBookByTitleOrAuthor/?searchTerm=$searchTerm&pageNo=1";
         }
         $data['result'] = $result;
-        $data['searchTerm'] = $search_term;
+        $data['searchTerm'] = $searchTerm;
         if (!$result) {
-            $error_message = 'No Search Results found';
-            $data['errorMessage'] = $error_message;
-            $this->load->view('visitor/search_results', $data);
+            $errorMessage = 'No Search Results found';
+            $data['errorMessage'] = $errorMessage;
+            $this->load->view('visitor/SearchResults', $data);
         } else {
             $data['result'] = $result;
-            $this->load->view('visitor/search_results', $data);
+            $this->load->view('visitor/SearchResults', $data);
         }
     }
 }

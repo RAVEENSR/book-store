@@ -21,10 +21,10 @@ class Login extends CI_Controller
     /**
      * Loads the view for searching a book.
      */
-    public function load_admin_login()
+    public function loadAdminLogin()
     {
-        if ($this->session->userdata('admin_username') != '') {
-            redirect(site_url() . '/administrator/load_admin_portal');
+        if ($this->session->userdata('adminUsername') != '') {
+            redirect(site_url() . '/administrator/loadAdminPortal');
         } else {
             $this->load->view('visitor/Header');
             $this->load->view('admin/Login');
@@ -43,18 +43,18 @@ class Login extends CI_Controller
         if ($this->form_validation->run()) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $this->load->model('Login_model');
-            $result = $this->Login_model->login($username, $password);
+            $this->load->model('LoginModel');
+            $result = $this->LoginModel->login($username, $password);
             if ($result) {
-                $session_data = array('admin_username' => $username);
+                $session_data = array('adminUsername' => $username);
                 $this->session->set_userdata($session_data);
-                redirect(site_url() . '/administrator/load_admin_portal');
+                redirect(site_url() . '/administrator/loadAdminPortal');
             } else {
                 $this->session->set_flashdata('error', 'Invalid Username and Password!');
-                redirect(site_url() . '/login/load_admin_login');
+                redirect(site_url() . '/login/loadAdminLogin');
             }
         } else {
-            $this->load_admin_login();
+            $this->loadAdminLogin();
         }
     }
 
@@ -63,8 +63,8 @@ class Login extends CI_Controller
      */
     public function logout()
     {
-        $this->session->unset_userdata('admin_username');
-        redirect(site_url() . '/login/load_admin_login');
+        $this->session->unset_userdata('adminUsername');
+        redirect(site_url() . '/login/loadAdminLogin');
     }
 
     /**
@@ -72,8 +72,8 @@ class Login extends CI_Controller
      */
     private function _register()
     {
-        $this->load->model('Login_model');
-        $this->Login_model->register('admin', 'password', 'John', 'Doe');
+        $this->load->model('LoginModel');
+        $this->LoginModel->register('admin', 'password', 'John', 'Doe');
     }
 }
 

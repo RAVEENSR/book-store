@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * Login_model Class
+ * addVisitor Class
  *
  * This class represents a database activities regarding the administrator login operation.
  *
  * @author Raveen Savinda Rathnayake
  */
-class Login_model extends CI_Model {
+class LoginModel extends CI_Model {
 
     /**
      * LoginModel constructor.

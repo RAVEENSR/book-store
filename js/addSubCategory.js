@@ -22,7 +22,7 @@ function validateSubCategoryForm() {
         alertSection.html('<div class="alert alert-danger">"Sub Category 1" field cannot be blank.</div>');
     } else {
         $.ajax({
-            url: siteURL + "/administrator/create_subcategory",
+            url: siteURL + "/administrator/createSubCategory",
             type: "POST",
             data: {mainCategory: mainCategory, subCategories: data},
             success: function (data) {
@@ -51,7 +51,7 @@ function validateSubCategoryName(subCategoryName, subCategoryFieldId) {
     }
 
     $.ajax({
-        url: siteURL + "/administrator/validate_subcategory",
+        url: siteURL + "/administrator/validateSubCategory",
         type: "POST",
         data: {subCategoryName: subCategoryName},
         success: function (data) {

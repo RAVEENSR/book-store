@@ -8,7 +8,7 @@ function loadSubCategories() {
     var subCategorySelectSection = $('#subCategorySelect');
     if (selectedMainCategory !== "") {
         $.ajax({
-            url: siteURL + "/administrator/get_all_subcategories_of_main_category",
+            url: siteURL + "/administrator/getAllSubCategoriesOfMainCategory",
             type: "POST",
             data: {mainCategory: selectedMainCategory},
             success: function (data) {
@@ -118,7 +118,7 @@ $(document).ready(function () {
     $('#addBookForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
-            url: siteURL + '/administrator/add_book',
+            url: siteURL + '/administrator/addBook',
             type: "post",
             data: new FormData(this),
             processData: false,
@@ -169,7 +169,7 @@ function validateISBN() {
     var siteURL = $('#siteURL')[0].value;
 
     $.ajax({
-        url: siteURL + "/administrator/validate_book_isbn",
+        url: siteURL + "/administrator/validateBookIsbn",
         type: "POST",
         data: {isbn: isbn},
         success: function (data) {
