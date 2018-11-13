@@ -99,13 +99,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
                                                     . $book->isbnNo; ?>">
                                                     <img src="<?php echo base_url() . $book->imageURL; ?>"
-                                                         alt="book" class="primary"/>
+                                                         alt="book" class="primary resizeImage"/>
                                                 </a>
                                             </div>
                                             <div class="product-details text-center">
-                                                <h4>
+                                                <span class="text"><h4>
                                                     <a href="<?php echo site_url() . '/visitor/viewBookDetails/?isbn='
-                                                        . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4>
+                                                        . $book->isbnNo; ?>"><?php echo $book->title; ?></a></h4></span>
                                                 <div class="product-price">
                                                     <ul>
                                                         <li>$<?php echo $book->price; ?></li>

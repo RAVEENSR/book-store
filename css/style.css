@@ -3756,3 +3756,15 @@ a#scrollUp:hover {
 /*----------------------------------------*/
 /*  16. Other
 /*----------------------------------------*/
+.text {
+    display: block;
+    max-width: 75ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.resizeImage{
+    width:350px;
+    height:350px;
+}
